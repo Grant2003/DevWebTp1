@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Produits;
-use App\Entity\Categories;
+use App\Entity\Produit;
+use App\Entity\Categorie;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +22,7 @@ class HomeController extends AbstractController
         //! DANGER Ligne importante pour les fonctions utilitaires
         $this->em = $doctrine->getManager();
 
-        $role = $request->query->get('role'); // $_GET['role']
+        $categorie = $request->query->get('categorie'); // $_GET['role']
         $searchField = $request->request->get('search_field'); // $_POST['search_field']
 
         $categories = $this->retrieveAllCategories();
@@ -35,7 +35,7 @@ class HomeController extends AbstractController
         //     $champions = $this->retrieveAllChampions();
         // }
         
-        $produits = $this->retrieveProducts($role, $searchField);
+        $produits = $this->retrieveProduits($categorie, $searchField);
         
 
         //Pour déboguer des fois
@@ -45,20 +45,19 @@ class HomeController extends AbstractController
     }
 
 
-    #[Route('/produuits/{id}', name:'produit_modal')]
+    #[Route('/produits/{id}', name:'produit_modal')]
     public function infoChampion($idChampion, Request $request, ManagerRegistry $doctrine): Response {
         //2 Philosophies -> JSON, HTML
 
         $this->em = $doctrine->getManager();
 
-        $champion = $this->em->getRepository(Champion::class)->find($idChampion);
+        $produit = $this->em->getRepository(Produit::class)->find($idChampion);
 
         return $this->render('home/produit.modal.twig', ['produit' => $produit]);
 
     }
 
-    
-    private function retrieveChampions($categorie, $searchField) {
+    private function retrieveProduits($categorie, $searchField) {
         return $this->em->getRepository(Produit::class)->findWithCriteria($categorie, $searchField);
     }
 

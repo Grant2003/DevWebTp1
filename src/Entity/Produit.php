@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\ProduitsRepository;
+use App\Repository\ProduitRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ProduitsRepository::class)]
-class Produits
+#[ORM\Entity(repositoryClass: ProduitRepository::class)]
+
+class Produit
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -117,7 +118,7 @@ class Produits
         return $this;
     }
 
-    public function addIdCategorie(Categories $idCategorie): static
+    public function addIdCategorie(Categorie $idCategorie): static
     {
         if (!$this->id_categorie->contains($idCategorie)) {
             $this->id_categorie->add($idCategorie);
@@ -127,7 +128,7 @@ class Produits
         return $this;
     }
 
-    public function removeIdCategorie(Categories $idCategorie): static
+    public function removeIdCategorie(Categorie $idCategorie): static
     {
         if ($this->id_categorie->removeElement($idCategorie)) {
             // set the owning side to null (unless already changed)

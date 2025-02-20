@@ -2,25 +2,26 @@
 
 namespace App\Entity;
 
-use App\Repository\CatergorieRepository;
+use App\Entity\CategorieRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: CategorieRepository::class)]
+#[ORM\Entity(repositoryClass: \App\Repository\CategorieRepository::class)]
+
+
 #[ORM\Table(name:'categorie')]
 class Categorie
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(name:'idCategorie')]
-    private ?int $id = null;
+    private ?int $idCategorie = null;
+    
 
     #[ORM\Column(length: 50)]
     private ?string $Description = null;
 
     #[ORM\OneToMany(targetEntity:Produit::class, mappedBy:"IdCategorie", fetch:"LAZY")]
-    private $champions;
-
     public function idCategorie(): ?int
     {
         return $this->idCategorie;
