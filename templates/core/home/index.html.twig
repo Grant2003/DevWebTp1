@@ -1,0 +1,58 @@
+{% extends 'core/base.html.twig' %}
+
+{% block title %} Champions  {% endblock %}
+
+{% block content %}
+    <h1 class="mt-4">Champions - ({{ champions | length }}) </h1>
+    <div class="row">
+        <div class="col-2">
+            {# Afficher les 5 rôles #}
+            <ul>
+                <li><a href="{{ path('app_home') }}">Tous les rôles</a></li>
+                {% for role in roles %} 
+                    <li><a href="{{ path('app_home', { role: role.idRole }) }}">{{ role.name }}</a></li>
+                {% endfor %}
+            </ul>
+
+            {# Lien complet avec le DNS #}
+            {{ app.request.uri }} <br /> 
+            {# Path sans GET (?) #}
+            {{ app.request.pathinfo }} <br /> 
+            {# Path avec GET #}
+            {{ app.request.requesturi }} <br /> 
+
+        </div>
+        <div class="col-10">
+            <div class="row">
+                {% if champions|length > 0 %}
+                    {% for champion in champions %}
+                        <div class="col-2 card mx-2 my-2">
+                            <div class="card-body">
+                                <a class="champion-modal" href="{{ path('champion_modal', { idChampion: champion.idChampion })}}"><h5 class="card-title text-center">{{ champion.name }}</h5></a>
+                                <img src="{{ asset_if(champion.imagePath, 'images/champions/non-disponible.jpg') }}" class="mx-auto d-block img-champion">
+                                {# <img src="https://ddragon.leagueoflegends.com/cdn/13.1.1/img/champion/{{ champion.name | replace({' ':'', "'":""}) | lower}}.png" class="mx-auto d-block"> #}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>Aucun champion avec ce rôle.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="modal" tabindex="-1" id="champion-modal">
+        <div class="modal-dialog">
+            <div id="champion-modal-content" class="modal-content">
+                
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('styles/champions.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+	<script src="{{ asset('scripts/modal.champion.js') }}"></script>
+{% endblock %}
