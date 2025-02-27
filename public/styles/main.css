@@ -1,3 +1,30 @@
 main > .container {
     padding: 60px 15px 0;
+
+}
+.headerConsole {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+    background-color: aliceblue;
+    height: 150px;
+    border-bottom: 10px solid black; /* Adjusted the border width to a more reasonable value */
+}
+
+.headerConsole .col-3 {
+    width: 25%;
+    margin-right: 1rem;
+}
+
+.headerConsole .col-9 {
+    width: 75%;
+}
+
+.headerConsole img {
+    max-width: 100%;
+    height: auto;
+}
+
+.headerConsole h1, .headerConsole h2 {
+    margin: 0;
 }

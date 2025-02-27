@@ -10,7 +10,7 @@
             <ul>
                 <li><a href="{{ path('app_home') }}">Tous les rôles</a></li>
                 {% for categorie in categories %} 
-                    <li><a href="{{ path('app_home', { role: role.idRole }) }}">{{ role.name }}</a></li>
+                    <li><a href="{{ path('app_home', { categorie: categorie.idCategorie  }) }}">{{ categorie.description }}</a></li>
                 {% endfor %}
             </ul>
         </div>
@@ -20,21 +20,21 @@
                     {% for produit in produits %}
                         <div class="col-2 card mx-2 my-2">
                             <div class="card-body">
-                                <a class="champion-modal" href="{{ path('champion_modal', { idChampion: champion.idChampion })}}"><h5 class="card-title text-center">{{ champion.name }}</h5></a>
-                                {# <img src="{{ asset_if(champion.imagePath, 'images/champions/non-disponible.jpg') }}" class="mx-auto d-block img-champion"> #}
+                                <a class="produit-modal" href="{{ path('produit_modal', { idProduit: produit.id })}}"><h5 class="card-title text-center">{{ produit.nom }}</h5></a>
+                                <img src="images/{{ produit.nom }}.jpg" class="mx-auto d-block img-produit">
                                 {# <img src="https://ddragon.leagueoflegends.com/cdn/13.1.1/img/champion/{{ champion.name | replace({' ':'', "'":""}) | lower}}.png" class="mx-auto d-block"> #}
                             </div>
                         </div>
                     {% endfor %}
                 {% else %}
-                    <p>Aucun Produit de cette cat/gorie.</p>
+                    <p>Aucun Produit de cette catégorie.</p>
                 {% endif %}
             </div>
         </div>
     </div>
-    <div class="modal" tabindex="-1" id="champion-modal">
+    <div class="modal" tabindex="-1" id="produit-modal">
         <div class="modal-dialog">
-            <div id="champion-modal-content" class="modal-content">
+            <div id="produit-modal-content" class="modal-content">
                 
             </div>
         </div>
@@ -42,7 +42,7 @@
 {% endblock %}
 
 {% block stylesheets %}
-	<link rel="stylesheet" href="{{ asset('styles/champions.css') }}">
+	<link rel="stylesheet" href="{{ asset('styles/produit.css') }}">
 {% endblock %}
 
 {% block javascripts %}

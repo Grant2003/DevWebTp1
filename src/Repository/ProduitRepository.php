@@ -19,8 +19,8 @@ class ProduitRepository extends ServiceEntityRepository
         $queryBuilder = $this->createQueryBuilder('c'); //SELECT * FROM champions c
 
         if($searchField != null) {
-            $queryBuilder->andWhere('c.name LIKE :searchFilter') // WHERE c.name LIKE %{searchField}%
-                ->orWhere('c.description LIKE :searchFilter') // OR c.description LIKE %{searchField}%
+            $queryBuilder->andWhere('c.Nom LIKE :searchFilter') // WHERE c.name LIKE %{searchField}%
+                ->orWhere('c.Description LIKE :searchFilter') // OR c.description LIKE %{searchField}%
                 ->setParameter('searchFilter', '%'.$searchField.'%'); 
         }
 

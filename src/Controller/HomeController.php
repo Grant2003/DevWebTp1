@@ -45,13 +45,13 @@ class HomeController extends AbstractController
     }
 
 
-    #[Route('/produits/{id}', name:'produit_modal')]
-    public function infoChampion($idChampion, Request $request, ManagerRegistry $doctrine): Response {
+    #[Route('/produits/{idProduit}', name:'produit_modal')]
+    public function infoChampion($idProduit, Request $request, ManagerRegistry $doctrine): Response {
         //2 Philosophies -> JSON, HTML
 
         $this->em = $doctrine->getManager();
 
-        $produit = $this->em->getRepository(Produit::class)->find($idChampion);
+        $produit = $this->em->getRepository(Produit::class)->find($idProduit);
 
         return $this->render('home/produit.modal.twig', ['produit' => $produit]);
 
