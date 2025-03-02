@@ -1,6 +1,11 @@
 <?php
 
 namespace App\Repository;
+//-----------------------------------
+//   Fichier : ProduitRepository.php
+//   Par:      Anthony Grenier
+//   Date :    2025-2-22
+//-----------------------------------
 
 use App\Entity\Produit;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -15,19 +20,16 @@ class ProduitRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Produit::class);
     }
-    public function findWithCriteria($categorie, $searchField, $limit = 10, $offset = 0) {
-        $queryBuilder = $this->createQueryBuilder('c')
-            ->setMaxResults($limit)
-            ->setFirstResult($offset);
-    
+    public function findWithCriteria($categorie, $searchField) {
+        $queryBuilder = $this->createQueryBuilder('p');    
         if ($searchField != null) {
-            $queryBuilder->andWhere('c.nom LIKE :searchFilter')
-                ->orWhere('c.description LIKE :searchFilter')
+            $queryBuilder->andWhere('p.nom LIKE :searchFilter')
+                ->orWhere('p.description LIKE :searchFilter')
                 ->setParameter('searchFilter', '%' . $searchField . '%'); 
         }
     
         if ($categorie != null) {
-            $queryBuilder->andWhere('c.idCategorie = :idCategorie')
+            $queryBuilder->andWhere('p.idCategorie = :idCategorie')
                 ->setParameter('idCategorie', $categorie);
         }
     

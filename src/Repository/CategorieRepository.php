@@ -1,10 +1,16 @@
 <?php
 
 namespace App\Repository;
+//-----------------------------------
+//   Fichier : CategorieRepository.php
+//   Par:      Anthony Grenier
+//   Date :    2025-2-22
+//-----------------------------------
                
 use App\Entity\Categorie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+
 
 /**
  * @extends ServiceEntityRepository<Categorie>

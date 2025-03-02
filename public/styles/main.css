@@ -1,10 +1,15 @@
+/*-----------------------------------
+    //   Fichier : main.css
+    //   Par:      Anthony Grenier
+    //   Date :    2025-2-22
+    //----------------------------------- */
 
 .headerConsole {
     display: flex;
     align-items: center;
     background-color: aliceblue;
     min-height: 250px;
-    border-bottom: 10px solid rgb(39, 44, 44); /* Adjusted the border width to a more reasonable value */
+    border-bottom: 10px solid rgb(39, 44, 44); 
 }
 
 .headerConsole h1, .headerConsole h2 {
@@ -18,5 +23,6 @@
     height: auto;
 }
 body, html {
-    margin: 10; /* Ensure no margin for body and html */
-    padding: 10; /* Ensure no padding for body and html */}
+    margin: 10; 
+    padding: 10; 
+}

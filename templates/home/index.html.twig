@@ -1,3 +1,8 @@
+{# //-----------------------------------
+//   Fichier : index.html.twig
+//   Par:      Anthony Grenier
+//   Date :    2025-2-22
+//----------------------------------- #}
 {% extends 'core/base.html.twig' %}
 
 {% block title %} Produits  {% endblock %}
@@ -16,6 +21,7 @@
         <div class="col-2">
             <ul>
                 <li><a class="btn btn-dark" href="{{ path('app_home') }}">Toutes </a></li>
+                {# affichage des categories #}
                 {% for categorie in categories %} 
                     <li><a class="btn btn-dark" href="{{ path('app_home', { categorie: categorie.idCategorie  }) }}">{{ categorie.nom }}</a></li>
                 {% endfor %}
@@ -24,16 +30,17 @@
         <div class="col-10">
             <div class="row">
                 {% if produits|length > 0 %}
+                {# affichage des produits si il y en a #}
                     {% for produit in produits %}
-                        <div class="col-2 card mx-2 my-3">
+                        <div class="col-3 card mx-2 my-3">
                             <div class="card-body">
                                 <a class="produit-modal" href="{{ path('produit_modal', { idProduit: produit.id })}}"><h5 class="card-title text-center">{{ produit.nom }}</h5></a>
-
                                 <img src="images/produits/{{ produit.nom }}.jpg" onerror="this.onerror=null;this.src='images/unavailable.jpg';" class="mx-auto d-block img-produit">
                                 <img src="images/panier.png" class="img-panier">
                             </div>
                         </div>
                     {% endfor %}
+                {# reponse si il n'y a pas de produit correspondant #}
                 {% else %}
                     <p class="alert alert-warning">Aucun Produit ne correspond à votre recherche.</p>
                 {% endif %}
