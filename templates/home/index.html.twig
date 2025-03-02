@@ -8,15 +8,15 @@
 {% block title %} Produits  {% endblock %}
 
 {% block content %}
-    <h1 class="mt-4">Recherche textuelle:</h1>
+    <h2 class="mt-5">Recherche textuelle:</h2>
 
         <div class="div_recherche">
             <form class="d-flex" method="POST" action="{{ app.request.uri }}">
-                <input name="search_field" class="form-control me-2" type="search" placeholder="Recherche" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Recherche</button>
+                <input name="search_field" class="form-control me-2" type="search" placeholder="Recherche" aria-label="recherche">
+                <button class="btn btn-dark" type="submit">Recherche</button>
             </form>
         </div>
-    <h1 class="mt-4">Catégories:</h1>
+    <h2 class="mt-5">Catégories:</h2>
     <div class="row">
         <div class="col-2">
             <ul>
@@ -34,8 +34,11 @@
                     {% for produit in produits %}
                         <div class="col-3 card mx-2 my-3">
                             <div class="card-body">
-                                <a class="produit-modal" href="{{ path('produit_modal', { idProduit: produit.id })}}"><h5 class="card-title text-center">{{ produit.nom }}</h5></a>
-                                <img src="images/produits/{{ produit.nom }}.jpg" onerror="this.onerror=null;this.src='images/unavailable.jpg';" class="mx-auto d-block img-produit">
+                                <h5 class="card-title text-center">{{ produit.nom }}</h5>
+                                <a  class="produit-modal" href="{{ path('produit_modal', { idProduit: produit.id })}}">
+                                    <img src="images/produits/{{ produit.id }}.jpg" onerror="this.onerror=null;this.src='images/unavailable.jpg';" class="mx-auto d-block img-produit">
+                                </a>
+                                
                                 <img src="images/panier.png" class="img-panier">
                             </div>
                         </div>

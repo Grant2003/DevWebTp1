@@ -8,11 +8,11 @@
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body">
-    <img src="images/descriptions/{{ produit.nom }}.jpg" onerror="this.onerror=null;this.src='images/unavailable.jpg';" class="mx-auto d-block img-produit">
-    <p>Stock Quantity: {{ produit.qtte_stock }}</p>
+    <img src="images/descriptions/{{ produit.id }}.jpg" onerror="this.onerror=null;this.src='images/unavailable.jpg';" class="mx-auto d-block img-produit">
 	<p>Fabriquant: {{ produit.idCategorie.nom }}</p>
 	<p>{{ produit.description }}</p>
 	<p>prix: {{ produit.prix }}$</p>
+    <p>Stock: {{ produit.qtte_stock }}</p>
 </div>
 <div class="modal-footer">
     <button src="images/panier.png" data-bs-dismiss="modal" class="btn btn-panier" >
