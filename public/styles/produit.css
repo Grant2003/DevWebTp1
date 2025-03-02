@@ -1,4 +1,28 @@
+
 .img-produit {
     width: 120px;
     height: auto;
+}
+
+.img-panier {
+    position: absolute;
+    bottom: 10px; 
+    right: 10px; 
+    width: 20px;
+    height: auto;
+}
+.btn-panier {
+    position: absolute;
+    bottom: 12px; 
+    right: 12px; 
+    width: 38px; 
+    height: 38px;
+  }
+
+  .headerConsole {
+    display: flex;
+    align-items: center;
+    background-color: aliceblue;
+    min-height: 250px;
+    border-bottom: 10px solid rgb(39, 44, 44); /* Adjusted the border width to a more reasonable value */
 }

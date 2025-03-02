@@ -1,11 +1,16 @@
 <div class="modal-header">
-	<h5 class="modal-title">{{ produit.nom }}</h5>
-	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <h5 class="modal-title">{{ produit.nom }}</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body">
+    <img src="images/descriptions/{{ produit.nom }}.jpg" onerror="this.onerror=null;this.src='images/unavailable.jpg';" class="mx-auto d-block img-produit">
+    <p>Stock Quantity: {{ produit.qtte_stock }}</p>
+	<p>Fabriquant: {{ produit.idCategorie.nom }}</p>
 	<p>{{ produit.description }}</p>
-    <p>{{ produit.description }}</p>
+	<p>prix: {{ produit.prix }}$</p>
 </div>
 <div class="modal-footer">
-	<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    <button src="images/panier.png" data-bs-dismiss="modal" class="btn btn-panier" >
+	    <img src="images/panier.png" class="img-panier">
+	</button>
 </div>

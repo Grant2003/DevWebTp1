@@ -6,13 +6,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ItemController extends AbstractController
+class ContactController extends AbstractController
 {
-    #[Route('/items', name: 'route_items')]
+    #[Route('/contact', name: 'route_contact')]
     public function index(): Response
     {
-        return $this->render('item/index.html.twig', [
-            'controller_name' => 'ItemController',
+        return $this->render('contact/index.html.twig', [
         ]);
     }
 }

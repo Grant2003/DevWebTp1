@@ -16,11 +16,11 @@ class CategorieRepository extends ServiceEntityRepository
         parent::__construct($registry, Categorie::class);
     }
     public function findWithCriteria($categorie, $searchField) {
-        $queryBuilder = $this->createQueryBuilder('c'); //SELECT * FROM champions c
+        $queryBuilder = $this->createQueryBuilder('c'); 
 
         if($searchField != null) {
-            $queryBuilder->andWhere('c.name LIKE :searchFilter') // WHERE c.name LIKE %{searchField}%
-                ->orWhere('c.description LIKE :searchFilter') // OR c.description LIKE %{searchField}%
+            $queryBuilder->andWhere('c.name LIKE :searchFilter') 
+                ->orWhere('c.description LIKE :searchFilter') 
                 ->setParameter('searchFilter', '%'.$searchField.'%'); 
         }
 
@@ -28,33 +28,7 @@ class CategorieRepository extends ServiceEntityRepository
             $queryBuilder->andWhere('c.idCategorie = :idCategorie')
                 ->setParameter('idCategorie', $categorie);
         }
-        
-
+    
         return $queryBuilder->getQuery()->getResult();
     }
-
-    //    /**
-    //     * @return Categories[] Returns an array of Categories objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('c.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Categories
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 }

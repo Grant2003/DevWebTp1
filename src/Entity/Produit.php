@@ -1,3 +1,5 @@
+<!-- Categorie.php
+Fait Par Anthony Grenier le 22 févrié 2025 -->
 <?php
 
 namespace App\Entity;
@@ -17,23 +19,24 @@ class Produit
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
-    private ?string $Nom = null;
+    private ?string $nom = null;
 
     #[ORM\Column(length: 150)]
-    private ?string $Description = null;
+    private ?string $description = null;
 
     #[ORM\Column]
-    private ?float $float = null;
+    private ?float $prix = null;
 
     #[ORM\Column]
-    private ?int $Qtte_stock = null;
+    private ?int $qtte_stock = null;
+    
 
     #[ORM\Column]
     private ?int $Qtte_seuil_min = null;
 
     #[ORM\ManyToOne(targetEntity:Categorie::class, inversedBy:"produits", cascade:["persist"])]
     #[ORM\JoinColumn(name:'idCategorie', referencedColumnName:'idCategorie')]
-    private $mainRole;
+    private $idCategorie;
 
     public function __construct()
     {
@@ -48,7 +51,7 @@ class Produit
 
     public function getNom(): ?string
     {
-        return $this->Nom;
+        return $this->nom;
     }
 
     public function setNom(string $Nom): static
@@ -60,7 +63,7 @@ class Produit
 
     public function getDescription(): ?string
     {
-        return $this->Description;
+        return $this->description;
     }
 
     public function setDescription(string $Description): static
@@ -70,26 +73,27 @@ class Produit
         return $this;
     }
 
-    public function getFloat(): ?float
+    public function getPrix(): ?float
     {
-        return $this->float;
+        return $this->prix;
     }
 
-    public function setFloat(float $float): static
+    public function setPrix(float $prix): static
     {
-        $this->float = $float;
+        $this->prix = $prix;
 
         return $this;
     }
 
-    public function getQtteStock(): ?int
+    public function getQtte_Stock(): ?int
     {
-        return $this->Qtte_stock;
+        return $this->qtte_stock;
     }
+    
 
-    public function setQtteStock(int $Qtte_stock): static
+    public function setQtteStock(int $qtte_stock): static
     {
-        $this->Qtte_stock = $Qtte_stock;
+        $this->qtte_stock = $qtte_stock;
 
         return $this;
     }
@@ -106,37 +110,8 @@ class Produit
         return $this;
     }
 
-    public function getIdCategorie(): ?int
+    public function getIdCategorie(): ?Categorie
     {
         return $this->idCategorie;
-    }
-
-    public function setIdCategorie(int $idCategorie): static
-    {
-        $this->idCategorie = $idCategorie;
-
-        return $this;
-    }
-
-    public function addIdCategorie(Categorie $idCategorie): static
-    {
-        if (!$this->id_categorie->contains($idCategorie)) {
-            $this->id_categorie->add($idCategorie);
-            $idCategorie->setCategorie($this);
-        }
-
-        return $this;
-    }
-
-    public function removeIdCategorie(Categorie $idCategorie): static
-    {
-        if ($this->id_categorie->removeElement($idCategorie)) {
-            // set the owning side to null (unless already changed)
-            if ($idCategorie->getCategorie() === $this) {
-                $idCategorie->setCategorie(null);
-            }
-        }
-
-        return $this;
     }
 }

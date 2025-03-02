@@ -3,14 +3,21 @@
 {% block title %} Produits  {% endblock %}
 
 {% block content %}
-    <h1 class="mt-4">Produits - ({{ produits | length }}) </h1>
+    <h1 class="mt-4">Recherche textuelle:</h1>
+
+        <div class="div_recherche">
+            <form class="d-flex" method="POST" action="{{ app.request.uri }}">
+                <input name="search_field" class="form-control me-2" type="search" placeholder="Recherche" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Recherche</button>
+            </form>
+        </div>
+    <h1 class="mt-4">Catégories:</h1>
     <div class="row">
         <div class="col-2">
-            {# Afficher les 5 rôles #}
             <ul>
-                <li><a href="{{ path('app_home') }}">Tous les rôles</a></li>
+                <li><a class="btn btn-dark" href="{{ path('app_home') }}">Toutes </a></li>
                 {% for categorie in categories %} 
-                    <li><a href="{{ path('app_home', { categorie: categorie.idCategorie  }) }}">{{ categorie.description }}</a></li>
+                    <li><a class="btn btn-dark" href="{{ path('app_home', { categorie: categorie.idCategorie  }) }}">{{ categorie.nom }}</a></li>
                 {% endfor %}
             </ul>
         </div>
@@ -18,16 +25,17 @@
             <div class="row">
                 {% if produits|length > 0 %}
                     {% for produit in produits %}
-                        <div class="col-2 card mx-2 my-2">
+                        <div class="col-2 card mx-2 my-3">
                             <div class="card-body">
                                 <a class="produit-modal" href="{{ path('produit_modal', { idProduit: produit.id })}}"><h5 class="card-title text-center">{{ produit.nom }}</h5></a>
-                                <img src="images/{{ produit.nom }}.jpg" class="mx-auto d-block img-produit">
-                                {# <img src="https://ddragon.leagueoflegends.com/cdn/13.1.1/img/champion/{{ champion.name | replace({' ':'', "'":""}) | lower}}.png" class="mx-auto d-block"> #}
+
+                                <img src="images/produits/{{ produit.nom }}.jpg" onerror="this.onerror=null;this.src='images/unavailable.jpg';" class="mx-auto d-block img-produit">
+                                <img src="images/panier.png" class="img-panier">
                             </div>
                         </div>
                     {% endfor %}
                 {% else %}
-                    <p>Aucun Produit de cette catégorie.</p>
+                    <p class="alert alert-warning">Aucun Produit ne correspond à votre recherche.</p>
                 {% endif %}
             </div>
         </div>
@@ -46,5 +54,5 @@
 {% endblock %}
 
 {% block javascripts %}
-	<script src="{{ asset('scripts/modal.champion.js') }}"></script>
+	<script src="{{ asset('scripts/modal.produits.js') }}"></script>
 {% endblock %}

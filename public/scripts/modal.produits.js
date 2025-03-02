@@ -7,10 +7,11 @@ $(document).ready(() => {
         const href = event.currentTarget.href;
 
         const response = await axios.get(href);
+        console.log(response.data)
         if(response.status === 200) {
             $("#produit-modal-content").html(response.data);
-            const championViewModal = new bootstrap.Modal(document.getElementById('produit-modal'), {});
-            championViewModal.show();
+            const produitViewModal = new bootstrap.Modal(document.getElementById('produit-modal'), {});
+            produitViewModal.show();
         }
 
     });

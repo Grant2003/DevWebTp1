@@ -1,3 +1,6 @@
+<!-- Categorie.php
+Fait Par Anthony Grenier le 22 févrié 2025 -->
+
 <?php
 
 namespace App\Entity;
@@ -17,9 +20,8 @@ class Categorie
     #[ORM\Column(name:'idCategorie')]
     private ?int $idCategorie = null;
     
-
     #[ORM\Column(length: 50)]
-    private ?string $Description = null;
+    private ?string $nom = null;
 
     #[ORM\OneToMany(targetEntity:Produit::class, mappedBy:"IdCategorie", fetch:"LAZY")]
     public function idCategorie(): ?int
@@ -27,14 +29,14 @@ class Categorie
         return $this->idCategorie;
     }
 
-    public function getDescription(): ?string
+    public function getNom(): ?string
     {
-        return $this->Description;
+        return $this->nom;
     }
 
-    public function setDescription(string $Description): static
+    public function setNom(string $nom): static
     {
-        $this->Description = $Description;
+        $this->nom = $nom;
 
         return $this;
     }
