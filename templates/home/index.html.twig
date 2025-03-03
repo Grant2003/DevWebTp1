@@ -36,10 +36,10 @@
                             <div class="card-body">
                                 <h5 class="card-title text-center">{{ produit.nom }}</h5>
                                 <a  class="produit-modal" href="{{ path('produit_modal', { idProduit: produit.id })}}">
-                                    <img src="images/produits/{{ produit.id }}.jpg" onerror="this.onerror=null;this.src='images/unavailable.jpg';" class="mx-auto d-block img-produit">
+                                    <img src="images/produits/{{ produit.id }}.jpg" onerror="this.onerror=null;this.src='images/unavailable.jpg';" alt="image de {{produit.nom}}" class="mx-auto d-block img-produit">
                                 </a>
                                 
-                                <img src="images/panier.png" class="img-panier">
+                                <img src="images/panier.png" class="img-panier" alt="image de panier">
                             </div>
                         </div>
                     {% endfor %}

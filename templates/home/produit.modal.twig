@@ -8,7 +8,7 @@
     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body">
-    <img src="images/descriptions/{{ produit.id }}.jpg" onerror="this.onerror=null;this.src='images/unavailable.jpg';" class="mx-auto d-block img-produit">
+    <img src="images/descriptions/{{ produit.id }}.jpg" onerror="this.onerror=null;this.src='images/unavailable.jpg';" class="mx-auto d-block img-produit" alt="image de {{produit.nom}}">
 	<p>Fabriquant: {{ produit.idCategorie.nom }}</p>
 	<p>{{ produit.description }}</p>
 	<p>prix: {{ produit.prix }}$</p>
@@ -16,6 +16,6 @@
 </div>
 <div class="modal-footer">
     <button src="images/panier.png" data-bs-dismiss="modal" class="btn btn-panier" >
-	    <img src="images/panier.png" class="img-panier">
+	    <img src="images/panier.png" class="img-panier" alt="image de panier">
 	</button>
 </div>
