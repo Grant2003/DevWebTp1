@@ -51,9 +51,10 @@ class PanierController extends AbstractController
     #[Route(path: '/delete-item/{id}', name: 'delete_item',methods: ['POST'])]
 
     public function supprimerProduitParId(Request $request, int $id): Response {
+
         $panier = $request->getSession()->get('panier', new Panier());
         $panier->supprimerProduitParId($id);
-
+        $request->getSession()->set('panier', $panier);
         return $this->redirectToRoute('route_panier');
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////

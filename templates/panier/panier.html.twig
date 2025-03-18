@@ -28,6 +28,7 @@
                 </tr>
             </thead>
             <tbody>
+        </form>
             {# affichage de touts les produit #}
                 {% for produit in items %}
                     <tr>
@@ -40,7 +41,6 @@
                         <td>
                         {# effacer un item #}
                             <form action="{{ path('delete_item', { id: produit.id }) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce produit ?');">
-                                <input type="hidden" name="_method" value="DELETE">
                                 <button type="submit" class="btn btn-dark">Supprimer</button>
                             </form>
                         </td>
@@ -91,7 +91,6 @@
                     </tr>
             </tbody>
         </table>
-    </form>
     <a class="nav-link" href="{{ path('app_home') }}"> Retour au Catalogue</a>
 
     <form action="{{ path('vider_panier') }}" method="post">

@@ -38,10 +38,16 @@ class HomeController extends AbstractController
         $session = $request->getSession();
 
         $panier = $session->get('panier', new Panier()); 
-        $nbItem = $panier->compterProduitsTotal();
         $session->set('panier', $panier);
-        
+
         $request->getSession()->set('panier', $panier);
+        
+        if ($panier === null) {
+            $panier = new Panier();
+            $session->set('panier', $panier);
+        }
+        $nbItem = $panier->compterProduitsTotal();
+        
 
 
         return $this->render('home/index.html.twig', ['produits' => $produits, 'categories' => $categories, 'nbItem'=> $nbItem]);
