@@ -73,34 +73,24 @@ class HomeController extends AbstractController
 
         $produit = $this->em->getRepository(Produit::class)->find($id);
     
-        if ($produit) {
-            if ($panier->existenceProduitParId($produit->getId())) {
-                $panier->incrementerQuantiteProduit($produit->getId());
-                $this->addFlash('success', 'Produit ajouté au panier(i)!');
-            } else {
-                $produitPanier = new ProduitPanier();
-                $produitPanier->id = $produit->getId();
-                $produitPanier->nom = $produit->getNom();
-                $produitPanier->prix = $produit->getPrix();
-                $produitPanier->quantiteCommande = 1; 
-                $this->addFlash('success', 'Produit ajouté au panier!');
     
-                $panier->ajouterProduit($produitPanier);
-            }
-    
-            $session->set('panier', $panier);
+        //si le produit existe on incremente sinon on le créer
+        if ($panier->existenceProduitParId($produit->getId())) {
+            $panier->incrementerQuantiteProduit($produit->getId());
         } else {
-            $this->addFlash('error', 'Produit non trouvé.');
+            $produitPanier = new ProduitPanier();
+            $produitPanier->id = $produit->getId();
+            $produitPanier->nom = $produit->getNom();
+            $produitPanier->prix = $produit->getPrix();
+            $produitPanier->quantiteCommande = 1; 
+
+            $panier->ajouterProduit($produitPanier);
         }
+
+        $session->set('panier', $panier);
+    
     
         $produitsDansPanier = $panier->panier; 
-
-    
-        foreach ($produitsDansPanier as $produitPanier) {
-            if ($produitPanier instanceof ProduitPanier) {
-                $this->addFlash('info', 'Produit dans le panier: ' . $produitPanier->nom . ' - Quantité: ' . $produitPanier->quantiteCommande);
-            }
-        }
     
         return $this->redirectToRoute('app_home');
     }

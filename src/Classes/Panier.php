@@ -14,10 +14,11 @@ class Panier {
         $this->panier = [];
     }
     public function supprimerProduitParId(int $id): void {
+        //on recherche un produit avec l'id correspondant et le supprime
         foreach ($this->panier as $key => $produit) {
             if ($produit->id === $id) {
                 unset($this->panier[$key]); 
-                $this->panier = array_values($this->panier); 
+                $this->panier = array_values($this->panier);  //on re-index le panier
                 return; 
             }
         }
@@ -28,8 +29,8 @@ class Panier {
     }
 
     public function calculerSommePrix(): float {
-        return array_reduce($this->panier, function ($carry, $produit) {
-            return $carry + $produit->prix*$produit->quantiteCommande; 
+        return array_reduce($this->panier, function ($temp, $produit) {
+            return $temp + $produit->prix*$produit->quantiteCommande; 
         }, 0);
     }
 
@@ -42,8 +43,11 @@ class Panier {
     }
 
     public function compterProduitsTotal(): int {
-        return count($this->panier);
+        return array_reduce($this->panier, function ($total, $produit) {
+            return $total + $produit->quantiteCommande; 
+        }, 0);
     }
+    
 
     public function existenceProduitParId(int $id): ?bool {
         foreach ($this->panier as $produit) {
@@ -55,17 +59,29 @@ class Panier {
         return false; 
     }
     public function incrementerQuantiteProduit(int $id): void {
+        //trouve le produit et incrémente sa quantité
         foreach ($this->panier as $produit) {
             if ($produit->id === $id) {
+                if($produit->quantiteCommande >= 20){
+                    return;
+                }
                 $produit->quantiteCommande += 1;  
                 return; 
             }
         }
     }
     public function majQuantiteProduit(int $id, int $quantite): void {
+        //trouve le produit et change sa quantité
+
         foreach ($this->panier as $produit) {
             if ($produit->id === $id) {
-                $produit->quantiteCommande =$quantite;  
+                $produit->quantiteCommande =$quantite; 
+                //si la quantite depasse 20 on la met a 20 et retourne  
+                if($produit->quantiteCommande >= 20){
+                    $produit->quantiteCommande = 20;  
+
+                    return;
+                }
                 return;  
             }
         }

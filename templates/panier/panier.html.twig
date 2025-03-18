@@ -8,22 +8,27 @@
 {% block content %}
 <div class="example-wrapper">
     <h1>Panier</h1>
+    {# affichage des items si le panier n'est pas vide #}
     {% if items is not empty %}
+    {# mise a jour des quantitésd de tout les produits #}
     <form action="{{ path('update_all') }}" method="post">
-        <table class="table">
+        <table class="table table-striped">
             <thead>
-                <tr>
+                <tr class="text-center align-middle">
                     <th>Nom du produit</th>
-                    <th>Quantité</th>
+                    <th class="align-middle">
+                        Quantité
+                        <button  type="submit" class="btn btn-dark mt-2 ">Mettre à jour les quantités</button>
+                    </th>
                     <th>Prix Unitaire</th>
                     <th>Total</th>
                     <th>
                         Supprimer
-                        <button type="submit" class="btn btn-primary btn-sm mt-2">Mettre à jour les quantités</button>
                     </th>
                 </tr>
             </thead>
             <tbody>
+            {# affichage de touts les produit #}
                 {% for produit in items %}
                     <tr>
                         <td>{{ produit.nom }}</td>
@@ -33,13 +38,15 @@
                         <td>{{ produit.prix | number_format(2, '.', ',') }} $</td>
                         <td>{{ (produit.prix * produit.quantiteCommande) | number_format(2, '.', ',') }} $</td>
                         <td>
+                        {# effacer un item #}
                             <form action="{{ path('delete_item', { id: produit.id }) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce produit ?');">
                                 <input type="hidden" name="_method" value="DELETE">
-                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                                <button type="submit" class="btn btn-dark">Supprimer</button>
                             </form>
                         </td>
                     </tr>
                 {% endfor %}
+                    {# attributs de la commande #}
                     <tr>
                         <td></td>
                         <td></td>
@@ -85,13 +92,13 @@
             </tbody>
         </table>
     </form>
-
-    <p>Total: {{ totalSum | number_format(2, '.', ',') }} $</p>
+    <a class="nav-link" href="{{ path('app_home') }}"> Retour au Catalogue</a>
 
     <form action="{{ path('vider_panier') }}" method="post">
-        <button type="submit" class="btn btn-primary btn-sm mt-1">Vider le panier</button>
+        <button type="submit" class="btn btn-dark mt-1">Vider le panier</button>
     </form>
-    
+
+    {# message si le panier est vide #}
     {% else %}
         <p>Votre panier est vide.</p>
     {% endif %}

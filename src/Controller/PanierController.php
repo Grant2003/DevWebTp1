@@ -23,13 +23,16 @@ class PanierController extends AbstractController
 
         $items = $panier->panier;
 
+        //pour le compteur du panier
         $nbItem = $panier->compterProduitsTotal();
 
+        //propriétés du tableau
         $fraisDePort = 10;
         $totalAvantTaxes = $panier->calculerSommePrix();
         $tps = ($totalAvantTaxes+10)*0.05;
         $tvq =($totalAvantTaxes+10)*0.0975;
         $total = $totalAvantTaxes + $tps + $tvq + $fraisDePort;
+
         return $this->render('panier/panier.html.twig', [
             'items' => $items,
             'totalSum' => $totalAvantTaxes,
@@ -64,6 +67,7 @@ class PanierController extends AbstractController
 
         $panier = $request->getSession()->get('panier', new Panier());
 
+        //pour chaque item du panier on change la quantité pour la quantité choisie grace a l'id et la quantité du form
         if (isset($submittedData['quantiteCommande'])) {
             foreach ($submittedData['quantiteCommande'] as $id => $quantite) {
               $panier->majQuantiteProduit($id, (int) $quantite);  
