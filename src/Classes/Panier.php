@@ -2,6 +2,11 @@
 
 namespace App\Classes;
 
+//-----------------------------------
+//   Fichier : Panier.php
+//   Par:      Anthony Grenier
+//   Date :    2025-3-16
+//-----------------------------------
 class Panier {
     public array $panier;
 
@@ -11,9 +16,9 @@ class Panier {
     public function supprimerProduitParId(int $id): void {
         foreach ($this->panier as $key => $produit) {
             if ($produit->id === $id) {
-                unset($this->panier[$key]); // Remove the product from the array
-                $this->panier = array_values($this->panier); // Reindex the array
-                return; // Exit the function after removal
+                unset($this->panier[$key]); 
+                $this->panier = array_values($this->panier); 
+                return; 
             }
         }
     }
@@ -52,16 +57,16 @@ class Panier {
     public function incrementerQuantiteProduit(int $id): void {
         foreach ($this->panier as $produit) {
             if ($produit->id === $id) {
-                $produit->quantiteCommande += 1;  // Increment the quantity of the product
-                return;  // Exit after updating the product
+                $produit->quantiteCommande += 1;  
+                return; 
             }
         }
     }
     public function majQuantiteProduit(int $id, int $quantite): void {
         foreach ($this->panier as $produit) {
             if ($produit->id === $id) {
-                $produit->quantiteCommande =$quantite;  // Increment the quantity of the product
-                return;  // Exit after updating the product
+                $produit->quantiteCommande =$quantite;  
+                return;  
             }
         }
     }

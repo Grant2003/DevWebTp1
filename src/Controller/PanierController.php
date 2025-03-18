@@ -2,6 +2,12 @@
 
 namespace App\Controller;
 
+//-----------------------------------
+//   Fichier : PanierController.php
+//   Par:      Anthony Grenier
+//   Date :    2025-3-16
+//-----------------------------------
+
 use App\Classes\Panier;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,23 +23,27 @@ class PanierController extends AbstractController
 
         $items = $panier->panier;
 
-        $itemCount = $panier->compterProduitsTotal();
+        $nbItem = $panier->compterProduitsTotal();
 
         $fraisDePort = 10;
-        $totalSum = $panier->calculerSommePrix();
-        $tps = ($totalSum+10)*0.05;
-        $tvq =($totalSum+10)*0.0975;
-        $total = $totalSum + $tps + $tvq + $fraisDePort;
+        $totalAvantTaxes = $panier->calculerSommePrix();
+        $tps = ($totalAvantTaxes+10)*0.05;
+        $tvq =($totalAvantTaxes+10)*0.0975;
+        $total = $totalAvantTaxes + $tps + $tvq + $fraisDePort;
         return $this->render('panier/panier.html.twig', [
             'items' => $items,
-            'itemCount' => $itemCount,
-            'totalSum' => $totalSum,
+            'totalSum' => $totalAvantTaxes,
             'fraisDePort' => $fraisDePort,
             'tps' => $tps,
             'tvq' => $tvq,
-            'total' => $total
+            'total' => $total,
+            'nbItem' => $nbItem
         ]);
     }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///
+///
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     #[Route(path: '/delete-item/{id}', name: 'delete_item',methods: ['POST'])]
 
@@ -43,24 +53,31 @@ class PanierController extends AbstractController
 
         return $this->redirectToRoute('route_panier');
     }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///
+///
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     #[Route('/updateall', name: 'update_all', methods: ['POST'])]
-public function updateAll(Request $request): Response
-{
-    $submittedData = $request->request->all();
+    public function updateAll(Request $request): Response
+    {
+        $submittedData = $request->request->all();
 
-    $panier = $request->getSession()->get('panier', new Panier());
+        $panier = $request->getSession()->get('panier', new Panier());
 
-    if (isset($submittedData['quantiteCommande'])) {
-        foreach ($submittedData['quantiteCommande'] as $id => $quantity) {
-            $panier->majQuantiteProduit($id, (int) $quantity);  
+        if (isset($submittedData['quantiteCommande'])) {
+            foreach ($submittedData['quantiteCommande'] as $id => $quantite) {
+              $panier->majQuantiteProduit($id, (int) $quantite);  
+            }
         }
+
+        $request->getSession()->set('panier', $panier);
+
+        return $this->redirectToRoute('route_panier');
     }
-
-    $request->getSession()->set('panier', $panier);
-
-    return $this->redirectToRoute('route_panier');
-}
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///
+///
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     #[Route(path: '/viderPanier', name: 'vider_panier',methods: ['POST'])]
 

@@ -38,12 +38,13 @@ class HomeController extends AbstractController
         $session = $request->getSession();
 
         $panier = $session->get('panier', new Panier()); 
+        $nbItem = $panier->compterProduitsTotal();
         $session->set('panier', $panier);
         
         $request->getSession()->set('panier', $panier);
 
 
-        return $this->render('home/index.html.twig', ['produits' => $produits, 'categories' => $categories]);
+        return $this->render('home/index.html.twig', ['produits' => $produits, 'categories' => $categories, 'nbItem'=> $nbItem]);
     }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -66,13 +67,10 @@ class HomeController extends AbstractController
     {
         $this->em = $doctrine->getManager();
     
-        // Access the session to manage the cart
         $session = $request->getSession();
         
-        // Retrieve the existing cart from the session (if any)
-        $panier = $session->get('panier', new Panier()); // Don't reinitialize the cart
+        $panier = $session->get('panier', new Panier()); 
 
-        // Fetch the product from the database using the provided ID
         $produit = $this->em->getRepository(Produit::class)->find($id);
     
         if ($produit) {
@@ -80,37 +78,30 @@ class HomeController extends AbstractController
                 $panier->incrementerQuantiteProduit($produit->getId());
                 $this->addFlash('success', 'Produit ajouté au panier(i)!');
             } else {
-                // Create a new ProduitPanier object and add it to the cart
                 $produitPanier = new ProduitPanier();
                 $produitPanier->id = $produit->getId();
                 $produitPanier->nom = $produit->getNom();
                 $produitPanier->prix = $produit->getPrix();
-                $produitPanier->quantiteCommande = 1; // Default to 1 when adding for the first time
+                $produitPanier->quantiteCommande = 1; 
                 $this->addFlash('success', 'Produit ajouté au panier!');
     
-                // Add the new product to the panier
                 $panier->ajouterProduit($produitPanier);
             }
     
-            // Save the updated cart back into the session
             $session->set('panier', $panier);
         } else {
             $this->addFlash('error', 'Produit non trouvé.');
         }
     
-        // Access the products in the panier (the array of ProduitPanier objects)
-        $produitsDansPanier = $panier->panier; // Access the panier array directly
+        $produitsDansPanier = $panier->panier; 
 
     
-        // Add a flash message for each product in the panier
         foreach ($produitsDansPanier as $produitPanier) {
-            // Ensure you're working with an instance of ProduitPanier and access its properties
             if ($produitPanier instanceof ProduitPanier) {
                 $this->addFlash('info', 'Produit dans le panier: ' . $produitPanier->nom . ' - Quantité: ' . $produitPanier->quantiteCommande);
             }
         }
     
-        // Redirect back to the home page (or you can redirect to the cart page)
         return $this->redirectToRoute('app_home');
     }
     
