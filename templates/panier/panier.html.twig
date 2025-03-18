@@ -51,7 +51,7 @@
                         <td></td>
                         <td></td>
                         <td>Total achat:</td>
-                        <td>{{totalSum | number_format(2, '.', ',') }} $</td>
+                        <td>{{totalAvantTaxes | number_format(2, '.', ',') }} $</td>
                         <td></td>
                     </tr>
                     <tr>
@@ -65,7 +65,7 @@
                         <td></td>
                         <td></td>
                         <td>Total avant taxes:</td>
-                        <td>{{(totalSum + fraisDePort) | number_format(2, '.', ',') }} $</td>
+                        <td>{{(totalAvantTaxes + fraisDePort) | number_format(2, '.', ',') }} $</td>
                         <td></td>
                     </tr>
                     <tr>

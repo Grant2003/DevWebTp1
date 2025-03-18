@@ -35,7 +35,7 @@ class PanierController extends AbstractController
 
         return $this->render('panier/panier.html.twig', [
             'items' => $items,
-            'totalSum' => $totalAvantTaxes,
+            'totalAvantTaxes' => $totalAvantTaxes,
             'fraisDePort' => $fraisDePort,
             'tps' => $tps,
             'tvq' => $tvq,
