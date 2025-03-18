@@ -29,7 +29,7 @@
                             <input type="number" name="quantiteCommande[{{ produit.id }}]" value="{{ produit.quantiteCommande }}" min="1" class="form-control">
                         </td>
                         <td>{{ produit.prix | number_format(2, '.', ',') }} $</td>
-                        <td>{{ produit.prix * produit.quantiteCommande | number_format(2, '.', ',') }} $</td>
+                        <td>{{ (produit.prix * produit.quantiteCommande) | number_format(2, '.', ',') }} $</td>
                         <td>
                             <form action="{{ path('delete_item', { id: produit.id }) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce produit ?');">
                                 <input type="hidden" name="_method" value="DELETE">
@@ -38,6 +38,48 @@
                         </td>
                     </tr>
                 {% endfor %}
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Total achat:</td>
+                        <td>{{totalSum | number_format(2, '.', ',') }} $</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Frais de livraison:</td>
+                        <td>{{10 | number_format(2, '.', ',') }} $</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Total avant taxes:</td>
+                        <td>{{(totalSum + fraisDePort) | number_format(2, '.', ',') }} $</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>TPS(0,05):</td>
+                        <td>{{tps | number_format(2, '.', ',') }} $</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>TVQ(0,0975)</td>
+                        <td>{{tvq | number_format(2, '.', ',') }} $</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Total:</td>
+                        <td>{{total | number_format(2, '.', ',') }} $</td>
+                        <td></td>
+                    </tr>
             </tbody>
         </table>
 
