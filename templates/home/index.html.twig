@@ -27,6 +27,11 @@
                 {% endfor %}
             </ul>
         </div>
+        {% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ message }}
+    </div>
+{% endfor %}
         <div class="col-10">
             <div class="row">
                 {% if produits|length > 0 %}
@@ -39,8 +44,12 @@
                                     <img src="images/produits/{{ produit.id }}.jpg" onerror="this.onerror=null;this.src='images/unavailable.jpg';" class="mx-auto d-block img-produit">
                                 </a>
                                 
-                                <img src="images/panier.png" class="img-panier">
-                            </div>
+                                <form action="{{ path('add_to_cart', {'id': produit.id}) }}" method="POST">
+                                    <button type="submit" class="btn btn-panier">
+                                         <img src="images/panier.png" class="img-panier">
+                                    </button>
+                                </form>                            
+                         </div>
                         </div>
                     {% endfor %}
                 {# reponse si il n'y a pas de produit correspondant #}

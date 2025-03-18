@@ -1,0 +1,57 @@
+{% extends 'core/base.html.twig' %}
+
+{% block content %}
+<div class="example-wrapper">
+    <h1>Panier</h1>
+
+    {# Check if there are any items in the panier #}
+    {% if items is not empty %}
+    
+    <form action="{{ path('update_all') }}" method="post">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nom du produit</th>
+                    <th>Quantité</th>
+                    <th>Prix Unitaire</th>
+                    <th>Total</th>
+                    <th>
+                        Supprimer
+                        <button type="submit" class="btn btn-primary btn-sm mt-2">Mettre à jour les quantités</button>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for produit in items %}
+                    <tr>
+                        <td>{{ produit.nom }}</td>
+                        <td>
+                            <input type="number" name="quantiteCommande[{{ produit.id }}]" value="{{ produit.quantiteCommande }}" min="1" class="form-control">
+                        </td>
+                        <td>{{ produit.prix | number_format(2, '.', ',') }} $</td>
+                        <td>{{ produit.prix * produit.quantiteCommande | number_format(2, '.', ',') }} $</td>
+                        <td>
+                            <form action="{{ path('delete_item', { id: produit.id }) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce produit ?');">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {# Button to submit updated quantities of all items #}
+    </form>
+
+    <p>Total: {{ totalSum | number_format(2, '.', ',') }} $</p>
+
+    <form action="{{ path('vider_panier') }}" method="post">
+        <button type="submit" class="btn btn-primary btn-sm mt-1">Vider le panier</button>
+    </form>
+    
+    {% else %}
+        <p>Votre panier est vide.</p>
+    {% endif %}
+</div>
+{% endblock %}
