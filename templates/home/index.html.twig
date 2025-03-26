@@ -8,7 +8,31 @@
 {% block title %} Produits  {% endblock %}
 
 {% block content %}
-    <h2 class="mt-5">Recherche textuelle:</h2>
+<div class="row">
+
+
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    {% for produit in produits %}
+        <div class=" card cartecarousel carousel-item {% if loop.first %}active{% endif %}">
+            <div class="card-body cartecarousel">
+                <h5 class="card-title text-center">{{ produit.nom }}</h5>
+                <a class="produit-modal" href="{{ path('produit_modal', { idProduit: produit.id })}}">
+                    <img src="images/produits/{{ produit.id }}.jpg" onerror="this.onerror=null;this.src='images/unavailable.jpg';" alt="image de {{ produit.nom }}" class="mx-auto d-block img-produit">
+                </a>
+                
+                <form action="{{ path('add_to_cart', {'id': produit.id}) }}" method="POST">
+                    <button type="submit" class="btn btn-panier">
+                        <img src="images/panier.png" class="img-panier" alt="image de panier">
+                    </button>
+                </form>
+            </div>
+        </div>
+    {% endfor %}
+  </div>
+</div>
+</div>
+        <h2 class="mt-5">Recherche textuelle:</h2>
 
         <div class="div_recherche">
             <form class="d-flex" method="POST" action="{{ app.request.uri }}">
@@ -16,16 +40,20 @@
                 <button class="btn btn-dark" type="submit">Recherche</button>
             </form>
         </div>
+ 
     <h2 class="mt-5">Catégories:</h2>
     <div class="row">
         <div class="col-2">
-            <ul>
-                <li><a class="btn btn-dark" href="{{ path('app_home') }}">Toutes </a></li>
                 {# affichage des categories #}
-                {% for categorie in categories %} 
-                    <li><a class="btn btn-dark" href="{{ path('app_home', { categorie: categorie.idCategorie  }) }}">{{ categorie.nom }}</a></li>
-                {% endfor %}
-            </ul>
+                <select class="form-select" onchange="location = this.value;">
+                    <option value="" disabled selected>Choisir une catégorie</option>
+                    <option value="{{ path('app_home') }}">Toutes </option>
+                    {% for categorie in categories %}
+                        <option value="{{ path('app_home', { categorie: categorie.idCategorie }) }}">
+                            {{ categorie.nom }}
+                        </option>
+                    {% endfor %}
+                </select>
         </div>
         {% for message in app.flashes('success') %}
     <div class="alert alert-success">
@@ -37,7 +65,7 @@
                 {% if produits|length > 0 %}
                 {# affichage des produits si il y en a #}
                     {% for produit in produits %}
-                        <div class="col-3 card mx-2 my-3">
+                        <div class="col-2 card  mx-3 my-3 carteproduit">
                             <div class="card-body">
                                 <h5 class="card-title text-center">{{ produit.nom }}</h5>
                                 <a  class="produit-modal" href="{{ path('produit_modal', { idProduit: produit.id })}}">

@@ -7,7 +7,11 @@
 .headerConsole {
     display: flex;
     align-items: center;
-    background-color: aliceblue;
+    color: aliceblue;
+    background-image: url('../images/90sroom.gif');
+    background-position: center;
+    background-size: cover;
+    overflow: hidden;
     min-height: 250px;
     border-bottom: 10px solid rgb(39, 44, 44); 
 }
@@ -25,4 +29,14 @@
 body, html {
     margin: 10; 
     padding: 10; 
+}
+.carteproduit{
+    box-shadow: 0.5em 0.5em black;
+}
+.cartecarousel{
+    height: 200px;
+    box-shadow: 0.5em 0.5em black;
+}
+.carousel-inner {
+    overflow: visible;
 }
