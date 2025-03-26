@@ -6,27 +6,83 @@
 .img-produit {
     width: 120px;
     height: auto;
+    max-width: 100%; 
+    border-radius: 8px; 
+    margin-bottom: 15px; 
+    
 }
 
 .img-panier {
-    position: absolute;
-    bottom: 10px; 
-    right: 10px; 
+
     width: 20px;
     height: auto;
+    margin-right: 5px;
 }
 .btn-panier {
     position: absolute;
     bottom: 12px; 
     right: 12px; 
-    width: 38px; 
-    height: 38px;
-  }
 
-  .headerConsole {
+}
+
+.headerConsole {
     display: flex;
     align-items: center;
     background-color: aliceblue;
     min-height: 250px;
     border-bottom: 10px solid rgb(39, 44, 44); /* Adjusted the border width to a more reasonable value */
+}
+.imagecarousel{
+    box-shadow: 0.5em 0.5em  black; 
+    border-radius: 5px; 
+    width: 180px;
+    height: auto;
+}
+.modal-header {
+    background-color: #f8f9fa; 
+    border-bottom: 2px solid #dee2e6; 
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); 
+    padding: 15px;
+}
+.modal-title {
+    font-family: 'Roboto', sans-serif; 
+    font-size: 1.5rem;
+    color: #333;
+    font-weight: bold;
+}
+.modal-body {
+    font-family: 'Open Sans', sans-serif;
+    color: #444;
+    padding: 20px;
+    line-height: 1.6; 
+}
+.modal-body p {
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+.modal-footer {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-top: 2px solid #000000;
+}
+
+.btn-panier:hover {
+    border: solid;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}   
+
+.modal {
+    opacity: 0;
+    transform: translateY(-30px); 
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.modal.show {
+    opacity: 1;
+    transform: translateY(0); 
 }

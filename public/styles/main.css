@@ -20,7 +20,7 @@
     margin: 0;
 }
 .div_recherche {
-    width: 35%;
+    width: 25%;
 }
 .logo{
     width: 120px;
@@ -34,9 +34,16 @@ body, html {
     box-shadow: 0.5em 0.5em black;
 }
 .cartecarousel{
-    height: 200px;
-    box-shadow: 0.5em 0.5em black;
+    height: 300px;
+    color: whitesmoke;
+	background: radial-gradient(-180px 0px,circle ,#0053ad 100px,#001b85 350px,#000223);
+    background: -moz-radial-gradient(-180px 0px,circle ,#0053ad 100px,#001b85 350px,#000223);
+    background: -webkit-radial-gradient(-180px 0px,circle ,#0053ad 100px,#001b85 350px,#000223);
+    background: -o-radial-gradient(-180px 0px,circle ,#0053ad 100px,#001b85 350px,#000223);    
+    box-shadow: 0.5em 0.5em  rgb(32, 34, 36); 
+    border-radius: 5px; 
 }
 .carousel-inner {
     overflow: visible;
 }
+

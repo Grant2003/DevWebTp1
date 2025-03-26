@@ -13,10 +13,7 @@
 	<p>{{ produit.description }}</p>
 	<p>prix: {{ produit.prix }}$</p>
     <p>Stock: {{ produit.qtte_stock }}</p>
-</div>
-<div class="modal-footer">
-    <!-- Form to add to the cart -->
-    <form action="{{ path('add_to_cart', {'id': produit.id}) }}" method="POST">
+        <form action="{{ path('add_to_cart', {'id': produit.id}) }}" method="POST">
         <button type="submit" class="btn btn-panier">
             <img src="images/panier.png" class="img-panier" alt="image de panier">
         </button>
