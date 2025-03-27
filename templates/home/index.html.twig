@@ -13,16 +13,24 @@
 <div class="carousel-container">
     <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
-            {% for produit in produits %}
-                <div class="card cartecarousel carousel-item {% if loop.first %}active{% endif %}">
-                    <div class="card-body cartecarousel">
-                        <h3 class="card-title text-center">Produit à l'affiche: {{ produit.nom }}</h3>
-                        <a class="produit-modal" href="{{ path('produit_modal', { idProduit: produit.id }) }}">
-                            <img src="images/produits/{{ produit.id }}.jpg" 
-                                 onerror="this.onerror=null;this.src='images/unavailable.jpg';" 
-                                 alt="image de {{ produit.nom }}" 
-                                 class="mx-auto d-block imagecarousel">
-                        </a>
+            {% for produit in produits|batch(3) %}
+                <div class="carousel-item {% if loop.first %}active{% endif %}">
+                    <div class="row cartecarousel card">
+                        {% for item in produit %}
+                            <div class="col-4"> 
+                                <div class=" ">
+                                    <div class="card-body">
+                                        <h3 class="card-title text-center">{{ item.nom }}</h3>
+                                        <a class="produit-modal" href="{{ path('produit_modal', { idProduit: item.id }) }}">
+                                            <img src="images/produits/{{ item.id }}.jpg" 
+                                                 onerror="this.onerror=null;this.src='images/unavailable.jpg';" 
+                                                 alt="image de {{ item.nom }}" 
+                                                 class="mx-auto d-block imagecarousel">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
                     </div>
                 </div>
             {% endfor %}

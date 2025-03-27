@@ -9,7 +9,7 @@
     align-items: center;
     color: aliceblue;
     background-image: url('../images/90sroom.gif');
-    background-position: center;
+    background-position: center ;
     background-size: cover;
     overflow: hidden;
     min-height: 250px;
@@ -29,6 +29,8 @@
 body, html {
     margin: 10; 
     padding: 10; 
+    font-family: 'Roboto', sans-serif; 
+
 }
 .carteproduit{
     box-shadow: 0.5em 0.5em black;
@@ -46,4 +48,9 @@ body, html {
 .carousel-inner {
     overflow: visible;
 }
-
+.titre-carousel{
+    background: radial-gradient(-180px 0px,circle ,#0053ad 100px,#001b85 350px,#000223);
+    background: -moz-radial-gradient(-180px 0px,circle ,#0053ad 100px,#001b85 350px,#000223);
+    background: -webkit-radial-gradient(-180px 0px,circle ,#0053ad 100px,#001b85 350px,#000223);
+    background: -o-radial-gradient(-180px 0px,circle ,#0053ad 100px,#001b85 350px,#000223);  
+}
