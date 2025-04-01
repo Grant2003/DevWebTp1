@@ -4,37 +4,61 @@
 //   Par:      Anthony Grenier
 //   Date :    2025-2-22
 //----------------------------------- #}
-<div class="container-fluid headerConsole mt-4">
-    <a href="{{ path('app_home') }}">
-        <img class="logo" src="{{ asset('images/c++.png') }}" alt="LOGO C++" onerror="this.onerror=null;this.src='images/unavailable.jpg';">
-    </a>
-    <section class='col-9'>
-        <h1>Console ++</h1>
-        <h2>Vente de consoles de jeu</h2>
-    </section>
-</div>
-<div class="row">
-    <nav class="navbar navbar-dark fixed-top bg-dark">
-        <div class="container-fluid">
-            <div class="d-flex">
-                <ul class="navbar-nav flex-row">
-                    <li class="nav-item me-3">
-                        <a class="nav-link" href="{{ path('route_contact') }}">Contact</a>
-                    </li>
-                    <li class="nav-item me-3">
-                        <a class="nav-link" href="{{ path('app_home') }}"> Catalogue</a>
-                    </li>
-                    <li class="nav-item me-3">
-                        <a class="nav-link" href="{{ path('route_panier') }}"> Panier ({{nbItem}} items)</a>
-                    </li>
-                    <li class="nav-item me-3">
-                        <a class="nav-link" href="{{ path('route_connexion') }}"> Connexion </a>
-                    </li>
-                </ul>
-            </div>
+
+
+
+{# <div class="bg-dark mt-5 py-3 border-bottom">
+    <nav class="bg-dark navbar navbar-dark fixed-top bg-dark">
+    <div class="container d-flex flex-wrap">
+      <ul class="me-auto">
+        <li class="nav-item me-3">
+            <a class="nav-link px-2 text-white" href="{{ path('route_contact') }}">Contact</a>
+        </li>
+        <li class="nav-item me-3">
+            <a class="nav-link px-2 text-white px-2 text-secondary" href="{{ path('app_home') }}"> Catalogue</a>
+        </li>
+        <li class="nav-item me-3">
+            <a class="nav-link" href="{{ path('route_panier') }}"> Panier ({{nbItem}} items)</a>
+        </li>
+
+      </ul>
+      <ul class="nav">
+        <li class="nav-item me-3">
+            <a class="nav-link" href="{{ path('route_connexion') }}"> Connexion </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div> #}
+
+  <header class="py-3  border-bottom text-bg-dark">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+        </a>
+
+        <ul class="nav col-11 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <li class="nav-item me-3">
+            <a class="nav-link px-2 text-secondary" href="{{ path('app_home') }}"> Catalogue</a>
+        </li>          
+        <li class="nav-item me-3">
+            <a class="nav-link px-2 text-white" href="{{ path('route_contact') }}">Contact</a>
+        </li>
+            <a class="nav-link px-2 text-white" href="{{ path('route_panier') }}"> Panier </a>
+            <a class="nav-link px-2 text-secondary">({{nbItem}} items)</a>
+        </li>
+        </ul>
+
+
+
+        <div class="text-end">
+            <a class="nav-link" href="{{ path('route_connexion') }}"> Connexion </a>
+
         </div>
-    </nav>
-</div>
+      </div>
+    </div>
+  </header>
+
 
 
 

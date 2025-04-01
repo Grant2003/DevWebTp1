@@ -9,12 +9,41 @@
 
 {% block content %}
 
+    <header class="py-4 bg-dark">
+        <div class="container d-flex flex-wrap ">
 
-<div class="carousel-container">
+            <h1><span class="badge badge-primary">Promotions:</span></h1>
+            <a class=" d-flex align-items-center  link-body-emphasis text-decoration-none">
+            <div >
+                    {# affichage des categories #}
+                    <select class="form-select" onchange="location = this.value;">
+                        <option value="" disabled selected>Choisir une catégorie</option>
+                        <option value="{{ path('app_home') }}">Toutes </option>
+                        {% for categorie in categories %}
+                            <option value="{{ path('app_home', { categorie: categorie.idCategorie }) }}">
+                                {{ categorie.nom }}
+                            </option>
+                        {% endfor %}
+                    </select>
+            </div>
+            {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+            {{ message }}
+            </div>
+        </div>
+            {% endfor %} 
+        <form class="d-flex"  method="POST" action="{{ app.request.uri }}">
+            <input name="search_field" class="form-control " type="search" placeholder="Recherche" aria-label="recherche">
+        </form>
+        </a>
+
+    </div>
+  </header>
+<div class="carousel-container border-bottom">
     <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             {% for produit in produits|batch(3) %}
-                <div class="carousel-item {% if loop.first %}active{% endif %}">
+                <div class="carousel-item item {% if loop.first %}active{% endif %}">
                     <div class="row cartecarousel card">
                         {% for item in produit %}
                             <div class="col-4"> 
@@ -23,9 +52,9 @@
                                         <h3 class="card-title text-center">{{ item.nom }}</h3>
                                         <a class="produit-modal" href="{{ path('produit_modal', { idProduit: item.id }) }}">
                                             <img src="images/produits/{{ item.id }}.jpg" 
-                                                 onerror="this.onerror=null;this.src='images/unavailable.jpg';" 
-                                                 alt="image de {{ item.nom }}" 
-                                                 class="mx-auto d-block imagecarousel">
+                                                onerror="this.onerror=null;this.src='images/unavailable.jpg';" 
+                                                alt="image de {{ item.nom }}" 
+                                                class="mx-auto d-block imagecarousel">
                                         </a>
                                     </div>
                                 </div>
@@ -33,63 +62,38 @@
                         {% endfor %}
                     </div>
                 </div>
+                
             {% endfor %}
         </div>
+        
     </div>
 </div>
-    <h2 class="mt-5">Recherche textuelle:</h2>
+<div class="d-flex flex-wrap justify-content-center pb-5">
 
-    <div class="div_recherche">
-        <form class="d-flex" method="POST" action="{{ app.request.uri }}">
-            <input name="search_field" class="form-control me-2" type="search" placeholder="Recherche" aria-label="recherche">
-            <button class="btn btn-dark" type="submit">Recherche</button>
-        </form>
-    </div>
- 
-    <h2 class="mt-5">Catégories:</h2>
-    <div class="row">
-        <div class="col-2">
-                {# affichage des categories #}
-                <select class="form-select" onchange="location = this.value;">
-                    <option value="" disabled selected>Choisir une catégorie</option>
-                    <option value="{{ path('app_home') }}">Toutes </option>
-                    {% for categorie in categories %}
-                        <option value="{{ path('app_home', { categorie: categorie.idCategorie }) }}">
-                            {{ categorie.nom }}
-                        </option>
-                    {% endfor %}
-                </select>
-        </div>
-        {% for message in app.flashes('success') %}
-    <div class="alert alert-success">
-        {{ message }}
-    </div>
-{% endfor %}
-        <div class="col-10">
-            <div class="row">
-                {% if produits|length > 0 %}
-                {# affichage des produits si il y en a #}
-                    {% for produit in produits %}
-                        <div class="col-2 card  mx-3 my-3 carteproduit">
-                            <div class="card-body">
-                                <h5 class="card-title text-center produit-title">{{ produit.nom }}</h5>
-                                <a  class="produit-modal" href="{{ path('produit_modal', { idProduit: produit.id })}}">
-                                    <img src="images/produits/{{ produit.id }}.jpg" onerror="this.onerror=null;this.src='images/unavailable.jpg';" alt="image de {{produit.nom}}" class="mx-auto d-block img-produit">
-                                </a>
-                                
-                                <form action="{{ path('add_to_cart', {'id': produit.id}) }}" method="POST">
-                                    <button type="submit" class="btn btn-panier">
-                                         <img src="images/panier.png" class="img-panier" alt="image de panier">
-                                    </button>
-                                </form>                            
-                         </div>
-                        </div>
-                    {% endfor %}
-                {# reponse si il n'y a pas de produit correspondant #}
-                {% else %}
-                    <p class="alert alert-warning">Aucun Produit ne correspond à votre recherche.</p>
-                {% endif %}
-            </div>
+    <div class="col-10">
+        <div class="row">
+            {% if produits|length > 0 %}
+            {# affichage des produits si il y en a #}
+                {% for produit in produits %}
+                    <div class="col-2 card  mx-3 my-3 carteproduit">
+                        <div class="card-body">
+                            <h5 class="card-title text-center produit-title">{{ produit.nom }}</h5>
+                            <a  class="produit-modal" href="{{ path('produit_modal', { idProduit: produit.id })}}">
+                                <img src="images/produits/{{ produit.id }}.jpg" onerror="this.onerror=null;this.src='images/unavailable.jpg';" alt="image de {{produit.nom}}" class="mx-auto d-block img-produit">
+                            </a>
+                            
+                            <form action="{{ path('add_to_cart', {'id': produit.id}) }}" method="POST">
+                                <button type="submit" class="btn btn-panier">
+                                    <img src="images/panier.png" class="img-panier" alt="image de panier">
+                                </button>
+                            </form>                            
+                    </div>
+                    </div>
+                {% endfor %}
+            {# reponse si il n'y a pas de produit correspondant #}
+            {% else %}
+                <p class="alert alert-warning">Aucun Produit ne correspond à votre recherche.</p>
+            {% endif %}
         </div>
     </div>
     <div class="modal" tabindex="-1" id="produit-modal">
@@ -99,6 +103,8 @@
             </div>
         </div>
     </div>
+</div>
+
 {% endblock %}
 
 {% block stylesheets %}

@@ -35,18 +35,20 @@
 .imagecarousel{
     box-shadow: 0.5em 0.5em  black; 
     border-radius: 5px; 
-    width: 180px;
+    width: 280px;
     height: auto;
 }
 .modal-header {
     background-color: #f8f9fa; 
     border-bottom: 2px solid #dee2e6; 
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); 
+    
     padding: 15px;
 }
 .modal-title {
     font-size: 1.5rem;
     color: #333;
+    
     font-weight: bold;
 }
 .produit-title {
@@ -56,7 +58,10 @@
 }
 .modal-body {
     font-family: 'Open Sans', sans-serif;
-    color: #444;
+    color: whitesmoke;
+    background-image: url('../images/hyperspace.gif');
+    background-position: center ;
+    background-size: cover;
     padding: 20px;
     line-height: 1.6; 
 }
