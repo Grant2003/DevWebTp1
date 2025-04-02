@@ -4,19 +4,32 @@
     //   Date :    2025-2-22
     //----------------------------------- */
 
-.headerConsole {
-    display: flex;
-    align-items: center;
-    color: aliceblue;
-    background-image: url('../images/90sroom.gif');
-    background-position: center ;
-    background-size: cover;
-    overflow: hidden;
-    min-height: 230px;
-    border-bottom: 10px solid rgb(39, 44, 44); 
-}
+
 .nav-title{
     color: white;
+}
+.select-categories{
+    width: 218px;
+}
+.div-panier{
+    padding: 50px 50px 50px 50px;
+}
+.carousel-produit-text {
+    background-color: white;
+    color: rgb(39, 44, 44); 
+    width: 240px;
+    padding: 10px 20px; 
+    margin: 15px;
+    border-radius: 50px; 
+    display: inline-block; 
+    box-shadow: 0.13em 0.13em   rgb(69, 64, 64); 
+
+}
+.imagecarousel{
+    box-shadow: 0.5em 0.5em    rgb(69, 64, 64); 
+    border-radius: 5px; 
+    width: 280px;
+    height: auto
 }
 .headerConsole h1, .headerConsole h2 {
     margin: 0;
@@ -39,7 +52,7 @@ body, html {
 .cartecarousel{
     height: 450px;
     color: whitesmoke;
-    background-image: url('../images/90sroom.gif');
+    background-image: url('../images/univer.gif');
     background-position: center ;
     background-size: cover;
     box-shadow: 0.5em 0.5em  rgb(32, 34, 36); 
@@ -48,9 +61,26 @@ body, html {
 .carousel-inner {
     overflow: visible;
 }
-.titre-carousel{
-    background: radial-gradient(-180px 0px,circle ,#0053ad 100px,#001b85 350px,#000223);
-    background: -moz-radial-gradient(-180px 0px,circle ,#0053ad 100px,#001b85 350px,#000223);
-    background: -webkit-radial-gradient(-180px 0px,circle ,#0053ad 100px,#001b85 350px,#000223);
-    background: -o-radial-gradient(-180px 0px,circle ,#0053ad 100px,#001b85 350px,#000223);  
+
+.en-vedette-text {
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+    color: #333; /* Soft dark text for contrast */
+    padding: 25px 150px; /* Larger padding for emphasis */
+    border-radius: 50px; /* Oval shape */
+    font-size: 35px; /* Bigger, bolder text */
+    box-shadow: 0.25em 0.25em    rgb(69, 64, 64); 
+    text-transform: uppercase; /* Bold and professional look */
+    transition: all 0.3s ease-in-out; /* Smooth hover effect */
+}
+
+.en-vedette-text:hover {
+    background-color: rgba(0, 0, 0, 1); /* Stronger white background on hover */
+    color: white; /* Change text color on hover */
+    box-shadow: 0.25em 0.25em    rgb(200, 200, 200); 
+    transform: scale(1.05); /* Subtle zoom effect */
+}
+
+.glow-effect {
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8); /* Adds a glowing effect */
+    font-weight: bold; /* Enhances text weight */
 }

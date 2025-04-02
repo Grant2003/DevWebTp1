@@ -1,0 +1,139 @@
+{# //-----------------------------------
+//   Fichier : base.html.twig
+//   Par:      Anthony Grenier
+//   Date :    2025-2-22
+//----------------------------------- #}
+{% extends 'core/base.html.twig' %}
+
+{% block content %}
+    <form action="{{ path('route_creer') }}" method="post">
+    <div class="div-form row ">
+        <h1>Creation d'un nouveau compte</h1>
+        <div class="col-3">
+            <div class="row section-form">
+                <section class="col-1 titreChampForm">
+                    <label for="utilisateur"  class="required">Utilisateur:</label>
+                    </section>
+                    <section class='col-2 '>
+                    <input type="text" id="utilisateur" name="client[utilisateur]" required="required" class="col-4 form-control" />
+                </section>
+            </div>
+            <div class="row section-form">
+                <section class="col-1 titreChampForm">
+                    <label for="nom"  class="required">Nom:</label>
+                    </section>
+                    <section class='col-2 '>
+                    <input type="text" id="nom" name="client[nom]" required="required" class="col-4 form-control" />
+                </section>
+            </div>
+            <div class="row section-form">
+                <section class="col-1 titreChampForm">
+                    <label for="prenom"  class="required">Prénom:</label>
+                    </section>
+                    <section class='col-2 '>
+                    <input type="text" id="prenom" name="client[prenom]" required="required" class="col-4 form-control" />
+                </section>
+            </div>
+            <div class="row section-form">
+                <section class="col-1 titreChampForm">
+                    <label for="client_courriel"  class="required">Courriel:</label>
+                    </section>
+                    <section class='col-2 '>
+                    <input type="text" id="courriel" name="client[courriel]" required="required" class="col-4 form-control" />
+                </section>
+            </div>
+                <div class="row section-form">
+                <section class="col-1 titreChampForm">
+                    <label for="genre"  class="required">Genre:</label>
+                    </section>
+                    <section class='col-2 '>
+                <select id="genre" name="client[genre]" class="col-4 form-control">
+                    <option value="N">Neutre</option>
+                    <option value="F">Femme</option>
+                    <option value="M">Homme</option>
+                </select>               
+            </section>
+            </div>
+                <div class="row section-form">
+                <section class="col-1 titreChampForm">
+                    <label for="prenom"  class="required">Mot de passe:</label>
+                    </section>
+                    <section class='col-2 '>
+                    <input type="text" id="prenom" name="client[prenom]" required="required" class="col-4 form-control" />
+                </section>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="row section-form">
+                <section class="col-1 titreChampForm">
+                    <label for="prenom"  class="required">Confirmation:</label>
+                    </section>
+                    <section class='col-2 '>
+                    <input type="text" id="prenom" name="client[prenom]" required="required" class="col-4 form-control" />
+                </section>
+            </div>
+            <div class="row section-form">
+                <section class="col-1 titreChampForm">
+                    <label for="prenom"  class="required">Adresse:</label>
+                    </section>
+                    <section class='col-2 '>
+                    <input type="text" id="prenom" name="client[prenom]" required="required" class="col-4 form-control" />
+                </section>
+            </div>
+            <div class="row section-form">
+                <section class="col-1 titreChampForm">
+                    <label for="prenom"  class="required">Ville:</label>
+                    </section>
+                    <section class='col-2 '>
+                    <input type="text" id="prenom" name="client[prenom]" required="required" class="col-4 form-control" />
+                </section>
+            </div>
+            <div class="row section-form">
+                <section class="col-1 titreChampForm">
+                    <label for="prenom"  class="required">Code Postal:</label>
+                    </section>
+                    <section class='col-2 '>
+                    <input type="text" id="prenom" name="client[prenom]" required="required" class="col-4 form-control" />
+                </section>
+            </div>
+            <div class="row section-form">
+                <section class="col-1 titreChampForm">
+                    <label for="prenom"  class="required">Province:</label>
+                    </section>
+                    <section class='col-2 '>
+			        <select id="province" name="client[province]" class="col-4 form-control">    
+                        <option value="AB">Alberta</option>
+                        <option value="BC">Colombie-Britannique</option>
+                        <option value="MB">Manitoba</option>
+                        <option value="NB">Nouveau-Brunswick</option>
+                        <option value="NL">Terre-Neuve-et-Labrador</option>
+                        <option value="NS">Nouvelle-Écosse</option>
+                        <option value="NT">Territoires du Nord-Ouest</option>
+                        <option value="NU">Nunavut</option><option value="ON">Ontario</option>
+                        <option value="PE">Île-du-Prince-Édouard</option>
+                        <option value="QC">Québec</option>
+                        <option value="SK">Saskatchewan</option>
+                        <option value="YT">Yukon</option>
+                        </select>                
+                    </section>
+            </div>
+                    <div class="row section-form">
+                <section class="col-1 titreChampForm">
+                    <label for="telephone"  class="required">Téléphone:</label>
+                    </section>
+                    <section class='col-2 '>
+                    <input type="text" id="telephone" name="client[telephone]" required="required" class="col-4 form-control" />
+                </section>
+            </div>
+            </div>
+            <div class="">
+                <button type="submit" id="client_Valider" name="client[Valider]" class="btn btn-dark">Valider</button>
+                <input type="hidden" id="client__token" name="client[_token]" data-controller="csrf-protection" value="csrf-token" />
+            </div>
+    </div>
+</form>
+{% endblock %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('styles/client.css') }}">
+{% endblock %}

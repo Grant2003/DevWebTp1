@@ -9,67 +9,62 @@
 
 {% block content %}
 
-    <header class="py-4 bg-dark">
-        <div class="container d-flex flex-wrap ">
+<header class="py-4 bg-dark">
+    <div class="container d-flex align-items-center justify-content-between">
+        <form action="{{ path('toggle_carousel') }}" method="POST">
+            <button type="submit" class="en-vedette-text glow-effect">En Vedette!</button>
 
-            <h1><span class="badge badge-primary">Promotions:</span></h1>
-            <a class=" d-flex align-items-center  link-body-emphasis text-decoration-none">
-            <div >
-                    {# affichage des categories #}
-                    <select class="form-select" onchange="location = this.value;">
-                        <option value="" disabled selected>Choisir une catégorie</option>
-                        <option value="{{ path('app_home') }}">Toutes </option>
-                        {% for categorie in categories %}
-                            <option value="{{ path('app_home', { categorie: categorie.idCategorie }) }}">
-                                {{ categorie.nom }}
-                            </option>
-                        {% endfor %}
-                    </select>
-            </div>
-            {% for message in app.flashes('success') %}
-            <div class="alert alert-success">
-            {{ message }}
-            </div>
-        </div>
-            {% endfor %} 
-        <form class="d-flex"  method="POST" action="{{ app.request.uri }}">
-            <input name="search_field" class="form-control " type="search" placeholder="Recherche" aria-label="recherche">
         </form>
-        </a>
-
+        <div class="d-flex flex-column align-items-start">
+            <select class="form-select mb-2 select-categories" onchange="location = this.value;">
+                <option value="" disabled selected>Choisir une catégorie</option>
+                <option value="{{ path('app_home') }}">Toutes</option>
+                {% for categorie in categories %}
+                    <option value="{{ path('app_home', { categorie: categorie.idCategorie }) }}">
+                        {{ categorie.nom }}
+                    </option>
+                {% endfor %}
+            </select>
+            <form method="POST" action="{{ app.request.uri }}">
+                <input name="search_field" class="form-control" type="search" placeholder="Recherche" aria-label="recherche">
+            </form>
+        </div>
     </div>
-  </header>
-<div class="carousel-container border-bottom">
-    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            {% for produit in produits|batch(3) %}
-                <div class="carousel-item item {% if loop.first %}active{% endif %}">
-                    <div class="row cartecarousel card">
-                        {% for item in produit %}
-                            <div class="col-4"> 
-                                <div class=" ">
-                                    <div class="card-body">
-                                        <h3 class="card-title text-center">{{ item.nom }}</h3>
-                                        <a class="produit-modal" href="{{ path('produit_modal', { idProduit: item.id }) }}">
-                                            <img src="images/produits/{{ item.id }}.jpg" 
-                                                onerror="this.onerror=null;this.src='images/unavailable.jpg';" 
-                                                alt="image de {{ item.nom }}" 
-                                                class="mx-auto d-block imagecarousel">
-                                        </a>
-                                    </div>
+</header>
+{% if app.session.get('carousel_visible') %}
+    <div class="carousel-container border-bottom">
+        <div class="carousel-container border-bottom">
+            <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    {% for produit in produitVedette|batch(3) %}
+                            <div class="carousel-item item {% if loop.first %}active{% endif %}">
+                                <div class="row cartecarousel card justify-content-center">
+                                    {% for item in produit %}
+                                        <div class="col-4 d-flex flex-column align-items-center"> 
+                                            <div class="card-body text-center">
+                                                <a class="produit-modal" href="{{ path('produit_modal', { idProduit: item.id }) }}">
+                                                    <img src="images/produits/{{ item.id }}.jpg" 
+                                                        onerror="this.onerror=null;this.src='images/unavailable.jpg';" 
+                                                        alt="image de {{ item.nom }}" 
+                                                        class="mx-auto imagecarousel">
+                                                </a>
+                                                <h3 class="carousel-produit-text card-title">{{ item.nom }}
+                                                </h3>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
                                 </div>
                             </div>
-                        {% endfor %}
-                    </div>
+                    {% endfor %}
                 </div>
                 
-            {% endfor %}
+            </div>
         </div>
-        
     </div>
-</div>
-<div class="d-flex flex-wrap justify-content-center pb-5">
+{% else %}
+{% endif %}
 
+<div class="d-flex flex-wrap justify-content-center pb-5">
     <div class="col-10">
         <div class="row">
             {% if produits|length > 0 %}

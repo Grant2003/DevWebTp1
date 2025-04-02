@@ -31,9 +31,11 @@ class HomeController extends AbstractController
 
         $categorie = $request->query->get('categorie'); 
         $searchField = $request->request->get('search_field'); 
+        
 
         $categories = $this->retrieveAllCategories();
-        
+        $produitVedette = $this->retrieveAllProduits();
+
         $produits = $this->retrieveProduits($categorie, $searchField);
         $session = $request->getSession();
 
@@ -50,7 +52,20 @@ class HomeController extends AbstractController
         
 
 
-        return $this->render('home/index.html.twig', ['produits' => $produits, 'categories' => $categories, 'nbItem'=> $nbItem]);
+        return $this->render('home/index.html.twig', ['produits' => $produits, 'categories' => $categories, 'nbItem'=> $nbItem, 'produitVedette' => $produitVedette]);
+    }
+
+    #[Route('/toggle-carousel', name: 'toggle_carousel')]
+
+    public function toggleCarousel(Request $request): Response
+    {
+        $session = $request->getSession();
+
+        // Toggle the carousel visibility in session
+        $isCarouselVisible = $session->get('carousel_visible', true); // Default to visible
+        $session->set('carousel_visible', !$isCarouselVisible);
+
+        return $this->redirectToRoute('app_home'); // Redirect to your main page
     }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////

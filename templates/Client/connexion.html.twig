@@ -1,0 +1,33 @@
+{# //-----------------------------------
+//   Fichier : base.html.twig
+//   Par:      Anthony Grenier
+//   Date :    2025-2-22
+//----------------------------------- #}
+{% extends 'core/base.html.twig' %}
+
+{% block content %}
+    <form action="{{ path('route_connexion') }}" method="post">
+        <div class="div-log-in">
+            <div class="row section-form">
+                <section class="col-1 titreChampForm">
+                    <label for="user"  class="required">Utilisateur:</label>
+                    </section>
+                    <section class='col-2 '>
+                    <input type="text" id="user" name="client[user]" required="required" class="col-4 form-control" />
+                </section>
+            </div>
+            <div class="row section-form">
+                <section class="col-1 titreChampForm">
+                    <label for="mdp"  class="required">Mot de passe:</label>
+                    </section>
+                    <section class='col-2 '>
+                    <input type="text" id="mdp" name="client[mdp]" required="required" class="col-4 form-control" />
+                </section>
+            </div>
+            <div class="">
+                <button type="submit" id="client_Valider" name="client[Valider]" class="btn btn-dark">Valider</button>
+                <input type="hidden" id="client__token" name="client[_token]" data-controller="csrf-protection" value="csrf-token" />
+            </div>
+        </div>
+    </form>
+{% endblock %}

@@ -24,10 +24,22 @@ class ClientController extends AbstractController
         $panier = $request->getSession()->get('panier', new Panier());
         $itemCount = $panier->compterProduitsTotal();
 
-        return $this->render('contact/index.html.twig', ['nbItem'=>$itemCount
+        return $this->render('client/connexion.html.twig', ['nbItem'=>$itemCount
         ]);
-        return $this->render('client/index.html.twig', [
 
+    }
+
+    #[Route(path: '/creercompte', name: 'route_creer')]
+    public function creerCompte(Request $request): Response
+    {
+
+
+
+        $panier = $request->getSession()->get('panier', new Panier());
+        $itemCount = $panier->compterProduitsTotal();
+
+        return $this->render('client/creerCompte.html.twig', ['nbItem'=>$itemCount
         ]);
     }
+
 }
