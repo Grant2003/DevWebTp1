@@ -1,82 +1,51 @@
 <?php
+// src/Form/UtilisateurType.php
+namespace App\Form;
+
+use App\Entity\Client;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ClientType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('utilisateur', TextType::class, [
-                'label' => 'Utilisateur',
-                'required' => true,
-            ])
-            ->add('nom', TextType::class, [
-                'label' => 'Nom',
-                'required' => true,
-            ])
-            ->add('prenom', TextType::class, [
-                'label' => 'Prénom',
-                'required' => true,
-            ])
-            ->add('courriel', EmailType::class, [
-                'label' => 'Courriel',
-                'required' => true,
-            ])
-            ->add('genre', ChoiceType::class, [
-                'label' => 'Genre',
-                'choices' => [
-                    'Féminin' => 'Féminin',
-                    'Masculin' => 'Masculin',
-                    'Neutre' => 'neutre',
-                ],
-                'required' => true,
-            ])
-            ->add('adresse', TextType::class, [
-                'label' => 'Adresse',
-                'required' => true,
-            ])
-            ->add('ville', TextType::class, [
-                'label' => 'Ville',
-                'required' => true,
-            ])
-            ->add('codePostal', TextType::class, [
-                'label' => 'Code Postal',
-                'required' => true,
-            ])
-            ->add('province', ChoiceType::class, [
-                'label' => 'Province',
-                'choices' => [
-                    'Alberta' => 'Alberta',
-                    'British Columbia' => 'British Columbia',
-                    'Manitoba' => 'Manitoba',
-                    // Add other provinces and territories...
-                ],
-                'required' => true,
-            ])
-            ->add('telephone', TextType::class, [
-                'label' => 'Téléphone',
-                'required' => true,
-            ])
-            ->add('motDePasse', PasswordType::class, [
-                'label' => 'Mot de Passe',
-                'required' => true,
-            ])
-            ->add('confirmationMotDePasse', PasswordType::class, [
-                'label' => 'Confirmer le Mot de Passe',
-                'required' => true,
-            ]);
-    }
+        $requis = true;
 
-    public function configureOptions(OptionsResolver $resolver): void
+        $builder
+            ->add('utilisateur', TextType::class, ['label' => 'Nom d’utilisateur'])
+            ->add('prenom', TextType::class, ['label' => 'Prénom'])
+            ->add('nom', TextType::class, ['label' => 'Nom de famille'])
+            ->add('genre', ChoiceType::class, [
+                'choices' => ['Féminin' => 'Féminin', 'Masculin' => 'Masculin', 'Neutre' => 'Neutre']
+            ])
+            ->add('adresse', TextType::class, ['label' => 'Adresse'])
+            ->add('ville', TextType::class, ['label' => 'Ville'])
+            ->add('province', ChoiceType::class, [
+                'choices' => [
+                    'Québec' => 'Québec', 'Ontario' => 'Ontario', 'Manitoba' => 'Manitoba',
+                    'Saskatchewan' => 'Saskatchewan', 'Alberta' => 'Alberta', 'Colombie-Britannique' => 'Colombie-Britannique',
+                    'Nouvelle-Écosse' => 'Nouvelle-Écosse', 'Île-du-Prince-Édouard' => 'Île-du-Prince-Édouard',
+                    'Nouveau-Brunswick' => 'Nouveau-Brunswick', 'Terre-Neuve-et-Labrador' => 'Terre-Neuve-et-Labrador',
+                    'Territoires du Nord-Ouest' => 'Territoires du Nord-Ouest', 'Nunavut' => 'Nunavut', 'Yukon' => 'Yukon'
+                ]
+            ])
+            ->add('codePostal', TextType::class, ['label' => 'Code Postal'])
+            ->add('telephone', TextType::class, ['label' => 'Téléphone', 'required' => $requis])
+            ->add('email', EmailType::class, ['label' => 'Email'])
+            ->add('motDePasse', PasswordType::class, ['label' => 'Mot de passe'])
+            ->add('confirmationMotDePasse', PasswordType::class, ['label' => 'Confirmez le mot de passe']);
+            }
+
+    public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => Client::class,
-        ]);
+        $resolver->setDefaults(['data_class' => Client::class]);
     }
 }

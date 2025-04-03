@@ -1,11 +1,18 @@
 
 .div-form{
-    padding: 30px 30px;
+    padding: 50px 50px;
 }
 .section-form{
     padding: 5px 0px;
-    width: 1500px;
+    width: 1800px;
 }
 .div-log-in{
-    padding: 30px 30px;
+    padding: 50px 50px;
+}
+.erreur{
+    width: 1000px;
+    color: red;
+}
+.selecteur{
+    width: 200;
 }

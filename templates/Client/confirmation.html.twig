@@ -1,0 +1,88 @@
+{# templates/inscription/index.html.twig #}
+{% extends 'core/base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block content %}
+<div class="div-form  ">
+<h1>Le compte va être créer:</h1>
+    <div class="row section-form">
+        <div class="col-2 titreChampForm">
+                <h3>utilisateur:</h3>
+        </div>
+        <div class="col-1 ">
+            <h3>{{utilisateur.utilisateur}}</h3>
+        </div>
+    </div>
+    <div class="row section-form">
+        <div class="col-2 titreChampForm">
+            <h3>nom:</h3>
+        </div>
+        <div class="col-1 ">
+            <h3>{{utilisateur.nom}}</h3>
+        </div>
+    </div>
+    <div class="row section-form">
+        <div class="col-2 titreChampForm">
+            <h3>prenom:</h3>
+        </div>
+        <div class="col-1 ">
+            <h3>{{utilisateur.prenom}}</h3>
+        </div>
+    </div>
+    <div class="row section-form">
+        <div class="col-2 titreChampForm">
+            <h3>genre:</h3>
+        </div>
+        <div class="col-1 ">
+            <h3>{{utilisateur.genre}}</h3>
+        </div>
+    </div>
+    <div class="row section-form">
+        <div class="col-2 titreChampForm">
+            <h3>adresse:</h3>
+        </div>
+        <div class="col-1 ">
+            <h3>{{utilisateur.adresse}}</h3>
+        </div>
+    </div>
+    <div class="row section-form">
+        <div class="col-2 titreChampForm">
+            <h3>ville:</h3>
+        </div>
+        <div class="col-1 ">
+            <h3>{{utilisateur.ville}}</h3>
+        </div>
+    </div>
+    <div class="row section-form">
+        <div class="col-2 titreChampForm">
+            <h3>codePostal:</h3>
+        </div>
+        <div class="col-1 ">
+            <h3>{{utilisateur.codePostal}}</h3>
+        </div>
+    </div>
+    <div class="row section-form">
+        <div class="col-2 titreChampForm">
+            <h3>province:</h3>
+        </div>
+        <div class="col-1 ">
+            <h3>{{utilisateur.province}}</h3>
+        </div>
+    </div>
+    <div class="row section-form">
+        <div class="col-2 titreChampForm">
+            <h3>telephone:</h3>
+        </div>
+        <div class="col-1 ">
+            <h3>{{utilisateur.telephone}}</h3>
+        </div>
+    </div>
+    <form action="{{ path('route_confirmer') }}" >
+        <button class="btn btn-dark" type="submit">Confirmer</button>
+    </form>
+    <form action="{{ path('route_creer') }}">
+        <button class="btn btn-dark" type="submit">Annuler</button>
+    </form>
+</div>
+{% endblock %}

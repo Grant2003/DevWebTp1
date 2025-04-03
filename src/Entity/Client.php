@@ -2,44 +2,87 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ClientRepository;
 
-#[ORM\Entity]
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+#[ORM\Entity(repositoryClass: ClientRepository::class)]
+#[UniqueEntity(fields:"utilisateur", message:"existe déjà en BD")]
 class Client
 {
     #[ORM\Id]
     #[ORM\Column(length: 15, unique: true)]
+    #[Assert\Length(min:2, minMessage:'deux caractères minimum')]
+    #[Assert\Length(max:255, maxMessage:'15 caractères maximum')]
     private string $utilisateur;
 
     #[ORM\Column(length: 15)]
+    #[Assert\Length(min:2, minMessage:'deux caractères minimum')]
+    #[Assert\Length(max:255, maxMessage:'15 caractères maximum')]
     private string $prenom;
 
     #[ORM\Column(length: 15)]
+    #[Assert\Length(min:2, minMessage:'deux caractères minimum')]
+    #[Assert\Length(max:255, maxMessage:'15 caractères maximum')]
     private string $nom;
 
     #[ORM\Column(length: 15)]
-    private string $adresseRue;
+    #[Assert\Length(min:2, minMessage:'deux caractères minimum')]
+    #[Assert\Length(max:255, maxMessage:'15 caractères maximum')]
+    private string $adresse;
 
     #[ORM\Column(length: 15)]
+    #[Assert\Length(min:2, minMessage:'deux caractères minimum')]
+    #[Assert\Length(max:255, maxMessage:'15 caractères maximum')]
     private string $ville;
 
     #[ORM\Column(length: 15)]
     private string $province;
+    #[ORM\Column(length: 15)]
+    private string $genre;
 
     #[ORM\Column(length: 15)]
+    
+    #[Assert\Length(min:10, minMessage:'10 chiffres minimum')]
+    #[Assert\Regex(
+        pattern: '/^(\(\d{3}\)|\d{3})[ -]?\d{3}[ -]?\d{4}$/',
+        message: 'Format de téléphone invalide. Exemple attendu : (123) 456-7890 ou 123-456-7890.'
+    )]
     private string $telephone;
+    
 
     #[ORM\Column(length: 30)]
-    private string $courriel;
+    #[Assert\Regex(
+        pattern: '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
+        message: 'Format de mail invalide. Exemple attendu : nom@fournisseur.extension'
+    )]
+    private string $email;
 
     #[ORM\Column(length: 15)]
-    private string $mdp;
+    #[Assert\Length(min:2, minMessage:'deux caractères minimum')]
+    #[Assert\Length(max:255, maxMessage:'15 caractères maximum')]
+    private string $motDePasse;
+
+    #[Assert\Length(min:2, minMessage:'deux caractères minimum')]
+    #[Assert\Length(max:255, maxMessage:'15 caractères maximum')]
+    #[Assert\EqualTo(
+        propertyPath: "motDePasse",
+           message: "Les mots de passe ne correspondent pas."
+        )]
+    private string $confirmationMotDePasse;
+    
+    #[ORM\Column(length: 15)]
+    #[Assert\Length(min:6, minMessage:'6 caractères')]
+    #[Assert\Length(max:6, maxMessage:'6 caractères')]
+    #[Assert\Regex(
+        pattern: '/^[A-CEGHJ-NPR-TVXY]\d[A-CEGHJ-NPR-TV-Z]( ?)\d[A-CEGHJ-NPR-TV-Z]\d$/i',
+        message: 'Format de code postale invalide, foamt demandé: A1A1A1, on refuse les lettres (DFOQIU)'
+    )]
+    private string $codePostal;
 
 
-    public function getId(): int
-    {
-        return $this->id;
-    }
 
     public function getUtilisateur(): string
     {
@@ -62,6 +105,16 @@ class Client
         $this->prenom = $prenom;
         return $this;
     }
+    public function getGenre(): string
+    {
+        return $this->genre;
+    }
+
+    public function setGenre(string $genre): static
+    {
+        $this->genre = $genre;
+        return $this;
+    }
 
     public function getNom(): string
     {
@@ -74,14 +127,14 @@ class Client
         return $this;
     }
 
-    public function getAdresseRue(): string
+    public function getAdresse(): string
     {
-        return $this->adresseRue;
+        return $this->adresse;
     }
 
-    public function setAdresseRue(string $adresseRue): static
+    public function setAdresse(string $adresse): static
     {
-        $this->adresseRue = $adresseRue;
+        $this->adresse = $adresse;
         return $this;
     }
 
@@ -93,6 +146,16 @@ class Client
     public function setVille(string $ville): static
     {
         $this->ville = $ville;
+        return $this;
+    }
+    public function getCodePostal(): string
+    {
+        return $this->codePostal;
+    }
+
+    public function setCodePostal(string $codePostal): static
+    {
+        $this->codePostal = $codePostal;
         return $this;
     }
 
@@ -118,25 +181,35 @@ class Client
         return $this;
     }
 
-    public function getCourriel(): string
+    public function getEmail(): string
     {
-        return $this->courriel;
+        return $this->email;
     }
 
-    public function setCourriel(string $courriel): static
+    public function setEmail(string $courriel): static
     {
-        $this->courriel = $courriel;
+        $this->email = $courriel;
         return $this;
     }
 
-    public function getMdp(): string
+    public function getMotDePasse(): string
     {
-        return $this->mdp;
+        return $this->motDePasse;
     }
 
-    public function setMdp(string $mdp): static
+    public function setMotDePasse(string $mdp): static
     {
-        $this->mdp = $mdp;
+        $this->motDePasse = $mdp;
+        return $this;
+    }
+    public function getConfirmationMotDePasse(): string
+    {
+        return $this->confirmationMotDePasse;
+    }
+
+    public function setConfirmationMotDePasse(string $mdp): static
+    {
+        $this->confirmationMotDePasse = $mdp;
         return $this;
     }
 
