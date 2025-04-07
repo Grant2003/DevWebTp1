@@ -82,7 +82,13 @@ class Client
     )]
     private string $codePostal;
 
-
+    #[Assert\Length(min:2, minMessage:'deux caractères minimum')]
+    #[Assert\Length(max:255, maxMessage:'15 caractères maximum')]
+    #[Assert\EqualTo(
+        propertyPath: "motDePasse",
+           message: "Les mots de passe ne correspondent pas."
+        )]
+    private string $neoMotDePasse;
 
     public function getUtilisateur(): string
     {
@@ -200,6 +206,16 @@ class Client
     public function setMotDePasse(string $mdp): static
     {
         $this->motDePasse = $mdp;
+        return $this;
+    }
+    public function getNeoMotDePasse(): string
+    {
+        return $this->neoMotDePasse;
+    }
+
+    public function setNeoMotDePasse(string $mdp): static
+    {
+        $this->neoMotDePasse = $mdp;
         return $this;
     }
     public function getConfirmationMotDePasse(): string

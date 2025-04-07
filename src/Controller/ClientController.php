@@ -35,17 +35,6 @@ class ClientController extends AbstractController
 
     }
 
-    // public function creerCompte(Request $request): Response
-    // {
-
-
-
-    //     $panier = $request->getSession()->get('panier', new Panier());
-    //     $itemCount = $panier->compterProduitsTotal();
-
-    //     return $this->render('client/creerCompte.html.twig', ['nbItem'=>$itemCount
-    //     ]);
-    // }
     #[Route(path: '/creercompte', name: 'route_creer')]
 
     public function creerCompte(Request $request, ValidatorInterface $validator): Response
@@ -69,7 +58,7 @@ class ClientController extends AbstractController
 
         return $this->render('Client/creerCompte.html.twig', [
             'nbItem' => $itemCount,
-            'form' => $form->createView(),
+            'generalInfoForm' => $form->createView(),
         ]);
     }
     #[Route(path: '/confirmer', name: 'route_confirmer')]
@@ -98,12 +87,15 @@ class ClientController extends AbstractController
     public function modiferCompte(Request $request, ValidatorInterface $validator): Response
     {
         $utilisateur = $request->getSession()->get('utilisateurConnecte', new Client());
-        $form = $this->createForm(ClientType::class, $utilisateur);
+        $form = $this->createForm(ClientType::class, $utilisateur, ['is_modify' => true]);
+        $passwordForm = $this->createForm(ClientType::class, $utilisateur, ['is_password' => true]);
+
         $panier = $request->getSession()->get('panier', new Panier());
         $itemCount = $panier->compterProduitsTotal();
 
         $form->handleRequest($request);
 
+        
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $request->getSession()->set('utilisateur', $utilisateur);
@@ -114,10 +106,11 @@ class ClientController extends AbstractController
             }
         }
 
-        return $this->render('Client/modifier.html.twig', [
+        return $this->render('Client/creerCompte.html.twig', [
             'nbItem' => $itemCount,
-            'form' => $form->createView(),
-        ]);
+            'generalInfoForm' => $form->createView(),
+            'passwordForm' => $passwordForm->createView(),
+            ]);
     } 
 
 

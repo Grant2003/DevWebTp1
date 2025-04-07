@@ -19,33 +19,62 @@ class ClientType extends AbstractType
     {
         $requis = true;
 
-        $builder
-            ->add('utilisateur', TextType::class, ['label' => 'Nom d’utilisateur'])
-            ->add('prenom', TextType::class, ['label' => 'Prénom'])
-            ->add('nom', TextType::class, ['label' => 'Nom de famille'])
-            ->add('genre', ChoiceType::class, [
-                'choices' => ['Féminin' => 'Féminin', 'Masculin' => 'Masculin', 'Neutre' => 'Neutre']
-            ])
-            ->add('adresse', TextType::class, ['label' => 'Adresse'])
-            ->add('ville', TextType::class, ['label' => 'Ville'])
-            ->add('province', ChoiceType::class, [
-                'choices' => [
-                    'Québec' => 'Québec', 'Ontario' => 'Ontario', 'Manitoba' => 'Manitoba',
-                    'Saskatchewan' => 'Saskatchewan', 'Alberta' => 'Alberta', 'Colombie-Britannique' => 'Colombie-Britannique',
-                    'Nouvelle-Écosse' => 'Nouvelle-Écosse', 'Île-du-Prince-Édouard' => 'Île-du-Prince-Édouard',
-                    'Nouveau-Brunswick' => 'Nouveau-Brunswick', 'Terre-Neuve-et-Labrador' => 'Terre-Neuve-et-Labrador',
-                    'Territoires du Nord-Ouest' => 'Territoires du Nord-Ouest', 'Nunavut' => 'Nunavut', 'Yukon' => 'Yukon'
-                ]
-            ])
-            ->add('codePostal', TextType::class, ['label' => 'Code Postal'])
-            ->add('telephone', TextType::class, ['label' => 'Téléphone', 'required' => $requis])
-            ->add('email', EmailType::class, ['label' => 'Email'])
-            ->add('motDePasse', PasswordType::class, ['label' => 'Mot de passe'])
-            ->add('confirmationMotDePasse', PasswordType::class, ['label' => 'Confirmez le mot de passe']);
-            }
+        if (!$options['is_modify'] && !$options['is_password']) {
+            $builder->add('utilisateur', TextType::class, ['label' => 'Nom d’utilisateur'])
+                    ->add('prenom', TextType::class, ['label' => 'Prénom'])
+                    ->add('nom', TextType::class, ['label' => 'Nom de famille'])
+                    ->add('genre', ChoiceType::class, [
+                        'choices' => ['Féminin' => 'Féminin', 'Masculin' => 'Masculin', 'Neutre' => 'Neutre']
+                    ])
+                    ->add('adresse', TextType::class, ['label' => 'Adresse'])
+                    ->add('ville', TextType::class, ['label' => 'Ville'])
+                    ->add('province', ChoiceType::class, [
+                        'choices' => [
+                            'Québec' => 'Québec', 'Ontario' => 'Ontario', 'Manitoba' => 'Manitoba',
+                            'Saskatchewan' => 'Saskatchewan', 'Alberta' => 'Alberta', 'Colombie-Britannique' => 'Colombie-Britannique',
+                            'Nouvelle-Écosse' => 'Nouvelle-Écosse', 'Île-du-Prince-Édouard' => 'Île-du-Prince-Édouard',
+                            'Nouveau-Brunswick' => 'Nouveau-Brunswick', 'Terre-Neuve-et-Labrador' => 'Terre-Neuve-et-Labrador',
+                            'Territoires du Nord-Ouest' => 'Territoires du Nord-Ouest', 'Nunavut' => 'Nunavut', 'Yukon' => 'Yukon'
+                        ]
+                    ])
+                    ->add('codePostal', TextType::class, ['label' => 'Code Postal'])
+                    ->add('telephone', TextType::class, ['label' => 'Téléphone', 'required' => $requis])
+                    ->add('email', EmailType::class, ['label' => 'Email'])
+                    ->add('motDePasse', PasswordType::class, ['label' => 'Mot de passe'])
+                    ->add('confirmationMotDePasse', PasswordType::class, ['label' => 'Confirmez le mot de passe']);
+        }
+        
+        if ($options['is_modify']) {
+            $builder->add('prenom', TextType::class, ['label' => 'Prénom'])
+                    ->add('nom', TextType::class, ['label' => 'Nom de famille'])
+                    ->add('genre', ChoiceType::class, [
+                        'choices' => ['Féminin' => 'Féminin', 'Masculin' => 'Masculin', 'Neutre' => 'Neutre']
+                    ])
+                    ->add('adresse', TextType::class, ['label' => 'Adresse'])
+                    ->add('ville', TextType::class, ['label' => 'Ville'])
+                    ->add('province', ChoiceType::class, [
+                        'choices' => [
+                            'Québec' => 'Québec', 'Ontario' => 'Ontario', 'Manitoba' => 'Manitoba',
+                            'Saskatchewan' => 'Saskatchewan', 'Alberta' => 'Alberta', 'Colombie-Britannique' => 'Colombie-Britannique',
+                            'Nouvelle-Écosse' => 'Nouvelle-Écosse', 'Île-du-Prince-Édouard' => 'Île-du-Prince-Édouard',
+                            'Nouveau-Brunswick' => 'Nouveau-Brunswick', 'Terre-Neuve-et-Labrador' => 'Terre-Neuve-et-Labrador',
+                            'Territoires du Nord-Ouest' => 'Territoires du Nord-Ouest', 'Nunavut' => 'Nunavut', 'Yukon' => 'Yukon'
+                        ]
+                    ])
+                    ->add('codePostal', TextType::class, ['label' => 'Code Postal'])
+                    ->add('telephone', TextType::class, ['label' => 'Téléphone', 'required' => $requis])
+                    ->add('email', EmailType::class, ['label' => 'Email']);
+        }
+        if ($options['is_password']) {
+            $builder->add('neoMotDePasse', PasswordType::class, ['label' => ' nouveau mot de passe'])
+                    ->add('motDePasse', PasswordType::class, ['label' => 'Mot de passe'])
+                    ->add('confirmationMotDePasse', PasswordType::class, ['label' => 'Confirmez le mot de passe']);
+        }
+
+    }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(['data_class' => Client::class]);
+        $resolver->setDefaults(['data_class' => Client::class, 'is_modify' => false,'is_password' => false,]);
     }
 }
