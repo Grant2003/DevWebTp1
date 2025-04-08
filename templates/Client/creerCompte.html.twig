@@ -1,3 +1,8 @@
+{# //-----------------------------------
+//   Fichier : creerCompte.html.twig
+//   Par:      Anthony Grenier
+//   Date :    2025-2-22
+//----------------------------------- #}
 {% extends 'core/base.html.twig' %}
 
 {% block title %}Compte{% endblock %}
@@ -20,7 +25,7 @@
         {% endfor %}
         {# Si l'attribu neoMotDePasse est declarer on modifie le compte (il est declarer seulement dans ce contexte) #}
         {% if passwordForm.neoMotDePasse is defined %} 
-              {# Formulaire pour les informations general #}
+              {# Formulaire pour les informations generale #}
                 <h2 class="form-section-title">Informations personnelles</h2>
                 {{ form_start(generalInfoForm) }}
                 <div class="form-group">

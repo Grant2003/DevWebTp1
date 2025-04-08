@@ -2,9 +2,9 @@
 
 namespace App\Repository;
 //-----------------------------------
-//   Fichier : ProduitRepository.php
+//   Fichier : clientRepository.php
 //   Par:      Anthony Grenier
-//   Date :    2025-2-22
+//   Date :    2025-3-27
 //-----------------------------------
 
 use App\Entity\Client;

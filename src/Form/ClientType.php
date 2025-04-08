@@ -1,7 +1,11 @@
 <?php
-// src/Form/UtilisateurType.php
-namespace App\Form;
 
+namespace App\Form;
+//-----------------------------------
+//   Fichier : ClienType.php
+//   Par:      Anthony Grenier
+//   Date :    2025-3-27
+//-----------------------------------
 use App\Entity\Client;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
