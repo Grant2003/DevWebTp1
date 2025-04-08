@@ -66,6 +66,13 @@
 
 <div class="d-flex flex-wrap justify-content-center pb-5">
     <div class="col-10">
+        {% for label, messages in app.flashes %}
+        <div class="alert alert-{{ label == 'error' ? 'danger' : label }}">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endfor %}
         <div class="row">
             {% if produits|length > 0 %}
             {# affichage des produits si il y en a #}

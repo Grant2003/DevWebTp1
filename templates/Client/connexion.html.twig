@@ -1,33 +1,35 @@
-{# //-----------------------------------
-//   Fichier : base.html.twig
-//   Par:      Anthony Grenier
-//   Date :    2025-2-22
-//----------------------------------- #}
+{# templates/Client/connexion.html.twig #}
+
 {% extends 'core/base.html.twig' %}
 
 {% block content %}
-    <form action="{{ path('route_connexion') }}" method="post">
-        <div class="div-log-in">
-            <div class="row section-form">
-                <section class="col-1 titreChampForm">
-                    <label for="user"  class="required">Utilisateur:</label>
-                    </section>
-                    <section class='col-2 '>
-                    <input type="text" id="user" name="client[user]" required="required" class="col-4 form-control" />
-                </section>
-            </div>
-            <div class="row section-form">
-                <section class="col-1 titreChampForm">
-                    <label for="mdp"  class="required">Mot de passe:</label>
-                    </section>
-                    <section class='col-2 '>
-                    <input type="text" id="mdp" name="client[mdp]" required="required" class="col-4 form-control" />
-                </section>
-            </div>
-            <div class="">
-                <button type="submit" id="client_Valider" name="client[Valider]" class="btn btn-dark">Se Connecter</button>
-                <input type="hidden" id="client__token" name="client[_token]" data-controller="csrf-protection" value="csrf-token" />
-            </div>
+    {% for label, messages in app.flashes %}
+        <div class="alert alert-{{ label == 'error' ? 'danger' : label }}">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
         </div>
-    </form>
+    {% endfor %}
+    <div class="container container-form">
+        <div class="form-container">
+            <h1 class="page-title titre-form">Connexion</h1>
+            <form action="{{ path('route_connexion') }}" method="post">
+                <div class="div-log-in">
+                    <div class="form-group">
+                        <label for="user" class="required">Utilisateur:</label>
+                        <input type="text" id="user" name="user" required="required" class="form-control col-4" placeholder="Nom d'utilisateur" />
+                    </div>
+                    <div class="form-group">
+                        <label for="mdp" class="required">Mot de passe:</label>
+                        <input type="password" id="mdp" name="mdp" required="required" class="form-control col-4" placeholder="Mot de passe" />
+                    </div>
+
+                    <div>
+                        <button type="submit" id="client_Valider" name="client[Valider]" class="btn btn-form">Se Connecter</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
 {% endblock %}

@@ -9,39 +9,42 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
-#[UniqueEntity(fields:"utilisateur", message:"existe déjà en BD")]
-class Client
+#[UniqueEntity(
+    fields: "utilisateur", 
+    message: "Ce nom d'utilisateur existe déjà.", 
+    errorPath: "utilisateur"
+)]class Client
 {
     #[ORM\Id]
     #[ORM\Column(length: 15, unique: true)]
     #[Assert\Length(min:2, minMessage:'deux caractères minimum')]
-    #[Assert\Length(max:255, maxMessage:'15 caractères maximum')]
-    private string $utilisateur;
+    #[Assert\Length(max:15, maxMessage:'15 caractères maximum')]
+    private ?string $utilisateur;
 
     #[ORM\Column(length: 15)]
     #[Assert\Length(min:2, minMessage:'deux caractères minimum')]
-    #[Assert\Length(max:255, maxMessage:'15 caractères maximum')]
-    private string $prenom;
+    #[Assert\Length(max:15, maxMessage:'15 caractères maximum')]
+    private ?string $prenom;
 
     #[ORM\Column(length: 15)]
     #[Assert\Length(min:2, minMessage:'deux caractères minimum')]
-    #[Assert\Length(max:255, maxMessage:'15 caractères maximum')]
-    private string $nom;
+    #[Assert\Length(max:15, maxMessage:'15 caractères maximum')]
+    private ?string $nom;
 
     #[ORM\Column(length: 15)]
     #[Assert\Length(min:2, minMessage:'deux caractères minimum')]
-    #[Assert\Length(max:255, maxMessage:'15 caractères maximum')]
-    private string $adresse;
+    #[Assert\Length(max:15, maxMessage:'15 caractères maximum')]
+    private ?string $adresse;
 
     #[ORM\Column(length: 15)]
     #[Assert\Length(min:2, minMessage:'deux caractères minimum')]
-    #[Assert\Length(max:255, maxMessage:'15 caractères maximum')]
-    private string $ville;
+    #[Assert\Length(max:15, maxMessage:'15 caractères maximum')]
+    private ?string $ville;
 
     #[ORM\Column(length: 15)]
-    private string $province;
+    private ?string $province;
     #[ORM\Column(length: 15)]
-    private string $genre;
+    private ?string $genre;
 
     #[ORM\Column(length: 15)]
     
@@ -50,7 +53,7 @@ class Client
         pattern: '/^(\(\d{3}\)|\d{3})[ -]?\d{3}[ -]?\d{4}$/',
         message: 'Format de téléphone invalide. Exemple attendu : (123) 456-7890 ou 123-456-7890.'
     )]
-    private string $telephone;
+    private ?string $telephone;
     
 
     #[ORM\Column(length: 30)]
@@ -58,12 +61,12 @@ class Client
         pattern: '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
         message: 'Format de mail invalide. Exemple attendu : nom@fournisseur.extension'
     )]
-    private string $email;
+    private ?string $email;
 
     #[ORM\Column(length: 15)]
     #[Assert\Length(min:2, minMessage:'deux caractères minimum')]
     #[Assert\Length(max:255, maxMessage:'15 caractères maximum')]
-    private string $motDePasse;
+    private ?string $motDePasse = null;
 
     #[Assert\Length(min:2, minMessage:'deux caractères minimum')]
     #[Assert\Length(max:255, maxMessage:'15 caractères maximum')]
@@ -71,7 +74,7 @@ class Client
         propertyPath: "motDePasse",
            message: "Les mots de passe ne correspondent pas."
         )]
-    private string $confirmationMotDePasse;
+    private ?string $confirmationMotDePasse;
     
     #[ORM\Column(length: 15)]
     #[Assert\Length(min:6, minMessage:'6 caractères')]
@@ -80,152 +83,183 @@ class Client
         pattern: '/^[A-CEGHJ-NPR-TVXY]\d[A-CEGHJ-NPR-TV-Z]( ?)\d[A-CEGHJ-NPR-TV-Z]\d$/i',
         message: 'Format de code postale invalide, foamt demandé: A1A1A1, on refuse les lettres (DFOQIU)'
     )]
-    private string $codePostal;
+    private ?string $codePostal;
 
+    #[Assert\Length(min:2, minMessage:'deux caractères minimum')]
+    #[Assert\Length(max:255, maxMessage:'15 caractères maximum')]
+
+    private ?string $neoMotDePasse;
     #[Assert\Length(min:2, minMessage:'deux caractères minimum')]
     #[Assert\Length(max:255, maxMessage:'15 caractères maximum')]
     #[Assert\EqualTo(
         propertyPath: "motDePasse",
-           message: "Les mots de passe ne correspondent pas."
+            message: "L'ancien mot de passe est incorrect"
         )]
-    private string $neoMotDePasse;
+    private ?string $ancienMotDePasse ;
+    #[Assert\Length(min:2, minMessage:'deux caractères minimum')]
+    #[Assert\Length(max:255, maxMessage:'15 caractères maximum')]
+    #[Assert\EqualTo(
+        propertyPath: "neoMotDePasse",
+            message: "Les mots de passe ne correspondent pas."
+        )]
+    private ?string $neoConfirmation ;
 
-    public function getUtilisateur(): string
+    public function getUtilisateur(): ?string
     {
         return $this->utilisateur;
     }
 
-    public function setUtilisateur(string $utilisateur): static
+    public function setUtilisateur(?string $utilisateur): static
     {
         $this->utilisateur = $utilisateur;
         return $this;
     }
 
-    public function getPrenom(): string
+    public function getPrenom(): ?string
     {
         return $this->prenom;
     }
 
-    public function setPrenom(string $prenom): static
+    public function setPrenom(?string $prenom): static
     {
         $this->prenom = $prenom;
         return $this;
     }
-    public function getGenre(): string
+    public function getGenre(): ?string
     {
         return $this->genre;
     }
 
-    public function setGenre(string $genre): static
+    public function setGenre(?string $genre): static
     {
         $this->genre = $genre;
         return $this;
     }
 
-    public function getNom(): string
+    public function getNom(): ?string
     {
         return $this->nom;
     }
 
-    public function setNom(string $nom): static
+    public function setNom(?string $nom): static
     {
         $this->nom = $nom;
         return $this;
     }
 
-    public function getAdresse(): string
+    public function getAdresse(): ?string
     {
         return $this->adresse;
     }
 
-    public function setAdresse(string $adresse): static
+    public function setAdresse(?string $adresse): static
     {
         $this->adresse = $adresse;
         return $this;
     }
 
-    public function getVille(): string
+    public function getVille(): ?string
     {
         return $this->ville;
     }
 
-    public function setVille(string $ville): static
+    public function setVille(?string $ville): static
     {
         $this->ville = $ville;
         return $this;
     }
-    public function getCodePostal(): string
+    public function getCodePostal(): ?string
     {
         return $this->codePostal;
     }
 
-    public function setCodePostal(string $codePostal): static
+    public function setCodePostal(?string $codePostal): static
     {
         $this->codePostal = $codePostal;
         return $this;
     }
 
-    public function getProvince(): string
+    public function getProvince(): ?string
     {
         return $this->province;
     }
 
-    public function setProvince(string $province): static
+    public function setProvince(?string $province): static
     {
         $this->province = $province;
         return $this;
     }
 
-    public function getTelephone(): string
+    public function getTelephone(): ?string
     {
         return $this->telephone;
     }
 
-    public function setTelephone(string $telephone): static
+    public function setTelephone(?string $telephone): static
     {
         $this->telephone = $telephone;
         return $this;
     }
 
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    public function setEmail(string $courriel): static
+    public function setEmail(?string $courriel): static
     {
         $this->email = $courriel;
         return $this;
     }
 
-    public function getMotDePasse(): string
+    public function getMotDePasse(): ?string
     {
         return $this->motDePasse;
     }
 
-    public function setMotDePasse(string $mdp): static
+    public function setMotDePasse(?string $mdp): static
     {
         $this->motDePasse = $mdp;
         return $this;
     }
-    public function getNeoMotDePasse(): string
+    public function getNeoMotDePasse(): ?string
     {
         return $this->neoMotDePasse;
     }
 
-    public function setNeoMotDePasse(string $mdp): static
+    public function setNeoMotDePasse(?string $mdp): static
     {
         $this->neoMotDePasse = $mdp;
         return $this;
     }
-    public function getConfirmationMotDePasse(): string
+    public function getNeoConfirmation(): ?string
+    {
+        return $this->neoConfirmation;
+    }
+
+    public function setNeoConfirmation(?string $mdp): static
+    {
+        $this->neoConfirmation = $mdp;
+        return $this;
+    }
+    public function getConfirmationMotDePasse(): ?string
     {
         return $this->confirmationMotDePasse;
     }
 
-    public function setConfirmationMotDePasse(string $mdp): static
+    public function setConfirmationMotDePasse(?string $mdp): static
     {
         $this->confirmationMotDePasse = $mdp;
+        return $this;
+    }
+    public function getAncienMotDePasse(): ?string
+    {
+        return $this->ancienMotDePasse;
+    }
+
+    public function setAncienMotDePasse(?string $mdp): static
+    {
+        $this->ancienMotDePasse = $mdp;
         return $this;
     }
 

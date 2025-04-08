@@ -19,6 +19,7 @@ class ClientType extends AbstractType
     {
         $requis = true;
 
+        //creation de compte
         if (!$options['is_modify'] && !$options['is_password']) {
             $builder->add('utilisateur', TextType::class, ['label' => 'Nom d’utilisateur'])
                     ->add('prenom', TextType::class, ['label' => 'Prénom'])
@@ -43,7 +44,7 @@ class ClientType extends AbstractType
                     ->add('motDePasse', PasswordType::class, ['label' => 'Mot de passe'])
                     ->add('confirmationMotDePasse', PasswordType::class, ['label' => 'Confirmez le mot de passe']);
         }
-        
+        //modification des informations
         if ($options['is_modify']) {
             $builder->add('prenom', TextType::class, ['label' => 'Prénom'])
                     ->add('nom', TextType::class, ['label' => 'Nom de famille'])
@@ -64,11 +65,13 @@ class ClientType extends AbstractType
                     ->add('codePostal', TextType::class, ['label' => 'Code Postal'])
                     ->add('telephone', TextType::class, ['label' => 'Téléphone', 'required' => $requis])
                     ->add('email', EmailType::class, ['label' => 'Email']);
+            $builder->setAttribute('validation_groups', ['Default', 'edit']);
         }
+        //modification du mot de passe
         if ($options['is_password']) {
             $builder->add('neoMotDePasse', PasswordType::class, ['label' => ' nouveau mot de passe'])
-                    ->add('motDePasse', PasswordType::class, ['label' => 'Mot de passe'])
-                    ->add('confirmationMotDePasse', PasswordType::class, ['label' => 'Confirmez le mot de passe']);
+                    ->add('ancienMotDePasse', PasswordType::class, ['label' => 'Ancien mot de passe'])
+                    ->add('neoConfirmation', PasswordType::class, ['label' => 'Confirmez le mot de passe']);
         }
 
     }

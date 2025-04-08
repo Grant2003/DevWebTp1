@@ -1,227 +1,245 @@
-{# templates/inscription/index.html.twig #}
 {% extends 'core/base.html.twig' %}
 
-{% block title %}Inscription{% endblock %}
+{% block title %}Compte{% endblock %}
 
 {% block content %}
-<div class="div-form  ">
-{% if passwordForm.neoMotDePasse is defined %}
-    <h1>Modifier vos infos</h1>
-{% else %}
-    <h1>Créer un compte</h1>
-{% endif %}
-
-    {{ form_start(generalInfoForm) }}
-    {% if generalInfoForm.utilisateur is defined %}
-
-    <div class="row section-form">
-        <div class="col-2 titreChampForm">
-            {{ form_label(generalInfoForm.utilisateur, 'Nom d’utilisateur') }}
-        </div>
-        <div class="col-1 ">
-            {{ form_widget(generalInfoForm.utilisateur, {'attr': {'placeholder': 'Votre nom d’utilisateur'}}) }}
-            <div class="erreur">
-                {{ form_errors(generalInfoForm.utilisateur) }}
+<div class="container container-form">
+    <div class="form-container">
+        {% if passwordForm.neoMotDePasse is defined %}
+            <h1 class="page-title titre-form">Modifier vos infos</h1>
+        {% else %}
+            <h1 class="page-title titre-form">Créer un compte</h1>
+        {% endif %}
+        
+        {% for label, messages in app.flashes %}
+            <div class="alert alert-{{ label == 'error' ? 'danger' : label }}">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
             </div>
-        </div>
-    </div>
-    {% endif %}
+        {% endfor %}
+        {# Si l'attribu neoMotDePasse est declarer on modifie le compte (il est declarer seulement dans ce contexte) #}
+        {% if passwordForm.neoMotDePasse is defined %} 
+              {# Formulaire pour les informations general #}
+                <h2 class="form-section-title">Informations personnelles</h2>
+                {{ form_start(generalInfoForm) }}
+                <div class="form-group">
+                    {{ form_label(generalInfoForm.nom, 'Nom de famille') }}
+                    {{ form_widget(generalInfoForm.nom, {'attr': {'class': 'form-control', 'placeholder': 'Votre nom de famille'}}) }}
+                    <div class="error-message">
+                        {{ form_errors(generalInfoForm.nom) }}
+                    </div>
+                </div>
 
-    <div class="row section-form">
-        <div class="col-2 titreChampForm">
-            {{ form_label(generalInfoForm.prenom, 'Prénom') }}
-        </div>
-        <div class="col-1 ">
-            {{ form_widget(generalInfoForm.prenom, {'attr': {'placeholder': 'Votre prénom'}}) }}
-            <div class="erreur">
-                {{ form_errors(generalInfoForm.prenom) }}
-            </div>
-        </div>
-    </div>
+                <div class="form-group">
+                    {{ form_label(generalInfoForm.prenom, 'Prénom') }}
+                    {{ form_widget(generalInfoForm.prenom, {'attr': {'class': 'form-control', 'placeholder': 'Votre prénom'}}) }}
+                    <div class="error-message">
+                        {{ form_errors(generalInfoForm.prenom) }}
+                    </div>
+                </div>
 
-    <div class="row section-form">
-        <div class="col-2 titreChampForm">
-            {{ form_label(generalInfoForm.nom, 'Nom de famille') }}
-        </div>
-        <div class="col-1 ">
-            {{ form_widget(generalInfoForm.nom, {'attr': {'placeholder': 'Votre nom de famille'}}) }}
-            <div class="erreur">
-                {{ form_errors(generalInfoForm.nom) }}
-            </div>
-        </div>
-    </div>
+                <div class="form-group">
+                    {{ form_label(generalInfoForm.adresse, 'Adresse') }}
+                    {{ form_widget(generalInfoForm.adresse, {'attr': {'class': 'form-control', 'placeholder': 'Votre adresse'}}) }}
+                    <div class="error-message">
+                        {{ form_errors(generalInfoForm.adresse) }}
+                    </div>
+                </div>
 
-    <div class="row section-form">
-        <div class="col-2 titreChampForm">
-            {{ form_label(generalInfoForm.genre, 'Genre') }}
-        </div>
-        <div class="col-2 ">
-            {{ form_widget(generalInfoForm.genre) }}
-            <div class="erreur">
-                {{ form_errors(generalInfoForm.genre) }}
-            </div>
-        </div>
-    </div>
+                <div class="form-group">
+                    {{ form_label(generalInfoForm.ville, 'Ville') }}
+                    {{ form_widget(generalInfoForm.ville, {'attr': {'class': 'form-control', 'placeholder': 'Votre ville'}}) }}
+                    <div class="error-message">
+                        {{ form_errors(generalInfoForm.ville) }}
+                    </div>
+                </div>
 
-    <div class="row section-form">
-        <div class="col-2 titreChampForm">
-            {{ form_label(generalInfoForm.adresse, 'Adresse') }}
-        </div>
-        <div class="col-1 ">
-            {{ form_widget(generalInfoForm.adresse, {'attr': {'placeholder': '123 Rue Exemple'}}) }}
-            <div class="erreur">
-                {{ form_errors(generalInfoForm.adresse) }}
-            </div>
-        </div>
-    </div>
+                <div class="form-group">
+                    {{ form_label(generalInfoForm.province, 'Province') }}
+                    {{ form_widget(generalInfoForm.province, {'attr': {'class': 'form-control'}}) }}
+                    <div class="error-message">
+                        {{ form_errors(generalInfoForm.province) }}
+                    </div>
+                </div>
 
-    <div class="row section-form">
-        <div class="col-2 titreChampForm">
-            {{ form_label(generalInfoForm.ville, 'Ville') }}
-        </div>
-        <div class="col-1 ">
-            {{ form_widget(generalInfoForm.ville, {'attr': {'placeholder': 'Votre ville'}}) }}
-            <div class="erreur">
-                {{ form_errors(generalInfoForm.ville) }}
-            </div>
-        </div>
-    </div>
+                <div class="form-group">
+                    {{ form_label(generalInfoForm.telephone, 'Téléphone') }}
+                    {{ form_widget(generalInfoForm.telephone, {'attr': {'class': 'form-control', 'placeholder': 'Votre téléphone'}}) }}
+                    <div class="error-message">
+                        {{ form_errors(generalInfoForm.telephone) }}
+                    </div>
+                </div>
 
-    <div class="row section-form">
-        <div class="col-2 titreChampForm">
-            {{ form_label(generalInfoForm.province, 'Province') }}
-        </div>
-        <div class="col-1 ">
-            {{ form_widget(generalInfoForm.province) }}
-            <div class="erreur">
-                {{ form_errors(generalInfoForm.province) }}
-            </div>        
-        </div>
-    </div>
+                <div class="form-group">
+                    {{ form_label(generalInfoForm.email, 'Email') }}
+                    {{ form_widget(generalInfoForm.email, {'attr': {'class': 'form-control', 'placeholder': 'Votre email'}}) }}
+                    <div class="error-message">
+                        {{ form_errors(generalInfoForm.email) }}
+                    </div>
+                </div>
 
-    <div class="row section-form">
-        <div class="col-2 titreChampForm">
-            {{ form_label(generalInfoForm.codePostal, 'Code Postal') }}
-        </div>
-        <div class="col-1 ">
-            {{ form_widget(generalInfoForm.codePostal, {'attr': {'placeholder': 'A1A 1A1'}}) }}
-            <div class="erreur">
-                {{ form_errors(generalInfoForm.codePostal) }}
-            </div>
-        </div>
-    </div>
+                <div class="form-group">
+                    {{ form_label(generalInfoForm.codePostal, 'Code postal') }}
+                    {{ form_widget(generalInfoForm.codePostal, {'attr': {'class': 'form-control', 'placeholder': 'Votre code postal'}}) }}
+                    <div class="error-message">
+                        {{ form_errors(generalInfoForm.codePostal) }}
+                    </div>
+                </div>
 
-    <div class="row section-form">
-        <div class="col-2 titreChampForm">
-            {{ form_label(generalInfoForm.telephone, 'Téléphone') }}
-        </div>
-        <div class="col-1 ">
-            {{ form_widget(generalInfoForm.telephone, {'attr': {'placeholder': '(123) 456-7890'}}) }}
-            <div class="erreur">
-                {{ form_errors(generalInfoForm.telephone) }}
-            </div>
-        </div>
-    </div>
+                <div class="form-group">
+                    {{ form_label(generalInfoForm.genre, 'Genre') }}
+                    {{ form_widget(generalInfoForm.genre, {'attr': {'class': 'form-control'}}) }}
+                    <div class="error-message">
+                        {{ form_errors(generalInfoForm.genre) }}
+                    </div>
+                </div>
 
-    <div class="row section-form">
-    <div class="col-2 titreChampForm">
-            {{ form_label(generalInfoForm.email, 'Adresse Email') }}
-        </div>
-        <div class="col-1 ">
-            {{ form_widget(generalInfoForm.email, {'attr': {'placeholder': 'exemple@domaine.com'}}) }}
-            <div class="erreur">
-                {{ form_errors(generalInfoForm.email) }}
-            </div>
-        </div>
-    </div>
-    {% if passwordForm.neoMotDePasse is defined %}
-        <button class="btn btn-dark" type="submit">Modifier</button>
-        {{ form_end(generalInfoForm) }}
-        {{ form_start(passwordForm) }}
-        <div class="spacerClient">
-        </div>
-        <h1>Modifier votre mot de passe</h1>
-        <div class="spacerClient">
-        </div>
-    {% endif %}
+                <input type="hidden" name="form_type" value="generalForm">
+                <button name="submit_general" class="btn btn-form" type="submit">Modifier</button>
+            {{ form_end(generalInfoForm) }}
+            
+            <div class="spacerClient"></div>
+            <h2 class="form-section-title">Modifier votre mot de passe</h2>
 
-
-
-
-    {% if passwordForm.neoMotDePasse is defined %}
-        <div class="row section-form">
-            <div class="col-2 titreChampForm">
-                {{ form_label(passwordForm.motDePasse, 'Mot de passe') }}
-            </div>
-            <div class="col-1 ">
-                {{ form_widget(passwordForm.motDePasse, {'attr': {'placeholder': 'Votre mot de passe'}}) }}
-                <div class="erreur ">
-                    {{ form_errors(passwordForm.motDePasse) }}
-                </div>        
-            </div>
-        </div>
-        <div class="row section-form">
-        <div class="col-2 titreChampForm">
-            {{ form_label(passwordForm.neoMotDePasse, 'Nouveau Mot de passe') }}
-        </div>
-        <div class="col-1 ">
-            {{ form_widget(passwordForm.neoMotDePasse, {'attr': {'placeholder': 'Votre nouveau MDP'}}) }}
-            <div class="erreur ">
-                {{ form_errors(passwordForm.neoMotDePasse) }}
-            </div>        
-        </div>
-        </div>
-            <div class="row section-form">
-            <div class="col-2 titreChampForm">
-                {{ form_label(passwordForm.confirmationMotDePasse, 'Confirmez le mot de passe') }}
-
-            </div>
-            <div class="col-1 ">
-                {{ form_widget(passwordForm.confirmationMotDePasse, {'attr': {'placeholder': 'Confirmez votre MDP'}}) }}
-                <div class="erreur ">
-                    {{ form_errors(passwordForm.confirmationMotDePasse) }}
+            {# Formulaire pour le mot de passe #}
+            {{ form_start(passwordForm) }}
+            <div class="form-group">
+                {{ form_label(passwordForm.ancienMotDePasse, 'Ancien mot de passe') }}
+                {{ form_widget(passwordForm.ancienMotDePasse, {'attr': {'class': 'form-control', 'placeholder': 'Votre ancien mot de passe'}}) }}
+                <div class="error-message">
+                    {{ form_errors(passwordForm.ancienMotDePasse) }}
                 </div>
             </div>
-        </div>
-    {% else %}
-        <div class="row section-form">
-            <div class="col-2 titreChampForm">
-                {{ form_label(generalInfoForm.motDePasse, 'Mot de passe') }}
-            </div>
-            <div class="col-1 ">
-                {{ form_widget(generalInfoForm.motDePasse, {'attr': {'placeholder': 'Votre mot de passe'}}) }}
-                <div class="erreur ">
-                    {{ form_errors(generalInfoForm.motDePasse) }}
-                </div>        
-            </div>
-        </div>
-        <div class="row section-form">
-            <div class="col-2 titreChampForm">
-                {{ form_label(generalInfoForm.confirmationMotDePasse, 'Confirmez le mot de passe') }}
 
-            </div>
-            <div class="col-1 ">
-                {{ form_widget(generalInfoForm.confirmationMotDePasse, {'attr': {'placeholder': 'Confirmez votre MDP'}}) }}
-                <div class="erreur ">
-                    {{ form_errors(generalInfoForm.confirmationMotDePasse) }}
+            <div class="form-group">
+                {{ form_label(passwordForm.neoMotDePasse, 'Nouveau mot de passe') }}
+                {{ form_widget(passwordForm.neoMotDePasse, {'attr': {'class': 'form-control', 'placeholder': 'Votre nouveau mot de passe'}}) }}
+                <div class="error-message">
+                    {{ form_errors(passwordForm.neoMotDePasse) }}
                 </div>
             </div>
-        </div>
-    {% endif %}
-    
 
-   
-    {% if passwordForm.neoMotDePasse is defined %}
-        <button class="btn btn-dark" type="submit">Modifier</button>
-    {% else %}
-        <button class="btn btn-dark" type="submit">S'inscrire</button>
-    {% endif %}
+            <div class="form-group">
+                {{ form_label(passwordForm.neoConfirmation, 'Confirmer le nouveau mot de passe') }}
+                {{ form_widget(passwordForm.neoConfirmation, {'attr': {'class': 'form-control', 'placeholder': 'Confirmer votre nouveau mot de passe'}}) }}
+                <div class="error-message">
+                    {{ form_errors(passwordForm.neoConfirmation) }}
+                </div>
+            </div>
+
+            <button name="submit_password" class="btn btn-form" type="submit">Modifier</button>
+            {{ form_end(passwordForm) }}
+
+        {% else %}
+          {# Formulaire pour la creation de compte #}
+        {{ form_start(form) }}
+
+            <div class="form-group">
+                {{ form_label(form.utilisateur, 'Nom d’utilisateur') }}
+                {{ form_widget(form.utilisateur, {'attr': {'class': 'form-control', 'placeholder': 'Votre nom d’utilisateur'}}) }}
+                <div class="error-message">
+                    {{ form_errors(form.utilisateur) }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.prenom, 'Prénom') }}
+                {{ form_widget(form.prenom, {'attr': {'class': 'form-control', 'placeholder': 'Votre prénom'}}) }}
+                <div class="error-message">
+                    {{ form_errors(form.prenom) }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.nom, 'Nom de famille') }}
+                {{ form_widget(form.nom, {'attr': {'class': 'form-control', 'placeholder': 'Votre nom de famille'}}) }}
+                <div class="error-message">
+                    {{ form_errors(form.nom) }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.adresse, 'Adresse') }}
+                {{ form_widget(form.adresse, {'attr': {'class': 'form-control', 'placeholder': 'Votre adresse'}}) }}
+                <div class="error-message">
+                    {{ form_errors(form.adresse) }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.ville, 'Ville') }}
+                {{ form_widget(form.ville, {'attr': {'class': 'form-control', 'placeholder': 'Votre ville'}}) }}
+                <div class="error-message">
+                    {{ form_errors(form.ville) }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.province, 'Province') }}
+                {{ form_widget(form.province, {'attr': {'class': 'form-control'}}) }}
+                <div class="error-message">
+                    {{ form_errors(form.province) }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.telephone, 'Téléphone') }}
+                {{ form_widget(form.telephone, {'attr': {'class': 'form-control', 'placeholder': 'Votre téléphone'}}) }}
+                <div class="error-message">
+                    {{ form_errors(form.telephone) }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.email, 'Email') }}
+                {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Votre email'}}) }}
+                <div class="error-message">
+                    {{ form_errors(form.email) }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.codePostal, 'Code postal') }}
+                {{ form_widget(form.codePostal, {'attr': {'class': 'form-control', 'placeholder': 'Votre code postal'}}) }}
+                <div class="error-message">
+                    {{ form_errors(form.codePostal) }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.genre, 'Genre') }}
+                {{ form_widget(form.genre, {'attr': {'class': 'form-control'}}) }}
+                <div class="error-message">
+                    {{ form_errors(form.genre) }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.motDePasse, 'Mot de passe') }}
+                {{ form_widget(form.motDePasse, {'attr': {'class': 'form-control', 'placeholder': 'Votre mot de passe'}}) }}
+                <div class="error-message">
+                    {{ form_errors(form.motDePasse) }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.confirmationMotDePasse, 'Confirmer le mot de passe') }}
+                {{ form_widget(form.confirmationMotDePasse, {'attr': {'class': 'form-control', 'placeholder': 'Confirmer le mot de passe'}}) }}
+                <div class="error-message">
+                    {{ form_errors(form.confirmationMotDePasse) }}
+                </div>
+            </div>
+            <button name="submit_password" class="btn btn-form" type="submit">Créer le compte</button>
+
+        {{ form_end(form) }}
+
+
+        {% endif %}
+    </div>
 </div>
+{% endblock %}
 
-{% if passwordForm.neoMotDePasse is defined %}
-    {{ form_end(passwordForm) }}
-{% else %}
-    {{ form_end(generalInfoForm) }}
-{% endif %}
-
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/clients.css') }}">
 {% endblock %}
