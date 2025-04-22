@@ -37,9 +37,9 @@ class Commande
 ///
 ///
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public function idCategorie(): ?int
+    public function getIdCommande(): ?int
     {
-        return $this->idCategorie;
+        return $this->idCommande;
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///
@@ -47,7 +47,7 @@ class Commande
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function getDateCommande(): ?string
     {
-        return $this->nom;
+        return $this->dateCommande;
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///
@@ -56,6 +56,18 @@ class Commande
     public function setNom(string $nom): static
     {
         $this->nom = $nom;
+
+        return $this;
+    }
+    public function setClient(Client $client): static
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+    public function setDateCommande(DateTime $datecomm): static
+    {
+        $this->dateCommande = $datecomm;
 
         return $this;
     }

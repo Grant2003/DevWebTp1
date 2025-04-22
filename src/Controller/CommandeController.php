@@ -14,6 +14,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Classes\Panier;
 use App\Entity\Commande;
+use App\Entity\Client;
+use App\Entity\Produit;
+use Doctrine\Persistence\ManagerRegistry;
+
+
 use App\Entity\CommandeDetail;
 
 
@@ -21,9 +26,14 @@ use App\Entity\CommandeDetail;
 class CommandeController extends AbstractController
 {
     #[Route('/commander', name: 'commander', methods: ['POST'])]
-    public function commander(Request $request): Response
+    public function commander(Request $request,ManagerRegistry $doctrine): Response
     {
         $panier = $request->getSession()->get('panier', new Panier());
+        $panier = $request->getSession()->get('panier', new Panier());
+        $clientSession = $request->getSession()->get('utilisateurConnecte');
+        $client = $doctrine->getRepository(Client::class)->find($clientSession->getUtilisateur());
+        $em = $doctrine->getManager();
+
         $itemCount = $panier->compterProduitsTotal();
         // Cart is assumed to be stored in session
     
@@ -35,25 +45,29 @@ class CommandeController extends AbstractController
         $commande = new Commande();
         $commande->setClient($client);
         $commande->setDateCommande(new \DateTime());
-    
-        foreach ($panier as $item) {
-            $produit = $em->getRepository(Produit::class)->find($item['id']);
+
+        foreach ($panier->panier as $item) {
+            $produit = $em->getRepository(Produit::class)->find($item->id);
+        
             if (!$produit) {
                 continue;
             }
-    
+        
             $detail = new CommandeDetail();
             $detail->setProduit($produit);
-            $detail->setQuantite($item['quantite']);
+            $detail->setQuantite($item->quantiteCommande);
+            $detail->setQuantiteRupture($item->quantiteCommande);
+
             $detail->setCommande($commande);
-    
+        
             $em->persist($detail);
         }
+        
     
         $em->persist($commande);
         $em->flush();
     
-        $session->remove('panier');
+        $request->getSession()->remove('panier');
         $this->addFlash('success', 'Votre commande a été enregistrée.');
     
         return $this->redirectToRoute('app_home');

@@ -64,7 +64,31 @@ class CommandeDetail
 ///
 ///
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public function getProduits() : Collection {
-        return $this->produits;
+    public function getProduits() : Produit {
+        return $this->produit;
+    }
+    public function setProduit(Produit $prod): static
+    {
+        $this->produit = $prod;
+
+        return $this;
+    }
+    public function setQuantite(int $quantite): static
+    {
+        $this->quantite = $quantite;
+
+        return $this;
+    }
+    public function setQuantiteRupture(int $quantite): static
+    {
+        $this->quantiteRupture = $quantite;
+
+        return $this;
+    }
+    public function setCommande(Commande $commande): static
+    {
+        $this->commande = $commande;
+
+        return $this;
     }
 }
