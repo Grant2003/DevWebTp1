@@ -8,12 +8,13 @@ namespace App\Entity;
 //   Date :    2025-2-22
 //-----------------------------------
 
-use App\Entity\CategorieRepository;
+use App\Entity\CommandeRepository;
 use DateTime;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: \App\Repository\CategorieRepository::class)]
+#[ORM\Entity(repositoryClass: \App\Repository\CommandeRepository::class)]
 
 
 #[ORM\Table(name:'commande')]
@@ -33,6 +34,11 @@ class Commande
 
     #[ORM\OneToMany(mappedBy: 'commande', targetEntity: CommandeDetail::class, cascade: ['persist'], orphanRemoval: true)]
     private Collection $commandeDetails;
+
+    public function __construct()
+    {
+        $this->commandeDetails = new ArrayCollection();
+    }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///
 ///
@@ -48,6 +54,10 @@ class Commande
     public function getDateCommande(): ?string
     {
         return $this->dateCommande;
+    }
+    public function getCommandeDetails(): ?Collection
+    {
+        return $this->commandeDetails;
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///

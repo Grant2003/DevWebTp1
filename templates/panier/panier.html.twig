@@ -11,14 +11,15 @@
 
     {# affichage des items si le panier n'est pas vide #}
     {% if items is not empty %}
-        {# mise a jour des quantités de tout les produits #}
+    <div class="card table-responsive">
+           {# mise a jour des quantités de tout les produits #}
         <form action="{{ path('update_all') }}" method="post">
-            <table class="table table-bordered table-striped">
+            <table class="table table-striped">
                 <thead class="thead-dark">
                     <tr class="text-center align-middle">
                         <th>Nom du produit</th>
                         <th class="align-middle">Quantité
-                            <button type="submit" class="btn btn-dark btn-sm mt-2">Mettre à jour les quantités</button>
+                            <button type="submit" class="btn btn-dark btn-sm">Mettre à jour les quantités</button>
                         </th>
                         <th>Prix Unitaire</th>
                         <th>Total</th>
@@ -28,7 +29,7 @@
                 <tbody>
                     {# affichage de tous les produits #}
                     {% for produit in items %}
-                        <tr>
+                        <tr class="text-center">
                             <td>{{ produit.nom }}</td>
                             <td>
                                 <input type="number" name="quantiteCommande[{{ produit.id }}]" value="{{ produit.quantiteCommande }}" min="1" class="form-control w-50 mx-auto">
@@ -38,70 +39,85 @@
                             <td>
                                 {# effacer un item #}
                                 <form action="{{ path('delete_item', { id: produit.id }) }}" method="post" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce produit ?');">
-                                    <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                                    <button type="submit" class="btn btn-dark btn-sm">Supprimer</button>
                                 </form>
                             </td>
                         </tr>
                     {% endfor %}
                     {# attributs de la commande #}
-                    <tr class="font-weight-bold">
+                    <tr class="font-weight-bold text-center">
                         <td></td>
                         <td></td>
                         <td>Total achat:</td>
                         <td>{{ totalAvantTaxes | number_format(2, '.', ',') }} $</td>
                         <td></td>
                     </tr>
-                    <tr class="font-weight-bold">
+                    <tr class="font-weight-bold text-center">
                         <td></td>
                         <td></td>
                         <td>Frais de livraison:</td>
                         <td>{{ 10 | number_format(2, '.', ',') }} $</td>
                         <td></td>
                     </tr>
-                    <tr class="font-weight-bold">
+                    <tr class="font-weight-bold text-center">
                         <td></td>
                         <td></td>
                         <td>Total avant taxes:</td>
                         <td>{{ (totalAvantTaxes + fraisDePort) | number_format(2, '.', ',') }} $</td>
                         <td></td>
                     </tr>
-                    <tr class="font-weight-bold">
+                    <tr class="font-weight-bold text-center">
                         <td></td>
                         <td></td>
                         <td>TPS (0.05):</td>
                         <td>{{ tps | number_format(2, '.', ',') }} $</td>
                         <td></td>
                     </tr>
-                    <tr class="font-weight-bold">
+                    <tr class="font-weight-bold text-center">
                         <td></td>
                         <td></td>
                         <td>TVQ (0.0975):</td>
                         <td>{{ tvq | number_format(2, '.', ',') }} $</td>
                         <td></td>
                     </tr>
-                    <tr class="font-weight-bold">
+                    <tr class="font-weight-bold text-center">
                         <td></td>
                         <td></td>
                         <td>Total:</td>
                         <td>{{ total | number_format(2, '.', ',') }} $</td>
                         <td></td>
                     </tr>
+                    <tr class="font-weight-bold text-center">
+                        <td>
+                            <div class="text-center">
+                                <a class="btn btn-dark" href="{{ path('app_home') }}">Retour au Catalogue</a>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-center">
+                                <form action="{{ path('vider_panier') }}" method="post">
+                                    <button type="submit" class="btn btn-dark">Vider le panier</button>
+                                </form>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-center">
+                                <form action="{{ path('commander') }}" method="post">
+                                    <button type="submit" class="btn btn-dark">TEST COMMANDER</button>
+                                </form>
+                            </div>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
                 </tbody>
             </table>
         </form>
 
-        <div class="mt-3 text-center">
-            <a class="btn btn-secondary" href="{{ path('app_home') }}">Retour au Catalogue</a>
-        </div>
 
-        <div class="mt-3 text-center">
-            <form action="{{ path('vider_panier') }}" method="post">
-                <button type="submit" class="btn btn-danger btn-lg">Vider le panier</button>
-            </form>
-            <form action="{{ path('commander') }}" method="post">
-                <button type="submit" class="btn btn-danger btn-lg">TEST COMMANDER</button>
-            </form>
-        </div>
+
+    </div>
+ 
 
     {# message si le panier est vide #}
     {% else %}

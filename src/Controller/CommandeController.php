@@ -29,7 +29,6 @@ class CommandeController extends AbstractController
     public function commander(Request $request,ManagerRegistry $doctrine): Response
     {
         $panier = $request->getSession()->get('panier', new Panier());
-        $panier = $request->getSession()->get('panier', new Panier());
         $clientSession = $request->getSession()->get('utilisateurConnecte');
         $client = $doctrine->getRepository(Client::class)->find($clientSession->getUtilisateur());
         $em = $doctrine->getManager();
@@ -62,15 +61,28 @@ class CommandeController extends AbstractController
         
             $em->persist($detail);
         }
-        
-    
         $em->persist($commande);
         $em->flush();
-    
+
+        //propriétés du tableau
+        $fraisDePort = 10;
+        $totalAvantTaxes = $panier->calculerSommePrix();
+        $tps = ($totalAvantTaxes+10)*0.05;
+        $tvq =($totalAvantTaxes+10)*0.0975;
+        $total = $totalAvantTaxes + $tps + $tvq + $fraisDePort;
+
         $request->getSession()->remove('panier');
         $this->addFlash('success', 'Votre commande a été enregistrée.');
-    
-        return $this->redirectToRoute('app_home');
+        $commandetest = $em->getRepository(Commande::class)->find(99);
+        return $this->render('Commande/index.html.twig', [
+            'details' => $commandetest->getCommandeDetails(),
+            'totalAvantTaxes' => $totalAvantTaxes,
+            'fraisDePort' => $fraisDePort,
+            'tps' => $tps,
+            'tvq' => $tvq,
+            'total' => $total,
+            'nbItem' => $itemCount
+        ]);   
     }
     
 }

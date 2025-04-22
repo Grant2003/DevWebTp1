@@ -20,15 +20,15 @@ class CommandeRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Commande::class);
     }
-    public function findWithCriteria($searchField) {
+    public function findWithCriteria($id) {
         $queryBuilder = $this->createQueryBuilder('c');    
-        if ($searchField != null) {
-            $queryBuilder->andWhere('c.utilisateur LIKE :searchFilter')
-                ->orWhere('c.nom LIKE :searchFilter')
-                ->setParameter('searchFilter', '%' . $searchField . '%'); 
-        }
     
+        if ($categorie != null) {
+            $queryBuilder->andWhere('c.idCommande = :idCommande')
+                ->setParameter('idCommande', $id);
+        }
     
         return $queryBuilder->getQuery()->getResult();
     }
+
 }

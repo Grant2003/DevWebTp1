@@ -1,15 +1,102 @@
 {# //-----------------------------------
-//   Fichier : base.html.twig
-//   Par:      Anthony Grenier
-//   Date :    2025-2-22
+  //   Fichier : panier.html.twig
+  //   Par:      Anthony Grenier
+  //   Date :    2025-3-16
 //----------------------------------- #}
 {% extends 'core/base.html.twig' %}
 
 {% block content %}
+<div class="div-panier justify-content-center pb-5">
+    <h1 class="text-center mb-4">Confirmation de la commande</h1>
+        <div class="card table-responsive">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr class="text-center align-middle">
+                        <th>Nom du produit</th>
+                        <th>Quantité</th>
+                        <th>Prix Unitaire</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {# affichage de tous les detail.produits #}
+                    {% for detail in details %}
+                        <tr class="text-center">
+                            <td>{{ detail.produit.nom }}</td>
+                            <td>{{ detail.quantite }}</td>
+                            <td>{{ detail.produit.prix | number_format(2, '.', ',') }} $</td>
+                            <td>{{ (detail.produit.prix * detail.quantite) | number_format(2, '.', ',') }} $</td>
+                        </tr>
+                    {% endfor %}
+                    {# attributs de la commande #}
+                    <tr class="font-weight-bold text-center">
+                        <td></td>
+                        <td></td>
+                        <td>Total achat:</td>
+                        <td>{{ totalAvantTaxes | number_format(2, '.', ',') }} $</td>
+                    </tr>
+                    <tr class="font-weight-bold text-center">
+                        <td></td>
+                        <td></td>
+                        <td>Frais de livraison:</td>
+                        <td>{{ 10 | number_format(2, '.', ',') }} $</td>
+                    </tr>
+                    <tr class="font-weight-bold text-center">
+                        <td></td>
+                        <td></td>
+                        <td>Total avant taxes:</td>
+                        <td>{{ (totalAvantTaxes + fraisDePort) | number_format(2, '.', ',') }} $</td>
+                    </tr>
+                    <tr class="font-weight-bold text-center">
+                        <td></td>
+                        <td></td>
+                        <td>TPS (0.05):</td>
+                        <td>{{ tps | number_format(2, '.', ',') }} $</td>
+                    </tr>
+                    <tr class="font-weight-bold text-center">
+                        <td></td>
+                        <td></td>
+                        <td>TVQ (0.0975):</td>
+                        <td>{{ tvq | number_format(2, '.', ',') }} $</td>
+                    </tr>
+                    <tr class="font-weight-bold text-center">
+                        <td></td>
+                        <td></td>
+                        <td>Total:</td>
+                        <td>{{ total | number_format(2, '.', ',') }} $</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="text-center">
+                                <form action="{{ path('route_panier') }}" method="post">
+                                    <button type="submit" class="btn btn-dark">retour au panier</button>
+                                </form>
+                             </div>
+                        </td>
+                        <td>
+                            <div class="text-center">
+                                 <a class="btn btn-dark" href="{{ path('app_home') }}">Retour au Catalogue</a>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-center">
+                                <form action="{{ path('commander') }}" method="post">
+                                    <button type="submit" class="btn btn-dark">Confirmer</button>
+                                </form>
+                            </div>
+                        </td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+       
 
 
-<div class="d-flex flex-wrap justify-content-center pb-5">
+
 </div>
+{% endblock %}
 
-
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('styles/panier.css') }}">
 {% endblock %}

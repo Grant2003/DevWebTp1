@@ -29,7 +29,7 @@ class CommandeDetail
     private ?int $quantiteRupture = null;
 
     #[ORM\ManyToOne(inversedBy: 'commandeDetails')]
-    #[ORM\JoinColumn(name: 'commande_id', referencedColumnName: 'idCommande', nullable: false)]
+    #[ORM\JoinColumn(name: 'idCommande', referencedColumnName: 'idCommande', nullable: false)]
     private ?Commande $commande = null;
 
     #[ORM\ManyToOne(inversedBy: 'commandeDetails')]
@@ -64,8 +64,11 @@ class CommandeDetail
 ///
 ///
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public function getProduits() : Produit {
+    public function getProduit() : Produit {
         return $this->produit;
+    }
+    public function getQuantite() : int {
+        return $this->quantite;
     }
     public function setProduit(Produit $prod): static
     {
