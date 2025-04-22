@@ -1,0 +1,70 @@
+<?php
+
+namespace App\Entity;
+
+//-----------------------------------
+//   Fichier : CommandeDetail.php
+//   Par:      Anthony Grenier
+//   Date :    2025-2-22
+//-----------------------------------
+
+use App\Entity\CommandeDetailRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
+
+#[ORM\Entity(repositoryClass: \App\Repository\CommandeDetailRepository::class)]
+
+
+#[ORM\Table(name:'commandeDetail')]
+class CommandeDetail
+{
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(name:'idCommandeDetail')]
+    private ?int $idCommandeDetail = null;
+    
+    #[ORM\Column]
+    private ?int $quantite = null;
+    #[ORM\Column]
+    private ?int $quantiteRupture = null;
+
+    #[ORM\ManyToOne(inversedBy: 'commandeDetails')]
+    #[ORM\JoinColumn(name: 'commande_id', referencedColumnName: 'idCommande', nullable: false)]
+    private ?Commande $commande = null;
+
+    #[ORM\ManyToOne(inversedBy: 'commandeDetails')]
+    #[ORM\JoinColumn(name: 'produit_id', referencedColumnName: 'id', nullable: false)]
+    private ?Produit $produit = null;
+///
+///
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public function idCommandeDetail(): ?int
+    {
+        return $this->idCommandeDetail;
+    }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///
+///
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///
+///
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public function setNom(string $nom): static
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///
+///
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public function getProduits() : Collection {
+        return $this->produits;
+    }
+}

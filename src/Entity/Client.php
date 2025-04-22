@@ -11,6 +11,7 @@ use App\Repository\ClientRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints\Collection;
 
 #[ORM\Entity(repositoryClass: ClientRepository::class)]
 #[UniqueEntity(
@@ -108,6 +109,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
             message: "Les mots de passe ne correspondent pas."
         )]
     private ?string $neoConfirmation ;
+
+    #[ORM\OneToMany(mappedBy: 'client', targetEntity: Commande::class)]
+    private Collection $commandes;
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///
 ///
