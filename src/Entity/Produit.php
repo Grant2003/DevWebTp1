@@ -39,11 +39,12 @@ class Produit
 
     #[ORM\ManyToOne(targetEntity:Categorie::class, inversedBy:"produits", cascade:["persist"])]
     #[ORM\JoinColumn(name:'idCategorie', referencedColumnName:'idCategorie')]
+    private $idCategorie;
     
     #[ORM\OneToMany(mappedBy: 'produit', targetEntity: CommandeDetail::class)]
     private Collection $commandeDetails;
 
-    private $idCategorie;
+
 
     public function __construct()
     {

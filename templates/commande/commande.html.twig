@@ -19,13 +19,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {# affichage de tous les detail.produits #}
-                    {% for detail in details %}
+                    {# affichage de tous les produits #}
+                    {% for produit in items %}
                         <tr class="text-center">
-                            <td>{{ detail.produit.nom }}</td>
-                            <td>{{ detail.quantite }}</td>
-                            <td>{{ detail.produit.prix | number_format(2, '.', ',') }} $</td>
-                            <td>{{ (detail.produit.prix * detail.quantite) | number_format(2, '.', ',') }} $</td>
+                            <td>{{ produit.nom }}</td>
+                            <td>{{ produit.quantiteCommande }}</td>
+                            <td>{{ produit.prix | number_format(2, '.', ',') }} $</td>
+                            <td>{{ (produit.prix * produit.quantiteCommande) | number_format(2, '.', ',') }} $</td>
                         </tr>
                     {% endfor %}
                     {# attributs de la commande #}
@@ -80,7 +80,7 @@
                         </td>
                         <td>
                             <div class="text-center">
-                                <form action="{{ path('commander') }}" method="post">
+                                <form action="{{ path('paiement') }}" method="post">
                                     <button type="submit" class="btn btn-dark">Confirmer</button>
                                 </form>
                             </div>

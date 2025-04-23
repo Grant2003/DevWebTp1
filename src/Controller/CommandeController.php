@@ -34,7 +34,42 @@ class CommandeController extends AbstractController
         $em = $doctrine->getManager();
 
         $itemCount = $panier->compterProduitsTotal();
-        // Cart is assumed to be stored in session
+
+        //propriétés du tableau
+        $fraisDePort = 10;
+        $totalAvantTaxes = $panier->calculerSommePrix();
+        $tps = ($totalAvantTaxes+10)*0.05;
+        $tvq =($totalAvantTaxes+10)*0.0975;
+        $total = $totalAvantTaxes + $tps + $tvq + $fraisDePort;
+        $items = $panier->panier;
+
+        return $this->render('Commande/commande.html.twig', [
+            'items' => $items,
+            'totalAvantTaxes' => $totalAvantTaxes,
+            'fraisDePort' => $fraisDePort,
+            'tps' => $tps,
+            'tvq' => $tvq,
+            'total' => $total,
+            'nbItem' => $itemCount
+        ]);   
+    }
+    #[Route('/paiement', name: 'paiement', methods: ['POST'])]
+    public function paiement(Request $request,ManagerRegistry $doctrine): Response
+    {
+        $panier = $request->getSession()->get('panier', new Panier());
+        $itemCount = $panier->compterProduitsTotal();
+
+        return $this->render('Commande/paiement.html.twig', [
+            'nbItem' => $itemCount
+        ]);   
+    }
+    #[Route('/confirmation', name: 'confirmation', methods: ['POST'])]
+    public function confirmation(Request $request,ManagerRegistry $doctrine): Response
+    {
+        $panier = $request->getSession()->get('panier', new Panier());
+        $clientSession = $request->getSession()->get('utilisateurConnecte');
+        $client = $doctrine->getRepository(Client::class)->find($clientSession->getUtilisateur());
+        $em = $doctrine->getManager();
     
         if (empty($panier)) {
             $this->addFlash('warning', 'Votre panier est vide.');
@@ -55,7 +90,17 @@ class CommandeController extends AbstractController
             $detail = new CommandeDetail();
             $detail->setProduit($produit);
             $detail->setQuantite($item->quantiteCommande);
-            $detail->setQuantiteRupture($item->quantiteCommande);
+            if($produit->getQtte_Stock() - $item->quantiteCommande <= 0){
+                $detail->setQuantiteRupture($item->quantiteCommande - $produit->getQtte_Stock());
+                $produit->setQtteStock(0);
+                $em->persist($produit);
+            }
+            else{
+                $detail->setQuantiteRupture(0);
+
+                $produit->setQtteStock($produit->getQtte_Stock() - $item->quantiteCommande);
+                $em->persist($produit);
+            }
 
             $detail->setCommande($commande);
         
@@ -63,26 +108,32 @@ class CommandeController extends AbstractController
         }
         $em->persist($commande);
         $em->flush();
+        $request->getSession()->remove('panier');
 
-        //propriétés du tableau
+
+        $itemCount = $panier->compterProduitsTotal();
+        $noCommande = $commande->getIdCommande();
+        $client = $commande->getClient();
+        $adresse = $client->getAdresse();
+        $ville = $client->getVille();
+        $province = $client->getProvince();
+        $codePostal = $client->getCodePostal();
+        $email = $client->getEmail();
         $fraisDePort = 10;
         $totalAvantTaxes = $panier->calculerSommePrix();
         $tps = ($totalAvantTaxes+10)*0.05;
         $tvq =($totalAvantTaxes+10)*0.0975;
         $total = $totalAvantTaxes + $tps + $tvq + $fraisDePort;
-
-        $request->getSession()->remove('panier');
-        $this->addFlash('success', 'Votre commande a été enregistrée.');
-        $commandetest = $em->getRepository(Commande::class)->find(99);
-        return $this->render('Commande/index.html.twig', [
-            'details' => $commandetest->getCommandeDetails(),
-            'totalAvantTaxes' => $totalAvantTaxes,
-            'fraisDePort' => $fraisDePort,
-            'tps' => $tps,
-            'tvq' => $tvq,
-            'total' => $total,
-            'nbItem' => $itemCount
+        
+        return $this->render('Commande/confirmation.html.twig', [
+            'nbItem' => $itemCount,
+            'noCommande' => $noCommande,
+            'adresse' => $adresse,
+            'ville' => $ville,
+            'province' => $province,
+            'codePostal' => $codePostal,
+            'email' => $email,
+            'total' => $total
         ]);   
     }
-    
 }

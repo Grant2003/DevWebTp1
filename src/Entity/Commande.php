@@ -59,6 +59,10 @@ class Commande
     {
         return $this->commandeDetails;
     }
+    public function getClient(): ?Client
+    {
+        return $this->client;
+    }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///
 ///
