@@ -89,14 +89,19 @@ class CommandeController extends AbstractController
         
             $detail = new CommandeDetail();
             $detail->setProduit($produit);
-            $detail->setQuantite($item->quantiteCommande);
             if($produit->getQtte_Stock() - $item->quantiteCommande <= 0){
+
                 $detail->setQuantiteRupture($item->quantiteCommande - $produit->getQtte_Stock());
+                $detail->setQuantite($item->quantiteCommande - $detail->getQuantiteRupture());
+                
                 $produit->setQtteStock(0);
+                $this->addFlash('warning', 'Attention: rupture de stock pour '.$item->nom.' (Manque '.$detail->getQuantiteRupture().' items)');
+
                 $em->persist($produit);
             }
             else{
                 $detail->setQuantiteRupture(0);
+                $detail->setQuantite($item->quantiteCommande);
 
                 $produit->setQtteStock($produit->getQtte_Stock() - $item->quantiteCommande);
                 $em->persist($produit);
@@ -109,6 +114,7 @@ class CommandeController extends AbstractController
         $em->persist($commande);
         $em->flush();
         $request->getSession()->remove('panier');
+        $this->addFlash('success', 'Commande '.$commande->getIdCommande().' En préparation');
 
 
         $itemCount = $panier->compterProduitsTotal();
@@ -135,5 +141,21 @@ class CommandeController extends AbstractController
             'email' => $email,
             'total' => $total
         ]);   
+    }
+    #[Route('/historique', name: 'historique', methods: ['GET'])]
+    public function historique(Request $request,ManagerRegistry $doctrine): Response
+    {
+        $panier = $request->getSession()->get('panier', new Panier());
+        $itemCount = $panier->compterProduitsTotal();
+        $clientSession = $request->getSession()->get('utilisateurConnecte');
+        $client = $doctrine->getRepository(Client::class)->find($clientSession->getUtilisateur());
+        $commandes = $client->getCommandes();
+
+
+
+        return $this->render('Commande/historique.html.twig', [
+            'nbItem' => $itemCount,
+            'commandes'=> $commandes
+        ]); 
     }
 }

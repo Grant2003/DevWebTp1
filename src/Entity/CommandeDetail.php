@@ -70,6 +70,9 @@ class CommandeDetail
     public function getQuantite() : int {
         return $this->quantite;
     }
+    public function getQuantiteRupture() : int {
+        return $this->quantiteRupture;
+    }
     public function setProduit(Produit $prod): static
     {
         $this->produit = $prod;

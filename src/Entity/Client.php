@@ -9,6 +9,7 @@ namespace App\Entity;
 use App\Repository\ClientRepository;
 
 use Doctrine\ORM\Mapping as ORM;
+use PhpParser\ErrorHandler\Collecting;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\Common\Collections\Collection;
@@ -356,6 +357,11 @@ use Doctrine\Common\Collections\Collection;
     public function getAncienMotDePasse(): ?string
     {
         return $this->ancienMotDePasse;
+    }
+
+    public function getCommandes(): Collection
+    {
+        return $this->commandes;
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///

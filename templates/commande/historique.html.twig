@@ -1,0 +1,7 @@
+{% extends 'core/base.html.twig' %}
+
+{% block content %}
+    {% for commande in commandes %}
+        <p>{{ commande.idCommande }}</p>
+    {% endfor %}
+{% endblock %}
