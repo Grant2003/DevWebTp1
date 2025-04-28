@@ -220,7 +220,7 @@ class CommandeController extends AbstractController
 
             return $this->redirectToRoute('route_historique');        }
 
-        return $this->render('commande/confirmation_annulation.html.twig', [
+        return $this->render('Commande/confirmation_annulation.html.twig', [
             'commande' => $commande
         ]);
     }
