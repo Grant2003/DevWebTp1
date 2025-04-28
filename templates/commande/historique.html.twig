@@ -31,7 +31,7 @@
                 <ul class="historique-ul-li">
                     {% for produitCommande in commande.commandeDetails %}
                         <li class="historique-ul-li">
-                            {{ produitCommande.produit.nom }} — {{ produitCommande.quantite + produitCommande.quantiteRupture }} exemplaire{{ produitCommande.quantite > 1 ? 's' : '' }}
+                            {{ produitCommande.produit.nom }} — {{ produitCommande.quantite }} exemplaire{{ produitCommande.quantite > 1 ? 's' : '' }}
                         </li>
                     {% else %}
                         <li class="historique-ul-li">Aucun produit</li>

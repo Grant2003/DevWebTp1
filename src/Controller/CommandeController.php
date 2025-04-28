@@ -265,7 +265,7 @@ class CommandeController extends AbstractController
         // Réapprovisionner les produits
         foreach ($commande->getCommandeDetails() as $detail) {
             $produit = $detail->getProduit();
-            $produit->getQtte_Stock($produit->getQtte_Stock() + ($detail->getQuantite() - $detail->getQuantiteRupture()));
+            $produit->setQtteStock($produit->getQtte_Stock() + ($detail->getQuantite() - $detail->getQuantiteRupture()));
             $em->persist($produit);
             
         }
