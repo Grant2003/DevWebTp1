@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: \App\Repository\CommandeDetailRepository::class)]
 
 
-#[ORM\Table(name:'commandeDetail')]
+#[ORM\Table(name:'commandedetail')]
 class CommandeDetail
 {
     #[ORM\Id]
