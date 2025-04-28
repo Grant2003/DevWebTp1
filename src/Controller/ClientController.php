@@ -34,8 +34,6 @@ class ClientController extends AbstractController
     {
         $utilisateur = $request->getSession()->get('utilisateur', new Client());
         $form = $this->createForm(ClientType::class, $utilisateur);
-        $panier = $request->getSession()->get('panier', new Panier());
-        $itemCount = $panier->compterProduitsTotal();
 
         $form->handleRequest($request);
 
@@ -43,14 +41,12 @@ class ClientController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
                 $request->getSession()->set('utilisateur', $utilisateur);
                 return $this->render('Client/confirmation.html.twig', [
-                    'nbItem' => $itemCount,
                     'utilisateur' => $utilisateur,
                 ]);
             
         }
 
         return $this->render('Client/creerCompte.html.twig', [
-            'nbItem' => $itemCount,
             'form' => $form->createView(),
         ]);
     }
@@ -149,7 +145,6 @@ class ClientController extends AbstractController
         return $this->render('Client/creerCompte.html.twig', [
             'generalInfoForm' => $generalForm->createView(),
             'passwordForm'  => $passwordForm->createView(),
-            'nbItem' => $itemCount,
         ]);
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -159,8 +154,6 @@ class ClientController extends AbstractController
     #[Route(path: '/connexion', name: 'route_connexion')]
     public function Connexion(Request $request, ManagerRegistry $doctrine): Response
     {
-        $panier = $request->getSession()->get('panier', new Panier());
-        $itemCount = $panier->compterProduitsTotal();
 
         if ($request->isMethod('POST')) {
 
@@ -182,7 +175,7 @@ class ClientController extends AbstractController
             $this->addFlash('error', 'Combinaison de connexion invalide');
         }
 
-        return $this->render('Client/connexion.html.twig', ['nbItem' => $itemCount]);
+        return $this->render('Client/connexion.html.twig', []);
     }
 
 }

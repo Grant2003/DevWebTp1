@@ -1,0 +1,20 @@
+{# //-----------------------------------
+  //   Fichier : confirmation_annulation.html.twig
+  //   Par:      Anthony Grenier
+  //   Date :    2025-4-21
+//----------------------------------- #}
+{% extends 'core/base.html.twig' %}
+
+{% block content %}
+    <h1>Confirmation d'annulation</h1>
+
+    <p>Êtes-vous sûr de vouloir annuler la commande #{{ commande.idCommande }} ?</p>
+    <p>Le total de la commande est de {{ commande.total }} $</p>
+
+    <form action="{{ path('route_confirmer_annulation', {id: commande.idCommande}) }}" method="POST">
+        <button type="submit" class="btn btn-danger">Confirmer l'annulation</button>
+    </form>
+
+    <a href="{{ path('app_home') }}" class="btn btn-primary">Retour au catalogue</a>
+    <a href="{{ path('route_historique') }}" class="btn btn-secondary">Retour à l'historique des commandes</a>
+{% endblock %}

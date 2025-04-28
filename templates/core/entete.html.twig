@@ -6,7 +6,7 @@
 //   
 //----------------------------------- #}
 
-
+{% set nbItemLocal = app.session.get('nbItem', 0) %}
   <header class="py-3  border-bottom text-bg-dark">
     <div class="container">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -21,7 +21,7 @@
             <a class="nav-link px-2 text-white" href="{{ path('route_contact') }}">Contact</a>
         </li>
         <li>
-            <a class="nav-link px-2 text-white" href="{{ path('route_panier') }}"> Panier ({{nbItem}} items) </a>
+            <a class="nav-link px-2 text-white" href="{{ path('route_panier') }}"> Panier ({{nbItemLocal }} items) </a>
 
         </li>
         </ul>
@@ -39,10 +39,7 @@
                   <a class="nav-link px-2 text-white" href="{{ path('route_modifier') }}"> Modifier le compte </a>
               </li>
               <li class="nav-item me-3">
-                  <a class="nav-link px-2 text-white"> Commande</a>
-              </li>
-              <li class="nav-item me-3">
-                  <a class="nav-link px-2 text-white" href="{{ path('historique') }}"> Mes achats </a>
+                  <a class="nav-link px-2 text-white" href="{{ path('route_historique') }}"> Mes achats </a>
               </li>
             {% else %}
               <li class="nav-item me-3">

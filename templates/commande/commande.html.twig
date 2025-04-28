@@ -1,7 +1,7 @@
 {# //-----------------------------------
-  //   Fichier : panier.html.twig
+  //   Fichier : commande.html.twig
   //   Par:      Anthony Grenier
-  //   Date :    2025-3-16
+  //   Date :    2025-4-18
 //----------------------------------- #}
 {% extends 'core/base.html.twig' %}
 
@@ -80,7 +80,7 @@
                         </td>
                         <td>
                             <div class="text-center">
-                                <form action="{{ path('paiement') }}" method="post">
+                                <form action="{{ path('route_paiement') }}" method="post">
                                     <button type="submit" class="btn btn-dark">Confirmer</button>
                                 </form>
                             </div>

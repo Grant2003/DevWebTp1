@@ -1,3 +1,8 @@
+{# //-----------------------------------
+  //   Fichier : confirmation.html.twig
+  //   Par:      Anthony Grenier
+  //   Date :    2025-4-21
+//----------------------------------- #}
 {% extends 'core/base.html.twig' %}
 
 {% block title %} Produits  {% endblock %}
@@ -33,16 +38,10 @@
     <h3>
         Vous avez 48h pour annuler la commande
     </h3>
-    <table>
-        <td class="text-center">
-            <a href="/historique" class="btn btn-secondary">Historique des commandes</a>
-        </td>
-        <td class="text-center">
-            <a href="/" class="btn btn-secondary">Retour au catalogue</a>
-        </td>
-    </table>
 
-    </tr>
+        <a href="/historique" class="btn btn-secondary">Historique des commandes</a>
+
+        <a href="/" class="btn btn-secondary">Retour au catalogue</a>
 </div>
 
 

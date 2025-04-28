@@ -48,11 +48,11 @@ class HomeController extends AbstractController
             $panier = new Panier();
             $session->set('panier', $panier);
         }
-        $nbItem = $panier->compterProduitsTotal();
-        
+        $request->getSession()->set('nbItem', $panier->compterProduitsTotal());
 
 
-        return $this->render('home/index.html.twig', ['produits' => $produits, 'categories' => $categories, 'nbItem'=> $nbItem, 'produitVedette' => $produitVedette]);
+
+        return $this->render('home/index.html.twig', ['produits' => $produits, 'categories' => $categories, 'produitVedette' => $produitVedette]);
     }
 
     #[Route('/toggle-carousel', name: 'toggle_carousel')]
@@ -109,7 +109,8 @@ class HomeController extends AbstractController
         }
 
         $session->set('panier', $panier);
-    
+        $session->set('nbItem', $panier->compterProduitsTotal());
+
     
         $produitsDansPanier = $panier->panier; 
     

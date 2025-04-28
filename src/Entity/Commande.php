@@ -3,9 +3,9 @@
 namespace App\Entity;
 
 //-----------------------------------
-//   Fichier : Categorie.php
+//   Fichier : Commande.php
 //   Par:      Anthony Grenier
-//   Date :    2025-2-22
+//   Date :    2025-4-18
 //-----------------------------------
 
 use App\Entity\CommandeRepository;
@@ -13,6 +13,8 @@ use DateTime;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use PhpParser\Node\Expr\Cast\Double;
+use PhpParser\Node\Scalar\Float_;
 
 #[ORM\Entity(repositoryClass: \App\Repository\CommandeRepository::class)]
 
@@ -51,7 +53,7 @@ class Commande
 ///
 ///
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public function getDateCommande(): ?string
+    public function getDateCommande(): ?DateTime
     {
         return $this->dateCommande;
     }
@@ -63,6 +65,23 @@ class Commande
     {
         return $this->client;
     }
+
+    public function total(): float
+    {
+        $total = 10;
+    
+        foreach ($this->commandeDetails as $produitCommande) {
+            $total += $produitCommande->getProduit()->getPrix();
+        }
+    
+        $tps = round(0.05 * $total, 2);
+        $tvq = round(0.0975 * $total, 2);
+        $total += $tps + $tvq;
+        
+        return round($total, 2);
+        
+    }
+    
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///
 ///

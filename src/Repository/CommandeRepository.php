@@ -2,9 +2,9 @@
 
 namespace App\Repository;
 //-----------------------------------
-//   Fichier : clientRepository.php
+//   Fichier : CommandeRepository.php
 //   Par:      Anthony Grenier
-//   Date :    2025-3-27
+//   Date :    2025-4-18
 //-----------------------------------
 
 use App\Entity\Commande;
@@ -23,12 +23,20 @@ class CommandeRepository extends ServiceEntityRepository
     public function findWithCriteria($id) {
         $queryBuilder = $this->createQueryBuilder('c');    
     
-        if ($categorie != null) {
+        if ($id != null) {
             $queryBuilder->andWhere('c.idCommande = :idCommande')
                 ->setParameter('idCommande', $id);
         }
     
         return $queryBuilder->getQuery()->getResult();
     }
+    public function findByClientOrdered($client)
+    {
+        return $this->findBy(
+            ['client' => $client],
+            ['dateCommande' => 'DESC'] 
+        );
+    }
+
 
 }

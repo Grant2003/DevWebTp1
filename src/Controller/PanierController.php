@@ -40,7 +40,6 @@ class PanierController extends AbstractController
             'tps' => $tps,
             'tvq' => $tvq,
             'total' => $total,
-            'nbItem' => $nbItem
         ]);
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -55,6 +54,8 @@ class PanierController extends AbstractController
         $panier = $request->getSession()->get('panier', new Panier());
         $panier->supprimerProduitParId($id);
         $request->getSession()->set('panier', $panier);
+        $request->getSession()->set('nbItem', $panier->compterProduitsTotal());
+
         return $this->redirectToRoute('route_panier');
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -76,6 +77,8 @@ class PanierController extends AbstractController
         }
 
         $request->getSession()->set('panier', $panier);
+        $request->getSession()->set('nbItem', $panier->compterProduitsTotal());
+
 
         return $this->redirectToRoute('route_panier');
     }
@@ -89,6 +92,8 @@ class PanierController extends AbstractController
     public function ViderPanier(Request $request): Response {
         $panier = $request->getSession()->get('panier', new Panier());
         $panier = $panier->viderPanier();
+        $request->getSession()->set('nbItem', 0);
+
 
 
         return $this->redirectToRoute('route_panier');

@@ -48,6 +48,9 @@ body, html {
 }
 .carteproduit{
     box-shadow: 0.5em 0.5em black;
+    /* border-radius: 8px;
+    overflow: hidden; */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .cartecarousel{
     height: 450px;
@@ -63,24 +66,26 @@ body, html {
 }
 
 .en-vedette-text {
-    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
-    color: #333; /* Soft dark text for contrast */
-    padding: 25px 150px; /* Larger padding for emphasis */
-    border-radius: 50px; /* Oval shape */
-    font-size: 35px; /* Bigger, bolder text */
+    background-color: rgba(255, 255, 255, 0.8); 
+    padding: 25px 150px; 
+    border-radius: 50px; 
+    font-size: 35px; 
     box-shadow: 0.25em 0.25em    rgb(69, 64, 64); 
-    text-transform: uppercase; /* Bold and professional look */
-    transition: all 0.3s ease-in-out; /* Smooth hover effect */
+    text-transform: uppercase; 
+    transition: all 0.3s ease-in-out; 
 }
 
 .en-vedette-text:hover {
-    background-color: rgba(0, 0, 0, 1); /* Stronger white background on hover */
-    color: white; /* Change text color on hover */
+    background-color: rgba(0, 0, 0, 1); 
+    color: white; 
     box-shadow: 0.25em 0.25em    rgb(200, 200, 200); 
-    transform: scale(1.05); /* Subtle zoom effect */
+    transform: scale(1.05); 
 }
 
 .glow-effect {
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8); /* Adds a glowing effect */
-    font-weight: bold; /* Enhances text weight */
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8); 
+    font-weight: bold;
+}
+.carteproduit:hover {
+    transform: scale(1.05); 
 }

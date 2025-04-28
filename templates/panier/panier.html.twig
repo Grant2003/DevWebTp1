@@ -103,7 +103,7 @@
                         <td>
                             {% if app.session.get('utilisateurConnecte') %}
                             <div class="text-center">
-                                <form action="{{ path('commander') }}" method="post">
+                                <form action="{{ path('route_commander') }}" method="post">
                                     <button type="submit" class="btn btn-dark">Payer</button>
                                 </form>
                             </div>

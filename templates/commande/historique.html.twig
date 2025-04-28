@@ -1,7 +1,61 @@
+{# //-----------------------------------
+  //   Fichier : historique.html.twig
+  //   Par:      Anthony Grenier
+  //   Date :    2025-4-21
+//----------------------------------- #}
 {% extends 'core/base.html.twig' %}
 
 {% block content %}
-    {% for commande in commandes %}
-        <p>{{ commande.idCommande }}</p>
-    {% endfor %}
+    <h1>Historique des commandes</h1>
+    
+    <div class="div-historique">
+        {% for label, messages in app.flashes %}
+            <div class="alert alert-{{ label == 'error' ? 'danger' : label }}">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+        {% for commande in commandes %}
+            <div class="commande-card ">
+                <h3>Commande #{{ commande.idCommande }}</h3>
+                <p><strong>Date :</strong> {{ commande.dateCommande|date('d-m-Y H:i') }}</p>
+                <p><strong>Total :</strong> {{ commande.total }} $</p>
+
+                <h4>Produits commandés :</h4>
+
+                {% set diffSecondes = (date('now').timestamp - commande.dateCommande.timestamp) %}
+                {% set tempsRestant = 172800 - diffSecondes %}
+
+
+                <ul class="historique-ul-li">
+                    {% for produitCommande in commande.commandeDetails %}
+                        <li class="historique-ul-li">
+                            {{ produitCommande.produit.nom }} — {{ produitCommande.quantite + produitCommande.quantiteRupture }} exemplaire{{ produitCommande.quantite > 1 ? 's' : '' }}
+                        </li>
+                    {% else %}
+                        <li class="historique-ul-li">Aucun produit</li>
+                    {% endfor %}
+                </ul>
+
+                <hr>
+                {% if tempsRestant > 0 %}
+                    <div id="delai-{{ commande.idCommande }}" data-secondes="{{ tempsRestant }}"></div>
+                    <a href="{{ path('route_annuler_commande', {id: commande.idCommande}) }}" class="btn">Annuler cette commande</a>
+                {% else %}
+                    <p style="color: gray;">Commande non annulable (délai dépassé)</p>
+                {% endif %}
+            </div>
+        {% else %}
+            <p class="no-orders">Aucune commande pour le moment.</p>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('scripts/TimerAnnulation.js') }}"></script>
+{% endblock %}
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('styles/historique.css') }}">
 {% endblock %}

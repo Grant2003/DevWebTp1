@@ -359,7 +359,7 @@ use Doctrine\Common\Collections\Collection;
         return $this->ancienMotDePasse;
     }
 
-    public function getCommandes(): Collection
+    public function getCommandes(): Collecti
     {
         return $this->commandes;
     }

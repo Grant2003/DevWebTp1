@@ -1,3 +1,8 @@
+    //-----------------------------------
+    //   Fichier : validationCommande.js
+    //   Modifié par:      Anthony Grenier
+    //   Date :    2025-2-22
+    //----------------------------------- 
 function validerCC(form) 
 {
   
