@@ -144,8 +144,7 @@ class CommandeController extends AbstractController
         //insertion de la commande
         $em->persist($commande);
         $em->flush();
-        //on enleve le panier
-        $request->getSession()->remove('panier');
+
         //mis a jour pour l<interface
         $request->getSession()->set('nbItem', 0);
 
@@ -161,8 +160,14 @@ class CommandeController extends AbstractController
         $codePostal = $client->getCodePostal();
         $email = $client->getEmail();
 
-        $total = $commande->total();
-        
+        $fraisDePort = 10;
+        $totalAvantTaxes = $panier->calculerSommePrix();
+        $tps = ($totalAvantTaxes+10)*0.05;
+        $tvq =($totalAvantTaxes+10)*0.0975;
+        $total = $totalAvantTaxes + $tps + $tvq + $fraisDePort;
+        //on enleve le panier
+        $request->getSession()->remove('panier');
+
         return $this->render('Commande/confirmation.html.twig', [
             'noCommande' => $noCommande,
             'adresse' => $adresse,
