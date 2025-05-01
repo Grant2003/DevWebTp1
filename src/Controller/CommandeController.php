@@ -62,6 +62,20 @@ class CommandeController extends AbstractController
     public function paiement(Request $request,ManagerRegistry $doctrine): Response
     {
         $clientSession = $request->getSession()->get('utilisateurConnecte');
+        $panier = $request->getSession()->get('panier');
+
+        //gestion d'injection (si le panier n'existe pas)
+        if($panier == null){
+            $this->addFlash('warning', 'Panier Vide');
+
+            return $this->redirectToRoute('app_home');
+        }
+        //gestion d'injection (si le panier existe mais est vide)
+        if($panier->calculerSommePrix() == 0){
+            $this->addFlash('warning', 'Panier Vide');
+
+            return $this->redirectToRoute('app_home');
+        }
 
         //gestion d'injection
         if($clientSession == null){
@@ -160,11 +174,7 @@ class CommandeController extends AbstractController
         $codePostal = $client->getCodePostal();
         $email = $client->getEmail();
 
-        $fraisDePort = 10;
-        $totalAvantTaxes = $panier->calculerSommePrix();
-        $tps = ($totalAvantTaxes+10)*0.05;
-        $tvq =($totalAvantTaxes+10)*0.0975;
-        $total = $totalAvantTaxes + $tps + $tvq + $fraisDePort;
+        $total=$panier->total();
         //on enleve le panier
         $request->getSession()->remove('panier');
 

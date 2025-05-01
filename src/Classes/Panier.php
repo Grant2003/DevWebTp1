@@ -33,6 +33,21 @@ class Panier {
             return $temp + $produit->prix*$produit->quantiteCommande; 
         }, 0);
     }
+    public function total(): float
+    {
+        $total = 10;
+    
+        foreach ($this->panier as $produitCommande) {
+            $total += $produitCommande->prix;
+        }
+    
+        $tps = round(0.05 * $total, 2);
+        $tvq = round(0.0975 * $total, 2);
+        $total += $tps + $tvq;
+        
+        return round($total, 2);
+        
+    }
 
     public function compterProduitsNomsDifferents(): int {
         $noms = array_map(function ($produit) {
