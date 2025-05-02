@@ -33,6 +33,11 @@ class PanierController extends AbstractController
         $tvq =($totalAvantTaxes+10)*0.0975;
         $total = $totalAvantTaxes + $tps + $tvq + $fraisDePort;
 
+        if ($request->getSession()->get('utilisateurConnecte') == null) {
+            $session = $request->getSession();
+            $session->set('target_after_login', 'commande');
+        }
+
         return $this->render('panier/panier.html.twig', [
             'items' => $items,
             'totalAvantTaxes' => $totalAvantTaxes,

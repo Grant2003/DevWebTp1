@@ -25,7 +25,7 @@ use App\Entity\CommandeDetail;
 
 class CommandeController extends AbstractController
 {
-    #[Route('/commander', name: 'route_commander', methods: ['POST'])]
+    #[Route('/commander', name: 'route_commander', methods: ['GET'])]
     public function commander(Request $request,ManagerRegistry $doctrine): Response
     {
         //affichage des données du panier avant la creation de la commande pour confirmation

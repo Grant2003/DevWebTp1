@@ -103,16 +103,16 @@
                         <td>
                             {% if app.session.get('utilisateurConnecte') %}
                             <div class="text-center">
-                                <form action="{{ path('route_commander') }}" method="post">
+                                <form action="{{ path('route_commander') }}" method="get">
                                     <button type="submit" class="btn btn-dark">Payer</button>
                                 </form>
                             </div>
                             {% else %}
-                            <div class="text-center">
-                                <form action="{{ path('route_connexion') }}" method="get">
-                                    <button type="submit" class="btn btn-dark">Payer</button>
-                                </form>
-                            </div>
+                                <div class="text-center">
+                                    <form action="{{ path('route_connexion', { 'redirect': 'commande' }) }}" method="get">
+                                        <button type="submit" class="btn btn-dark">Payer</button>
+                                    </form>
+                                </div>
                             {% endif %}
                         </td>
                         <td></td>

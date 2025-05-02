@@ -154,28 +154,37 @@ class ClientController extends AbstractController
     #[Route(path: '/connexion', name: 'route_connexion')]
     public function Connexion(Request $request, ManagerRegistry $doctrine): Response
     {
-
+        $defaultRedirect = 'app_home';
+        $from = $request->query->get('redirect', $defaultRedirect);
         if ($request->isMethod('POST')) {
 
             $username = $request->request->get('user');  
             $password = $request->request->get('mdp');  
+            $from     = $request->request->get('redirect', $defaultRedirect);
 
             $em = $doctrine->getManager();
-            //verification que le client est bien dans la bd 
             $utilisateur = $em->getRepository(Client::class)->findOneBy(['utilisateur' => $username]);
-            //verification que le mdp correspond
+        
             if ($utilisateur && $utilisateur->getMotDePasse() === $password) {
-
                 $request->getSession()->set('utilisateurConnecte', $utilisateur);
                 $this->addFlash('success', 'Connexion réussie!');
-
-                return $this->redirectToRoute('app_home'); 
+        
+                if ($request->getSession()->get('target_after_login')!=null) {
+                    $request->getSession()->remove('target_after_login');
+                    return $this->redirectToRoute('route_commander');
+                }
+        
+                return $this->redirectToRoute('app_home');
             }
-            
+        
             $this->addFlash('error', 'Combinaison de connexion invalide');
         }
+        
 
-        return $this->render('Client/connexion.html.twig', []);
+        return $this->render('Client/connexion.html.twig', [
+            'redirect' => $from, 
+        ]);
     }
+
 
 }
