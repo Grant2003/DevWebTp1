@@ -171,7 +171,11 @@ class ClientController extends AbstractController
         
                 if ($request->getSession()->get('target_after_login')!=null) {
                     $request->getSession()->remove('target_after_login');
-                    return $this->redirectToRoute('route_commander');
+                    return $this->forward(
+                        CommandeController::class.'::commander',
+                        [],                  
+                        []                 
+                    );
                 }
         
                 return $this->redirectToRoute('app_home');
