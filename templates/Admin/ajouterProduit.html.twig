@@ -1,0 +1,31 @@
+{% extends 'core/base.html.twig' %}
+
+{% block content %}
+    {% for label, messages in app.flashes %}
+        <div class="alert alert-{{ label == 'error' ? 'danger' : label }}">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endfor %}
+        <div class="container mt-4">
+        <h1>Créer un nouveau produit</h1>
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+
+        {{ form_start(form) }}
+            {{ form_row(form.nom) }}
+            {{ form_row(form.description) }}
+            {{ form_row(form.prix) }}
+            {{ form_row(form.qtte_stock) }}
+            {{ form_row(form.Qtte_seuil_min) }}
+            {{ form_row(form.idCategorie) }}
+
+            <button type="submit" class="btn btn-primary mt-3">Enregistrer</button>
+        {{ form_end(form) }}
+    </div>
+    <a class="btn btn-secondary" href="{{ path('route_admin') }}"> Retour</a>
+
+{% endblock %}

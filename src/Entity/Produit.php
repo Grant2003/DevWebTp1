@@ -11,6 +11,7 @@ use App\Repository\ProduitRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
 
@@ -22,19 +23,39 @@ class Produit
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
+    #[Assert\NotBlank(message: "Le nom du produit est requis.")]
+    #[Assert\Length(
+        min: 2,
+        max: 50,
+        minMessage: "Le nom doit contenir au moins {{ limit }} caractères.",
+        maxMessage: "Le nom ne peut pas dépasser {{ limit }} caractères."
+    )]
     private ?string $nom = null;
 
     #[ORM\Column(length: 150)]
+    #[Assert\NotBlank(message: "La description est requise.")]
+    #[Assert\Length(
+        min: 2,
+        max: 150,
+        minMessage: "La description doit contenir au moins {{ limit }} caractères.",
+        maxMessage: "La description ne peut pas dépasser {{ limit }} caractères."
+    )]
     private ?string $description = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: "Le prix est requis.")]
+    #[Assert\Positive(message: "Le prix doit être un nombre positif.")]
     private ?float $prix = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: "La quantité en stock est requise.")]
+    #[Assert\PositiveOrZero(message: "La quantité en stock doit être un nombre positif ou nul.")]
     private ?int $qtte_stock = null;
     
 
     #[ORM\Column]
+    #[Assert\NotNull(message: "La quantité minimale est requise.")]
+    #[Assert\Positive(message: "La quantité minimale doit être un nombre strictement positif.")]
     private ?int $Qtte_seuil_min = null;
 
     #[ORM\ManyToOne(targetEntity:Categorie::class, inversedBy:"produits", cascade:["persist"])]
@@ -73,7 +94,7 @@ class Produit
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function setNom(string $Nom): static
     {
-        $this->Nom = $Nom;
+        $this->nom = $Nom;
 
         return $this;
     }
@@ -91,7 +112,7 @@ class Produit
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public function setDescription(string $Description): static
     {
-        $this->Description = $Description;
+        $this->description = $Description;
 
         return $this;
     }
@@ -117,7 +138,11 @@ class Produit
 ///
 ///
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public function getQtte_Stock(): ?int
+    public function getQtteStock(): ?int
+    {
+        return $this->qtte_stock;
+    }
+        public function getQtte_Stock(): ?int
     {
         return $this->qtte_stock;
     }
@@ -154,6 +179,12 @@ class Produit
 ///
 ///
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+public function setIdCategorie(?Categorie $idCategorie): static
+{
+    $this->idCategorie = $idCategorie;
+    return $this;
+}
+
     public function getIdCategorie(): ?Categorie
     {
         return $this->idCategorie;

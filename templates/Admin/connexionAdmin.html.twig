@@ -1,0 +1,38 @@
+{# //-----------------------------------
+//   Fichier : connexion.html.twig
+//   Par:      Anthony Grenier
+//   Date :    2025-4-02
+//----------------------------------- #}
+
+{% extends 'core/base.html.twig' %}
+
+{% block content %}
+    {% for label, messages in app.flashes %}
+        <div class="alert alert-{{ label == 'error' ? 'danger' : label }}">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endfor %}
+    <div class="container container-form">
+        <div class="form-container">
+            <h1 class="page-title titre-form">Connexion Admin</h1>
+            <form action="{{ path('route_connexionAdmin') }}" method="post">
+                <div class="div-log-in">
+                    <div class="form-group">
+                        <label for="user" class="required">Utilisateur:</label>
+                        <input type="text" id="user" name="user" required="required" class="form-control col-4" placeholder="Nom d'utilisateur" />
+                    </div>
+                    <div class="form-group">
+                        <label for="mdp" class="required">Mot de passe:</label>
+                        <input type="password" id="mdp" name="mdp" required="required" class="form-control col-4" placeholder="Mot de passe" />
+    
+                        <button type="submit" id="client_Valider" name="client[Valider]" class="btn btn-form">Se Connecter</button>
+                    </div>
+                    <a class="nav-link px-2 text-secondary" href="{{ path('app_home') }}"> Catalogue</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
