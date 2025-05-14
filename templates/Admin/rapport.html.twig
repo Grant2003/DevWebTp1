@@ -9,5 +9,35 @@
         </div>
     {% endfor %}
     <a class="btn btn-secondary" href="{{ path('route_admin') }}"> Retour</a>
+    <div class="container mt-4">
+        <h1>Tout les Produits du catalogue</h1>
 
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+
+        <table class="table">
+            <thead class="thead-dark">
+                <tr class="text-center align-middle">
+                    <th>id</th>
+                    <th>Date</th>
+                    <th>Client</th>
+                    <th>Total</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for commande in commandes %}
+                <tr>
+                    <td>{{commande.idCommande}} </td>
+                    <td>{{commande.dateCommande|date('d-m-Y H:i')}}</td>
+                    <td>{{commande.client.utilisateur}}</td>
+                    <td>{{commande.total}}</td>
+                </tr>
+                {% else %}
+                    <li class="list-group-item">Aucun produit trouvé.</li>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

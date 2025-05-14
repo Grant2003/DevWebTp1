@@ -10,6 +10,8 @@ use App\Entity\Produit;
 use App\Form\ProduitType;
 use App\Entity\Categorie;
 use App\Form\CategorieType;
+use App\Entity\Commande;
+
 use App\Form\ClientType;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -59,8 +61,11 @@ class AdminController extends AbstractController
     #[Route(path: '/adminMenu', name: 'route_admin')]
     public function admin(Request $request, ManagerRegistry $doctrine): Response
     {
-        
-
+        $session = $request->getSession();
+        if(!$session->has('adminConnecte')){
+            $this->addFlash('error', 'Aucun admin connecté, veuillez vous connecter');
+            return $this->render('Admin/connexionAdmin.html.twig');
+        }
         return $this->render('Admin/admin.html.twig', [
         ]);
     }
@@ -68,6 +73,12 @@ class AdminController extends AbstractController
     #[Route(path: '/ajouterCategorie', name: 'route_ajouter_categorie')]
     public function ajouterCategorie(Request $request, ManagerRegistry $doctrine): Response
     {
+        $session = $request->getSession();
+        if(!$session->has('adminConnecte')){
+            $this->addFlash('error', 'Aucun admin connecté, veuillez vous connecter');
+            return $this->render('Admin/connexionAdmin.html.twig');
+        }
+
         $em = $doctrine->getManager();
         $categorie = new Categorie();
         $form = $this->createForm(CategorieType::class, $categorie);
@@ -87,8 +98,14 @@ class AdminController extends AbstractController
     }
 
     #[Route('/modifierProduitListe', name: 'route_modifier_produit_liste')]
-    public function list(ManagerRegistry $doctrine): Response
+    public function list(Request $request,ManagerRegistry $doctrine): Response
     {
+        $session = $request->getSession();
+        if(!$session->has('adminConnecte')){
+            $this->addFlash('error', 'Aucun admin connecté, veuillez vous connecter');
+            return $this->render('Admin/connexionAdmin.html.twig');
+        }
+
         $em = $doctrine->getManager();
 
         $produits = $em->getRepository(Produit::class)->findAll();
@@ -101,6 +118,11 @@ class AdminController extends AbstractController
 
     public function modifierCategorie( Request $request, ManagerRegistry $doctrine): Response
     {
+        $session = $request->getSession();
+        if(!$session->has('adminConnecte')){
+            $this->addFlash('error', 'Aucun admin connecté, veuillez vous connecter');
+            return $this->render('Admin/connexionAdmin.html.twig');
+        }
         $em = $doctrine->getManager();
 
         $categories = $em->getRepository(Categorie::class)->findAll();
@@ -135,6 +157,11 @@ class AdminController extends AbstractController
     #[Route(path: '/ajouterProduit', name: 'route_ajouter_produit')]
     public function ajouterProduit( Request $request, ManagerRegistry $doctrine): Response
     {
+        $session = $request->getSession();
+        if(!$session->has('adminConnecte')){
+            $this->addFlash('error', 'Aucun admin connecté, veuillez vous connecter');
+            return $this->render('Admin/connexionAdmin.html.twig');
+        }
         $em = $doctrine->getManager();
         
         $produit = new Produit();
@@ -158,7 +185,11 @@ class AdminController extends AbstractController
     #[Route(path: '/modifierProduit {id}', name: 'route_modifier_produit')]
     public function modifierProduit(int $id,Request $request, ManagerRegistry $doctrine): Response
     {
-        
+        $session = $request->getSession();
+        if(!$session->has('adminConnecte')){
+            $this->addFlash('error', 'Aucun admin connecté, veuillez vous connecter');
+            return $this->render('Admin/connexionAdmin.html.twig');
+        }
         $em = $doctrine->getManager();
         $produit = $em->getRepository(Produit::class)->find($id);
 
@@ -185,25 +216,44 @@ class AdminController extends AbstractController
     #[Route(path: '/produitCatalogue', name: 'route_produits_catalogue')]
     public function produitCatalogue(Request $request, ManagerRegistry $doctrine): Response
     {
-        
+        $session = $request->getSession();
+        if(!$session->has('adminConnecte')){
+            $this->addFlash('error', 'Aucun admin connecté, veuillez vous connecter');
+            return $this->render('Admin/connexionAdmin.html.twig');
+        }
 
+        $em = $doctrine->getManager();
+
+        $produits = $em->getRepository(Produit::class)->findAll();
         return $this->render('Admin/produitCatalogue.html.twig', [
+            'produits'=>$produits
         ]);
     }
 
     #[Route(path: '/rapport', name: 'route_rapport')]
     public function rapport(Request $request, ManagerRegistry $doctrine): Response
     {
-        
+
+        $session = $request->getSession();
+        if(!$session->has('adminConnecte')){
+            $this->addFlash('error', 'Aucun admin connecté, veuillez vous connecter');
+            return $this->render('Admin/connexionAdmin.html.twig');
+        }
+        $commandes = $doctrine->getRepository(Commande::class)->findBy([], ['dateCommande' => 'DESC']);
 
         return $this->render('Admin/rapport.html.twig', [
+            'commandes' =>$commandes
         ]);
     }
 
     #[Route(path: '/aCommander', name: 'route_a_commander')]
     public function aCommander(Request $request, ManagerRegistry $doctrine): Response
     {
-        
+        $session = $request->getSession();
+        if(!$session->has('adminConnecte')){
+            $this->addFlash('error', 'Aucun admin connecté, veuillez vous connecter');
+            return $this->render('Admin/connexionAdmin.html.twig');
+        }
 
         return $this->render('Admin/aCommander.html.twig', [
         ]);

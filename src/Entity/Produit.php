@@ -165,6 +165,10 @@ class Produit
     {
         return $this->Qtte_seuil_min;
     }
+        public function getQtte_Seuil_Min(): ?int
+    {
+        return $this->Qtte_seuil_min;
+    }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///
 ///
