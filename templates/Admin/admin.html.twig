@@ -1,20 +1,40 @@
 {% extends 'core/base.html.twig' %}
 
 {% block content %}
-    {% for label, messages in app.flashes %}
-        <div class="alert alert-{{ label == 'error' ? 'danger' : label }}">
-            {% for message in messages %}
-                <p>{{ message }}</p>
-            {% endfor %}
+    <div class="container mt-4 mb-5">
+
+        {% for label, messages in app.flashes %}
+            <div class="alert alert-{{ label == 'error' ? 'danger' : label }}">
+                {% for message in messages %}
+                    <p class="mb-0">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        <h1 class="mb-4">Tableau de bord administrateur</h1>
+
+        <div class="row g-3">
+            <div class="col-md-6 col-lg-4">
+                <a class="btn btn-outline-primary w-100" href="{{ path('route_ajouter_categorie') }}">➕ Ajouter Catégorie</a>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <a class="btn btn-outline-primary w-100" href="{{ path('route_modifier_categorie') }}">✏️ Modifier Catégories</a>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <a class="btn btn-outline-dark w-100" href="{{ path('route_rapport') }}">📊 Rapport sur les ventes</a>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <a class="btn btn-outline-primary w-100" href="{{ path('route_ajouter_produit') }}">➕ Ajouter Produit</a>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <a class="btn btn-outline-primary w-100" href="{{ path('route_modifier_produit_liste') }}">✏️ Modifier Produits</a>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <a class="btn btn-outline-dark w-100" href="{{ path('route_produits_catalogue') }}">📘 Produits du catalogue</a>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <a class="btn btn-outline-warning w-100" href="{{ path('route_a_commander') }}">📦 Produits à commander</a>
+            </div>
         </div>
-    {% endfor %}
-
-    <a class="btn btn-secondary" href="{{ path('route_ajouter_categorie') }}"> Ajouter Categorie</a>
-    <a class="btn btn-secondary" href="{{ path('route_modifier_categorie') }}"> Modifier Categorie</a>
-    <a class="btn btn-secondary" href="{{ path('route_ajouter_produit') }}"> Ajouter Produit</a>
-    <a class="btn btn-secondary" href="{{ path('route_modifier_produit_liste') }}"> Modifier Produit</a>
-    <a class="btn btn-secondary" href="{{ path('route_rapport') }}"> Rapport sur les ventes</a>
-    <a class="btn btn-secondary" href="{{ path('route_produits_catalogue') }}"> Produits du catalogue</a>
-    <a class="btn btn-secondary" href="{{ path('route_a_commander') }}"> Produit à commander</a>
-
+    </div>
 {% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'core/base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/admin.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="image-upload-form container py-4">
+
+        {% for label, messages in app.flashes %}
+            <div class="alert alert-{{ label == 'error' ? 'danger' : label }} mx-auto" style="max-width: 600px;">
+                {% for message in messages %}
+                    <p class="mb-0">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        <div class="text-center mb-4">
+            <a href="{{ path('route_modifier_produit', { id: produit.id }) }}" class="btn btn-outline-primary btn-sm">
+                ← Retour au produit
+            </a>
+        </div>
+
+        <div class="card shadow-sm mx-auto p-4" style="max-width: 500px;">
+            <h5 class="text-center mb-3">Modifier l'image catalogue de {{produit.nom}}</h5>
+
+            {{ form_start(formImage) }}
+                <div class="mb-3">
+                    {{ form_label(formImage.imageProduit, 'Photo (max 50 Ko)', {'label_attr': {'class': 'form-label'}}) }}
+                    <input type="hidden" name="MAX_FILE_SIZE" value="50000">
+                    {{ form_widget(formImage.imageProduit, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(formImage.imageProduit) }}
+                </div>
+                <div class="text-center">
+                    {{ form_widget(formImage.Envoyer, {'attr': {'class': 'btn btn-dark'}}) }}
+                </div>
+            {{ form_end(formImage) }}
+        </div>
+
+    </div>
+{% endblock %}

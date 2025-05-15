@@ -61,6 +61,7 @@ class ClientController extends AbstractController
         $utilisateur = $request->getSession()->get('utilisateur', new Client());
         $em  = $doctrine->getManager();
 
+        $utilisateur->setMotDePasse(password_hash($utilisateur->getMotDePasse(),PASSWORD_DEFAULT));
         $em->persist($utilisateur);
         $em->flush();
         $request->getSession()->set('utilisateurConnecte', $utilisateur);
@@ -126,20 +127,22 @@ class ClientController extends AbstractController
             }
             //verrification pour le formulaire de mdp
             if ($passwordForm->isSubmitted() && $passwordForm->isValid()) {
-                //je verifie ici pour etre bien sure mais le test ce fait deja niveau serveur.
-                if($ancienMDP === $utilisateur->getMotDePasse()){
-                    $nouveauMdp = $passwordForm->get('neoMotDePasse')->getData();
-                    $utilisateur->setMotDePasse($nouveauMdp);
+                $ancien = $passwordForm->get('ancienMotDePasse')->getData();
+                $nouveau = $passwordForm->get('neoMotDePasse')->getData();
+                $confirmation = $passwordForm->get('neoConfirmation')->getData();
 
+                $userFromDb = $doctrine->getRepository(Client::class)->find($utilisateur->getUtilisateur());
+
+                if (!password_verify($ancien, $userFromDb->getMotDePasse())) {
+                    $this->addFlash('error', 'Ancien mot de passe incorrect');
+                } elseif ($nouveau !== $confirmation) {
+                    $this->addFlash('error', 'Les mots de passe ne correspondent pas');
+                } else {
+                    $utilisateur->setMotDePasse(password_hash($nouveau, PASSWORD_DEFAULT));
                     $em->flush();
                     $this->addFlash('success', 'Mot de passe modifié !');
                 }
-                else{
-                    $this->addFlash('error', 'Ancien mot de passe invalide');
-                }
             }
-
-
         }
     
         return $this->render('Client/creerCompte.html.twig', [
@@ -165,7 +168,7 @@ class ClientController extends AbstractController
             $em = $doctrine->getManager();
             $utilisateur = $em->getRepository(Client::class)->findOneBy(['utilisateur' => $username]);
         
-            if ($utilisateur && $utilisateur->getMotDePasse() === $password) {
+            if ($utilisateur && password_verify($password, $utilisateur->getMotDePasse()) && $username != 'admin') {
                 $request->getSession()->set('utilisateurConnecte', $utilisateur);
                 $this->addFlash('success', 'Connexion réussie!');
         

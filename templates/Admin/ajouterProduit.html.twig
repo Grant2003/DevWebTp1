@@ -1,31 +1,70 @@
 {% extends 'core/base.html.twig' %}
 
 {% block content %}
-    {% for label, messages in app.flashes %}
-        <div class="alert alert-{{ label == 'error' ? 'danger' : label }}">
-            {% for message in messages %}
-                <p>{{ message }}</p>
-            {% endfor %}
+    <div class="container mt-4 mb-5">
+
+        {% for label, messages in app.flashes %}
+            <div class="alert alert-{{ label == 'error' ? 'danger' : label }}">
+                {% for message in messages %}
+                    <p class="mb-0">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="mb-0">Créer un nouveau produit</h1>
         </div>
-    {% endfor %}
-        <div class="container mt-4">
-        <h1>Créer un nouveau produit</h1>
 
         {% for message in app.flashes('success') %}
             <div class="alert alert-success">{{ message }}</div>
         {% endfor %}
 
-        {{ form_start(form) }}
-            {{ form_row(form.nom) }}
-            {{ form_row(form.description) }}
-            {{ form_row(form.prix) }}
-            {{ form_row(form.qtte_stock) }}
-            {{ form_row(form.Qtte_seuil_min) }}
-            {{ form_row(form.idCategorie) }}
+        <div class="card p-4 shadow-sm">
+            {{ form_start(form) }}
 
-            <button type="submit" class="btn btn-primary mt-3">Enregistrer</button>
-        {{ form_end(form) }}
+                <div class="mb-3">
+                    {{ form_label(form.nom, null, {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.nom) }}
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.description, null, {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.description) }}
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        {{ form_label(form.prix, null, {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.prix, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.prix) }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form_label(form.qtte_stock, null, {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.qtte_stock, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.qtte_stock) }}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form_label(form.Qtte_seuil_min, null, {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.Qtte_seuil_min, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.Qtte_seuil_min) }}
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    {{ form_label(form.idCategorie, null, {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(form.idCategorie, {'attr': {'class': 'form-select'}}) }}
+                    {{ form_errors(form.idCategorie) }}
+                </div>
+
+                <div class="text-end">
+                    <a class="btn btn-secondary" href="{{ path('route_admin') }}">← Retour</a>
+
+                    <button type="submit" class="btn btn-dark">💾 Enregistrer</button>
+                </div>
+
+            {{ form_end(form) }}
+        </div>
     </div>
-    <a class="btn btn-secondary" href="{{ path('route_admin') }}"> Retour</a>
-
 {% endblock %}

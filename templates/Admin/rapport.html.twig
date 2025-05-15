@@ -1,43 +1,50 @@
 {% extends 'core/base.html.twig' %}
 
 {% block content %}
-    {% for label, messages in app.flashes %}
-        <div class="alert alert-{{ label == 'error' ? 'danger' : label }}">
-            {% for message in messages %}
-                <p>{{ message }}</p>
-            {% endfor %}
+    <div class="container mt-4 mb-5 pb-5">
+
+        {% for label, messages in app.flashes %}
+            <div class="alert alert-{{ label == 'error' ? 'danger' : label }}">
+                {% for message in messages %}
+                    <p class="mb-0">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1 class="mb-0">Toutes les commandes du catalogue</h1>
+            <a class="btn btn-secondary" href="{{ path('route_admin') }}">← Retour</a>
         </div>
-    {% endfor %}
-    <a class="btn btn-secondary" href="{{ path('route_admin') }}"> Retour</a>
-    <div class="container mt-4">
-        <h1>Tout les Produits du catalogue</h1>
 
         {% for message in app.flashes('success') %}
             <div class="alert alert-success">{{ message }}</div>
         {% endfor %}
 
-        <table class="table">
-            <thead class="thead-dark">
-                <tr class="text-center align-middle">
-                    <th>id</th>
-                    <th>Date</th>
-                    <th>Client</th>
-                    <th>Total</th>
-
-                </tr>
-            </thead>
-            <tbody>
-                {% for commande in commandes %}
-                <tr>
-                    <td>{{commande.idCommande}} </td>
-                    <td>{{commande.dateCommande|date('d-m-Y H:i')}}</td>
-                    <td>{{commande.client.utilisateur}}</td>
-                    <td>{{commande.total}}</td>
-                </tr>
-                {% else %}
-                    <li class="list-group-item">Aucun produit trouvé.</li>
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover text-center align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Date</th>
+                        <th>Client</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for commande in commandes %}
+                        <tr>
+                            <td>{{ commande.idCommande }}</td>
+                            <td>{{ commande.dateCommande|date('d-m-Y H:i') }}</td>
+                            <td>{{ commande.client.utilisateur }}</td>
+                            <td>{{ commande.total|number_format(2, ',', ' ') }} $</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="4" class="text-muted fst-italic">Aucune commande trouvée.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 {% endblock %}

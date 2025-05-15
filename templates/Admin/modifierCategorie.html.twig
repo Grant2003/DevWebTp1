@@ -2,28 +2,39 @@
 
 {% block content %}
     <div class="container mt-4">
-        <h1>Modifier toutes les catégories</h1>
 
-        {% for message in app.flashes('success') %}
-            <div class="alert alert-success">{{ message }}</div>
+        <h1 class="mb-4">Modifier toutes les catégories</h1>
+
+        {% for label, messages in app.flashes %}
+            <div class="alert alert-{{ label == 'error' ? 'danger' : label }}">
+                {% for message in messages %}
+                    <p class="mb-0">{{ message }}</p>
+                {% endfor %}
+            </div>
         {% endfor %}
 
         {{ form_start(form) }}
 
-        <div class="list-group">
+        <div class="list-group mb-4">
             {% for categorieForm in form.categories %}
                 <div class="list-group-item">
-                    {{ form_row(categorieForm.nom) }}
+                    <div class="row align-items-center">
+                        <label class="col-sm-3 col-form-label">{{ form_label(categorieForm.nom) }}</label>
+                        <div class="col-sm-9">
+                            {{ form_widget(categorieForm.nom, {'attr': {'class': 'form-control'}}) }}
+                            {{ form_errors(categorieForm.nom) }}
+                        </div>
+                    </div>
                 </div>
             {% endfor %}
         </div>
 
-        <div class="mt-4 text-end">
-            <button class="btn btn-primary">Enregistrer</button>
+        <div class="text-end">
+            <a class="btn btn-secondary" href="{{ path('route_admin') }}">← Retour</a>
+
+            <button class="btn btn-dark">💾 Enregistrer</button>
         </div>
 
         {{ form_end(form) }}
     </div>
-    <a class="btn btn-secondary" href="{{ path('route_admin') }}"> Retour</a>
-
 {% endblock %}

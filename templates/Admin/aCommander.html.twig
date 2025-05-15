@@ -1,13 +1,47 @@
 {% extends 'core/base.html.twig' %}
 
 {% block content %}
-    {% for label, messages in app.flashes %}
-        <div class="alert alert-{{ label == 'error' ? 'danger' : label }}">
-            {% for message in messages %}
-                <p>{{ message }}</p>
-            {% endfor %}
-        </div>
-    {% endfor %}
-    <a class="btn btn-secondary" href="{{ path('route_admin') }}"> Retour</a>
+<div class="container mt-4 mb-5 pb-5">
 
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">Produits sous le seuil minimal</h2>
+        <a class="btn btn-secondary" href="{{ path('route_admin') }}">← Retour</a>
+    </div>
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+
+    {% set produitsACommander = produits|filter(p => p.qtte_stock < p.qtte_seuil_min) %}
+
+    {% if produitsACommander is empty %}
+        <div class="alert alert-info">Tous les produits sont au-dessus de leur seuil minimal.</div>
+    {% else %}
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover text-center align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Nom</th>
+                        <th>Description</th>
+                        <th>Prix</th>
+                        <th>Quantité en stock</th>
+                        <th>Quantité minimale</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for produit in produitsACommander %}
+                        <tr class="table-warning">
+                            <td>{{ produit.nom }}</td>
+                            <td>{{ produit.description }}</td>
+                            <td>{{ produit.prix|number_format(2, ',', ' ') }} $</td>
+                            <td>{{ produit.qtte_stock }}</td>
+                            <td>{{ produit.qtte_seuil_min }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+
+</div>
 {% endblock %}

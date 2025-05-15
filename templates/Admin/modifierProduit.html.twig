@@ -1,26 +1,86 @@
 {% extends 'core/base.html.twig' %}
 
+{# Charger les styles AVANT le bloc content #}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/admin.css') }}">
+{% endblock %}
+
 {% block content %}
-    {% for label, messages in app.flashes %}
-        <div class="alert alert-{{ label == 'error' ? 'danger' : label }}">
-            {% for message in messages %}
-                <p>{{ message }}</p>
-            {% endfor %}
+    <div class="container mt-4">
+
+        {% for label, messages in app.flashes %}
+            <div class="alert alert-{{ label == 'error' ? 'danger' : label }}">
+                {% for message in messages %}
+                    <p class="mb-0">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        <h1 class="mb-4">Modifier le produit : <strong>{{ produit.nom }}</strong></h1>
+        <div class="card p-4 shadow-sm mb-4">
+            <h4 class="mb-4">Modifier le produit</h4>
+
+            {{ form_start(form) }}
+
+            <div class="form-horizontal">
+                <div class="mb-3 row">
+                    <label class="col-sm-3 col-form-label">{{ form_label(form.nom) }}</label>
+                    <div class="col-sm-9">
+                        {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.nom) }}
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label class="col-sm-3 col-form-label">{{ form_label(form.description) }}</label>
+                    <div class="col-sm-9">
+                        {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.description) }}
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label class="col-sm-3 col-form-label">{{ form_label(form.prix) }}</label>
+                    <div class="col-sm-9">
+                        {{ form_widget(form.prix, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.prix) }}
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label class="col-sm-3 col-form-label">{{ form_label(form.qtte_stock) }}</label>
+                    <div class="col-sm-9">
+                        {{ form_widget(form.qtte_stock, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.qtte_stock) }}
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label class="col-sm-3 col-form-label">{{ form_label(form.Qtte_seuil_min) }}</label>
+                    <div class="col-sm-9">
+                        {{ form_widget(form.Qtte_seuil_min, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.Qtte_seuil_min) }}
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label class="col-sm-3 col-form-label">{{ form_label(form.idCategorie) }}</label>
+                    <div class="col-sm-9">
+                        {{ form_widget(form.idCategorie, {'attr': {'class': 'form-select'}}) }}
+                        {{ form_errors(form.idCategorie) }}
+                    </div>
+                </div>
+
+                <div class="text-end">
+                    <a class="btn btn-secondary" href="{{ path('route_admin') }}">Retour</a>
+                    <a class="btn btn-secondary" href="{{ path('route_image_detail', { id: produit.id }) }}">Modifier Image Détail</a>
+                    <a class="btn btn-secondary" href="{{ path('route_image_catalogue', { id: produit.id }) }}">Modifier Image Catalogue</a>
+                    <button type="submit" class="btn btn-dark">💾 Enregistrer</button>
+                </div>
+            </div>
+
+            {{ form_end(form) }}
         </div>
-    {% endfor %}
-        <div class="container mt-4">
-        <h1>Modifier le produit: {{ produit.nom }}</h1>
-
-        {{ form_start(form) }}
-            {{ form_row(form.nom) }}
-            {{ form_row(form.description) }}
-            {{ form_row(form.prix) }}
-            {{ form_row(form.qtte_stock) }}
-            {{ form_row(form.Qtte_seuil_min) }}
-            {{ form_row(form.idCategorie) }}
-            <button class="btn btn-success mt-3">Enregistrer les modifications</button>
-        {{ form_end(form) }}
     </div>
-    <a class="btn btn-secondary" href="{{ path('route_admin') }}"> Retour</a>
-
 {% endblock %}

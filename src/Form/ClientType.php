@@ -73,9 +73,25 @@ class ClientType extends AbstractType
         }
         //modification du mot de passe
         if ($options['is_password']) {
-            $builder->add('neoMotDePasse', PasswordType::class, ['label' => ' nouveau mot de passe'])
-                    ->add('ancienMotDePasse', PasswordType::class, ['label' => 'Ancien mot de passe'])
-                    ->add('neoConfirmation', PasswordType::class, ['label' => 'Confirmez le mot de passe']);
+            $builder
+                ->add('ancienMotDePasse', PasswordType::class, [
+                    'label' => 'Ancien mot de passe',
+                    'mapped' => false, 
+                    'required' => true,
+                    'attr' => ['autocomplete' => 'current-password']
+                ])
+                ->add('neoMotDePasse', PasswordType::class, [
+                    'label' => 'Nouveau mot de passe',
+                    'mapped' => false,
+                    'required' => true,
+                    'attr' => ['autocomplete' => 'new-password']
+                ])
+                ->add('neoConfirmation', PasswordType::class, [
+                    'label' => 'Confirmez le nouveau mot de passe',
+                    'mapped' => false,
+                    'required' => true,
+                    'attr' => ['autocomplete' => 'new-password']
+                ]);
         }
 
     }

@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 
+use App\Classes\ImageProduit;
 use App\Classes\Panier;
 use App\Classes\ProduitPanier;
 use App\Entity\Client;
 use App\Entity\Produit;
+use App\Form\ImageProduitType;
 use App\Form\ProduitType;
 use App\Entity\Categorie;
 use App\Form\CategorieType;
@@ -43,7 +45,7 @@ class AdminController extends AbstractController
             $em = $doctrine->getManager();
             $utilisateur = $em->getRepository(Client::class)->findOneBy(['utilisateur' => $username]);
         
-            if ($utilisateur && $utilisateur->getMotDePasse() === $password &&$username == 'admin') {
+            if ($utilisateur && password_verify($password, $utilisateur->getMotDePasse()) &&$username == 'admin') {
                 $request->getSession()->set('adminConnecte', $utilisateur);
                 $this->addFlash('success', 'Connexion réussie!');
         
@@ -254,8 +256,125 @@ class AdminController extends AbstractController
             $this->addFlash('error', 'Aucun admin connecté, veuillez vous connecter');
             return $this->render('Admin/connexionAdmin.html.twig');
         }
+        $em = $doctrine->getManager();
+
+        $produits = $em->getRepository(Produit::class)->findAll();
 
         return $this->render('Admin/aCommander.html.twig', [
+            'produits' => $produits
+        ]);
+    }
+
+    #[Route(path: '/modifierImageCatalogue {id}', name: 'route_image_catalogue')]
+    public function modifierImageCatalogue(int $id,Request $request, ManagerRegistry $doctrine): Response
+    {
+        $session = $request->getSession();
+        if(!$session->has('adminConnecte')){
+            $this->addFlash('error', 'Aucun admin connecté, veuillez vous connecter');
+            return $this->render('Admin/connexionAdmin.html.twig');
+        }
+        $em = $doctrine->getManager();
+        $produit = $em->getRepository(Produit::class)->find($id);
+
+        if (!$produit) {
+            throw $this->createNotFoundException('Produit introuvable');
+        }
+
+        $nomFichierImage = __DIR__ . '/../../public/images/produits/' . $id . '.jpg';
+
+        if (file_exists($nomFichierImage))
+        {
+            $image = 'images/produits/' . $id . '.jpg';
+        }
+        else
+        {
+            $image = 'images/unavailable.jpg';
+        }
+
+        $imageProduit = new ImageProduit;
+        $imageProduit->setProduitId($id);
+
+        $formImageProduit = $this->createForm(ImageProduitType::class, $imageProduit);
+
+        $formImageProduit->handleRequest($request);
+        if ($formImageProduit->isSubmitted())
+        {
+            if ($formImageProduit->isValid())
+            {
+                $codeErr = 0;
+                if ($imageProduit->televerserCatalogue($codeErre))
+                {
+                    $this->addFlash('succes', 'image téléversée avec succès!!');
+                }
+                else
+                {
+                    
+                    $this->addFlash('erreur', "Erreur ($codeErr)lors du téléversement de l'image...");
+                }
+            }
+        }
+
+
+        return $this->render('Admin/modifierImageCatalogue.html.twig', [
+            'produit' => $produit,
+            'image' => $image,
+            'formImage' => $formImageProduit
+        ]);
+    }
+    #[Route(path: '/modifierImageDetail {id}', name: 'route_image_detail')]
+    public function modifierImageDetail(int $id,Request $request, ManagerRegistry $doctrine): Response
+    {
+        $session = $request->getSession();
+        if(!$session->has('adminConnecte')){
+            $this->addFlash('error', 'Aucun admin connecté, veuillez vous connecter');
+            return $this->render('Admin/connexionAdmin.html.twig');
+        }
+        $em = $doctrine->getManager();
+        $produit = $em->getRepository(Produit::class)->find($id);
+
+        if (!$produit) {
+            throw $this->createNotFoundException('Produit introuvable');
+        }
+
+        $nomFichierImage = __DIR__ . '/../../public/images/descriptions/' . $id . '.jpg';
+
+        if (file_exists($nomFichierImage))
+        {
+            $image = 'images/descriptions/' . $id . '.jpg';
+        }
+        else
+        {
+            $image = 'images/unavailable.jpg';
+        }
+
+        $imageProduit = new ImageProduit;
+        $imageProduit->setProduitId($id);
+
+        $formImageProduit = $this->createForm(ImageProduitType::class, $imageProduit);
+
+        $formImageProduit->handleRequest($request);
+        if ($formImageProduit->isSubmitted())
+        {
+            if ($formImageProduit->isValid())
+            {
+                $codeErr = 0;
+                if ($imageProduit->televerserDetail($codeErre))
+                {
+                    $this->addFlash('succes', 'image téléversée avec succès!!');
+                }
+                else
+                {
+                    
+                    $this->addFlash('erreur', "Erreur ($codeErr)lors du téléversement de l'image...");
+                }
+            }
+        }
+
+
+        return $this->render('Admin/modifierImageDetail.html.twig', [
+            'produit' => $produit,
+            'image' => $image,
+            'formImage' => $formImageProduit
         ]);
     }
 }

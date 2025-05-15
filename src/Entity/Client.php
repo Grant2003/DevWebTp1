@@ -68,7 +68,7 @@ use Doctrine\Common\Collections\Collection;
     )]
     private ?string $email;
 
-    #[ORM\Column(length: 15)]
+    #[ORM\Column(length: 255)]
     #[Assert\Length(min:2, minMessage:'deux caractères minimum')]
     #[Assert\Length(max:255, maxMessage:'15 caractères maximum')]
     private ?string $motDePasse = null;
@@ -94,21 +94,13 @@ use Doctrine\Common\Collections\Collection;
     #[Assert\Length(max:255, maxMessage:'15 caractères maximum')]
 
     private ?string $neoMotDePasse;
-    //Permet d'éviter d'avoir la validation niveau serveur que l'ancien mdp== bien le mdp avant le changement
-    #[Assert\Length(min:2, minMessage:'deux caractères minimum')]
-    #[Assert\Length(max:255, maxMessage:'15 caractères maximum')]
-    #[Assert\EqualTo(
-        propertyPath: "motDePasse",
-            message: "L'ancien mot de passe est incorrect"
-        )]
-    private ?string $ancienMotDePasse ;
-    #[Assert\Length(min:2, minMessage:'deux caractères minimum')]
-    #[Assert\Length(max:255, maxMessage:'15 caractères maximum')]
-    #[Assert\EqualTo(
-        propertyPath: "neoMotDePasse",
-            message: "Les mots de passe ne correspondent pas."
-        )]
-    private ?string $neoConfirmation ;
+    
+    #[Assert\Length(min: 2, max: 255)]
+    private ?string $ancienMotDePasse;
+
+    #[Assert\Length(min: 2, max: 255)]
+    private ?string $neoConfirmation;
+
 
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: Commande::class)]
     private Collection $commandes;
