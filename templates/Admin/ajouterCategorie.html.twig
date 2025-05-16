@@ -1,3 +1,8 @@
+{# //-----------------------------------
+//   Fichier : ajouterCategorie.html.twig
+//   Par:      Anthony Grenier
+//   Date :    2025-05-09
+//----------------------------------- #}
 {% extends 'core/base.html.twig' %}
 
 {% block content %}
@@ -20,6 +25,7 @@
         {% endfor %}
 
         <div class="card p-4 shadow-sm">
+        {# Form creation de categorie #}
             {{ form_start(form) }}
                 <div class="mb-3">
                     {{ form_label(form.nom, null, {'label_attr': {'class': 'form-label'}}) }}

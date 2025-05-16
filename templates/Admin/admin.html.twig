@@ -1,3 +1,8 @@
+{# //-----------------------------------
+//   Fichier : admin.html.twig
+//   Par:      Anthony Grenier
+//   Date :    2025-05-09
+//----------------------------------- #}
 {% extends 'core/base.html.twig' %}
 
 {% block content %}
@@ -34,6 +39,9 @@
             </div>
             <div class="col-md-6 col-lg-4">
                 <a class="btn btn-outline-warning w-100" href="{{ path('route_a_commander') }}">📦 Produits à commander</a>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <a class="btn btn-outline-danger w-100" href="{{ path('route_deconnexionAdmin') }}">❌Deconnexion Admin</a>
             </div>
         </div>
     </div>

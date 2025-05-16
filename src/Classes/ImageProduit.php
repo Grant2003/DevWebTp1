@@ -1,7 +1,12 @@
 <?php
 
 namespace App\Classes;
-
+//-----------------------------------
+//   Fichier : ImageProduit.php
+//   Par:      Anthony Grenier
+//   Date :    2025-3-29
+//   Modification :    2025-5-07
+//-----------------------------------
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ImageProduit{
@@ -29,6 +34,7 @@ class ImageProduit{
     $this->imageProduit = $fichier;
   }
 
+  //televersement dans le catalogue
     public function televerserCatalogue(&$codeErr)
     {
         if ($this->imageProduit !== null) {
@@ -36,6 +42,7 @@ class ImageProduit{
 
             $sourceImage = null;
 
+            //gestion des different formats
             switch ($mime) {
                 case 'image/jpeg':
                 case 'image/jpg':
@@ -48,33 +55,32 @@ class ImageProduit{
                     $sourceImage = imagecreatefromgif($this->imageProduit->getPathname());
                     break;
                 default:
-                    $codeErr = -1; // unsupported type
+                    $codeErr = -1; 
                     return false;
             }
 
             if (!$sourceImage) {
-                $codeErr = -2; // failed to read image
+                $codeErr = -2; 
                 return false;
             }
 
             $nomDossier = __DIR__ . '/../../public/images/produits';
             $nomFichier = "$this->produitId.jpg";
 
-            // Ensure directory exists
             if (!file_exists($nomDossier)) {
                 mkdir($nomDossier, 0775, true);
             }
 
-            // Save the image as JPEG (quality 85%)
             imagejpeg($sourceImage, $nomDossier . '/' . $nomFichier, 85);
             imagedestroy($sourceImage);
 
             return true;
         }
 
-        $codeErr = -3; // no file
+        $codeErr = -3; 
         return false;
     }
+  //televersement dans le detail
 
     public function televerserDetail(&$codeErr)
     {
@@ -95,31 +101,29 @@ class ImageProduit{
                     $sourceImage = imagecreatefromgif($this->imageProduit->getPathname());
                     break;
                 default:
-                    $codeErr = -1; // unsupported type
+                    $codeErr = -1; 
                     return false;
             }
 
             if (!$sourceImage) {
-                $codeErr = -2; // failed to read image
+                $codeErr = -2; 
                 return false;
             }
 
             $nomDossier = __DIR__ . '/../../public/images/descriptions';
             $nomFichier = "$this->produitId.jpg";
 
-            // Ensure directory exists
             if (!file_exists($nomDossier)) {
                 mkdir($nomDossier, 0775, true);
             }
 
-            // Save the image as JPEG (quality 85%)
             imagejpeg($sourceImage, $nomDossier . '/' . $nomFichier, 85);
             imagedestroy($sourceImage);
 
             return true;
         }
 
-        $codeErr = -3; // no file
+        $codeErr = -3; 
         return false;
     }
 }

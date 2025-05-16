@@ -1,3 +1,9 @@
+
+{# //-----------------------------------
+//   Fichier : modifierCategorie.html.twig
+//   Par:      Anthony Grenier
+//   Date :    2025-05-09
+//----------------------------------- #}
 {% extends 'core/base.html.twig' %}
 
 {% block content %}
@@ -5,6 +11,7 @@
 
         <h1 class="mb-4">Modifier toutes les catégories</h1>
 
+    {# on affiche toutes les categories et le form pour les modifier  #}
         {% for label, messages in app.flashes %}
             <div class="alert alert-{{ label == 'error' ? 'danger' : label }}">
                 {% for message in messages %}

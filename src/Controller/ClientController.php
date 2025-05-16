@@ -6,6 +6,7 @@ namespace App\Controller;
 //   Fichier : ClientController.php
 //   Par:      Anthony Grenier
 //   Date :    2025-3-29
+//   Modification :    2025-5-07
 //-----------------------------------
 use App\Classes\Panier;
 use App\Classes\ProduitPanier;
@@ -133,11 +134,13 @@ class ClientController extends AbstractController
 
                 $userFromDb = $doctrine->getRepository(Client::class)->find($utilisateur->getUtilisateur());
 
+                //verification avec mdp hashé
                 if (!password_verify($ancien, $userFromDb->getMotDePasse())) {
                     $this->addFlash('error', 'Ancien mot de passe incorrect');
                 } elseif ($nouveau !== $confirmation) {
                     $this->addFlash('error', 'Les mots de passe ne correspondent pas');
                 } else {
+                    //hashage du nouveau mdp
                     $utilisateur->setMotDePasse(password_hash($nouveau, PASSWORD_DEFAULT));
                     $em->flush();
                     $this->addFlash('success', 'Mot de passe modifié !');
@@ -168,6 +171,7 @@ class ClientController extends AbstractController
             $em = $doctrine->getManager();
             $utilisateur = $em->getRepository(Client::class)->findOneBy(['utilisateur' => $username]);
         
+            //connexion avec mdp hashé
             if ($utilisateur && password_verify($password, $utilisateur->getMotDePasse()) && $username != 'admin') {
                 $request->getSession()->set('utilisateurConnecte', $utilisateur);
                 $this->addFlash('success', 'Connexion réussie!');
