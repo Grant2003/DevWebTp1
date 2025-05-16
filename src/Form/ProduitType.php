@@ -1,7 +1,11 @@
 <?php
 
 namespace App\Form;
-
+//-----------------------------------
+//   Fichier : produitType.php
+//   Par:      Anthony Grenier
+//   Date :    2025-5-11
+//-----------------------------------
 use App\Entity\Produit;
 use App\Entity\Categorie;
 use Symfony\Component\Form\AbstractType;

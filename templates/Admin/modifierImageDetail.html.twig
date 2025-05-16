@@ -32,8 +32,8 @@
 
             {{ form_start(formImage) }}
                 <div class="mb-3">
-                    {{ form_label(formImage.imageProduit, 'Photo (max 50 Ko)', {'label_attr': {'class': 'form-label'}}) }}
-                    <input type="hidden" name="MAX_FILE_SIZE" value="50000">
+                    {{ form_label(formImage.imageProduit, 'Photo (max 100 Ko)', {'label_attr': {'class': 'form-label'}}) }}
+                    <input type="hidden" name="MAX_FILE_SIZE" value="100000">
                     {{ form_widget(formImage.imageProduit, {'attr': {'class': 'form-control'}}) }}
                     {{ form_errors(formImage.imageProduit) }}
                 </div>

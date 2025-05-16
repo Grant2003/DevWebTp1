@@ -1,7 +1,11 @@
 <?php
 
 namespace App\Form;
-
+//-----------------------------------
+//   Fichier : ImageProduitType.php
+//   Par:      Anthony Grenier
+//   Date :    2025-5-11
+//-----------------------------------
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

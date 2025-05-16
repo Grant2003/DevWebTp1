@@ -1,5 +1,9 @@
 <?php
-
+//-----------------------------------
+//   Fichier : CategorieCollectionType.php
+//   Par:      Anthony Grenier
+//   Date :    2025-5-11
+//-----------------------------------
 namespace App\Form;
 
 use App\Form\CategorieType;
