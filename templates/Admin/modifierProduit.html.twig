@@ -30,7 +30,7 @@
 
             <div class="form-horizontal">
                 <div class="mb-3 row">
-                    <label class="col-sm-3 col-form-label">{{ form_label(form.nom) }}</label>
+                    <div class="col-sm-3 col-form-label">{{ form_label(form.nom) }}</div>
                     <div class="col-sm-9">
                         {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
                         {{ form_errors(form.nom) }}
@@ -38,7 +38,7 @@
                 </div>
 
                 <div class="mb-3 row">
-                    <label class="col-sm-3 col-form-label">{{ form_label(form.description) }}</label>
+                    <div class="col-sm-3 col-form-label">{{ form_label(form.description) }}</div>
                     <div class="col-sm-9">
                         {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
                         {{ form_errors(form.description) }}
@@ -46,7 +46,7 @@
                 </div>
 
                 <div class="mb-3 row">
-                    <label class="col-sm-3 col-form-label">{{ form_label(form.prix) }}</label>
+                    <div class="col-sm-3 col-form-label">{{ form_label(form.prix) }}</div>
                     <div class="col-sm-9">
                         {{ form_widget(form.prix, {'attr': {'class': 'form-control'}}) }}
                         {{ form_errors(form.prix) }}
@@ -54,7 +54,7 @@
                 </div>
 
                 <div class="mb-3 row">
-                    <label class="col-sm-3 col-form-label">{{ form_label(form.qtte_stock) }}</label>
+                    <div class="col-sm-3 col-form-label">{{ form_label(form.qtte_stock) }}</div>
                     <div class="col-sm-9">
                         {{ form_widget(form.qtte_stock, {'attr': {'class': 'form-control'}}) }}
                         {{ form_errors(form.qtte_stock) }}
@@ -62,7 +62,7 @@
                 </div>
 
                 <div class="mb-3 row">
-                    <label class="col-sm-3 col-form-label">{{ form_label(form.Qtte_seuil_min) }}</label>
+                    <div class="col-sm-3 col-form-label">{{ form_label(form.Qtte_seuil_min) }}</div>
                     <div class="col-sm-9">
                         {{ form_widget(form.Qtte_seuil_min, {'attr': {'class': 'form-control'}}) }}
                         {{ form_errors(form.Qtte_seuil_min) }}
@@ -70,7 +70,7 @@
                 </div>
 
                 <div class="mb-3 row">
-                    <label class="col-sm-3 col-form-label">{{ form_label(form.idCategorie) }}</label>
+                    <div class="col-sm-3 col-form-label">{{ form_label(form.idCategorie) }}</div>
                     <div class="col-sm-9">
                         {{ form_widget(form.idCategorie, {'attr': {'class': 'form-select'}}) }}
                         {{ form_errors(form.idCategorie) }}
